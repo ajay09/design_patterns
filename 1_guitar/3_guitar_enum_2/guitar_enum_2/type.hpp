@@ -19,7 +19,7 @@ public:
     
     Type(Kind t) : _type(t) {}
     
-    std::string to_string(Type t) {
+    std::string to_string() {
         switch (_type) {
             case Type::ACOUSTIC: return "Acoustic";
             case Type::ELECTRIC: return "Electric";

@@ -28,7 +28,7 @@ class Inventory{
     
         // We can't return reference here because if guitar is not found then we have to return null and reference can't be null in c++.
         pGuitar getGuitar(string); // serial number
-        pGuitar search(Guitar&);
+        std::list<pGuitar> search(Guitar&);
     private:
         std::list<pGuitar> guitars;
 };

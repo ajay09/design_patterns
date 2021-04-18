@@ -22,20 +22,21 @@ pGuitar Inventory::getGuitar(string serial) {
     return nullptr;
 }
 
-pGuitar Inventory::search(Guitar& searchGuitar) {
+std::list<pGuitar> Inventory::search(Guitar& searchGuitar) {
+    std::list<pGuitar> result;
     for (auto guitar : guitars) {
         // We are not comparing Serial Number and Price because they are unique for each guitar.
-        if (guitar->getBuilder() != searchGuitar.getBuilder())
+        if (guitar->getBuilder().getKind() != searchGuitar.getBuilder().getKind())
             continue;
         if (guitar->getModel() != searchGuitar.getModel())
             continue;
-        if (guitar->getType() != searchGuitar.getType())
+        if (guitar->getType().getKind() != searchGuitar.getType().getKind())
             continue;
-        if(guitar->getBackWood() != searchGuitar.getBackWood())
+        if(guitar->getBackWood().getKind() != searchGuitar.getBackWood().getKind())
             continue;
-        if(guitar->getTopWood() != searchGuitar.getTopWood())
+        if(guitar->getTopWood().getKind() != searchGuitar.getTopWood().getKind())
             continue;
-        return guitar;
+        result.push_back(guitar);
     }
-    return nullptr;
+    return result;
 }

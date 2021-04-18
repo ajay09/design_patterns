@@ -24,11 +24,11 @@ class Guitar {
         std::string getSerialNumber();
         double getPrice();
         void setPrice(float);
-        Builder::Kind getBuilder();
+        Builder getBuilder();
         std::string getModel();
-        Type::Kind getType();
-        Wood::Kind getBackWood();
-        Wood::Kind getTopWood();
+        Type getType();
+        Wood getBackWood();
+        Wood getTopWood();
     private:
         std::string serialNumber, model;
         Builder builder;

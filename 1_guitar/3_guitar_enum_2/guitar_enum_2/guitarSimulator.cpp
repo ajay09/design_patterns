@@ -92,14 +92,17 @@ int main() {
     // string _serialNumber, double _price, string _builder, string _model, string _type, string _backWood, string _topWood
     pGuitar whatErinLikes = new Guitar("", 0, Builder::Kind::FENDER, "Stratocastor", Type::Kind::ELECTRIC, Wood::Kind::ALDER, Wood::Kind::ALDER);
     
-    pGuitar guitar = inventory.search(*whatErinLikes);
-    if (guitar) {
-        cout << "You might like this " +
-        to_string(guitar->getBuilder()) + " " + guitar->getModel() +  " " +
-        to_string(guitar->getType()) + " guitar:\n   " +
-        to_string(guitar->getBackWood()) + " back and sides,\n   " +
-        to_string(guitar->getTopWood()) + " top.\nYou can have it for only $" +
-        to_string(guitar->getPrice()) + "!";
+    std::list<pGuitar> guitarsMatched = inventory.search(*whatErinLikes);
+    if (!guitarsMatched.empty()) {
+        cout << "You might like these guitars ... \n";
+        for (auto guitar : guitarsMatched) {
+            cout << "> We have a " +
+            guitar->getBuilder().to_string() + " " + guitar->getModel() +  " " +
+            guitar->getType().to_string() + " guitar:\n   " +
+            guitar->getBackWood().to_string() + " back and sides,\n   " +
+            guitar->getTopWood().to_string() + " top.\nYou can have it for only $" +
+            to_string(guitar->getPrice()) + "!\n ---\n";
+        }
     } else {
         cout << "Sorry that won't be available right now!\n";
     }

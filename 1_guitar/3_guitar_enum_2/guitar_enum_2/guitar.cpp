@@ -22,18 +22,18 @@ double Guitar::getPrice() {
 void Guitar::setPrice(float _price) {
     price = _price;
 }
-Builder::Kind Guitar::getBuilder() {
-    return builder.getKind();
+Builder Guitar::getBuilder() {
+    return builder;
 }
 std::string Guitar::getModel() {
     return model;
 }
-Type::Kind Guitar::getType() {
-    return type.getKind();
+Type Guitar::getType() {
+    return type;
 }
-Wood::Kind Guitar::getBackWood() {
-    return backWood.getKind();
+Wood Guitar::getBackWood() {
+    return backWood;
 }
-Wood::Kind Guitar::getTopWood() {
-    return topWood.getKind();
+Wood Guitar::getTopWood() {
+    return topWood;
 }
