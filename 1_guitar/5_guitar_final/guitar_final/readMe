@@ -1,0 +1,14 @@
+After encapsulting Guitar and GuitarSpec let's make Inventory well designed.
+
+New Requirement
+Now we want to be able to sell 12 strings guitar.
+
+For this we have to add a new attribuite and a new method in GuitarSpec, say numStrings and getNumStrings()
+This would inturn mean modification in the search method of Inventory
+This is undesirable!
+
+
+We need to encapsulate the guitar specifications and isolate them from the rest of the guitar search tool.
+- Change search() method in Inventory to "delegate" comparing two GuitarSpec objects instead of handling
+   the comparison directly.
+
