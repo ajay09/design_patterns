@@ -9,8 +9,8 @@
 
 Inventory::Inventory() {}
 
-void Inventory::addGuitar(string _serialNumber, double _price, Builder _builder, string _model, Type _type, Wood _backWood, Wood _topWood) {
-    Guitar* newGuitar = new Guitar(_serialNumber, _price, _builder, _model, _type, _backWood, _topWood);
+void Inventory::addGuitar(string _serialNumber, double _price, pGuitarSpec _spec) {
+    Guitar* newGuitar = new Guitar(_serialNumber, _price, _spec);
     guitars.push_back(newGuitar);
 }
 
@@ -25,16 +25,17 @@ pGuitar Inventory::getGuitar(string serial) {
 std::list<pGuitar> Inventory::search(GuitarSpec& searchGuitar) {
     std::list<pGuitar> result;
     for (auto guitar : guitars) {
+        GuitarSpec spec = guitar->getSpec();
         // We are not comparing Serial Number and Price because they are unique for each guitar.
-        if (guitar->getBuilder().getKind() != searchGuitar.getBuilder().getKind())
+        if (spec.getBuilder().getKind() != searchGuitar.getBuilder().getKind())
             continue;
-        if (guitar->getModel() != searchGuitar.getModel())
+        if (spec.getModel() != searchGuitar.getModel())
             continue;
-        if (guitar->getType().getKind() != searchGuitar.getType().getKind())
+        if (spec.getType().getKind() != searchGuitar.getType().getKind())
             continue;
-        if(guitar->getBackWood().getKind() != searchGuitar.getBackWood().getKind())
+        if (spec.getBackWood().getKind() != searchGuitar.getBackWood().getKind())
             continue;
-        if(guitar->getTopWood().getKind() != searchGuitar.getTopWood().getKind())
+        if (spec.getTopWood().getKind() != searchGuitar.getTopWood().getKind())
             continue;
         result.push_back(guitar);
     }

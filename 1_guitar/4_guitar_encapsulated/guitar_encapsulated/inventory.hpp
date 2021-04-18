@@ -25,7 +25,7 @@ class Inventory{
     public:
         Inventory();
         // string _serialNumber, double _price, string _builder, string _model, string _type, string _backWood, string _topWood
-        void addGuitar(string, double, Builder, string, Type, Wood, Wood);
+        void addGuitar(string, double, GuitarSpec*);
     
         // We can't return reference here because if guitar is not found then we have to return null and reference can't be null in c++.
         pGuitar getGuitar(string); // serial number
