@@ -1,0 +1,23 @@
+Now we have got a working application.
+
+So the first goal, "Make sure the application works as expected."  has been fulfilled.
+
+No we try to improve the code by applying OO principles.
+
+Some Tips :
+1. Objects should do what their names indicate.
+    e.g Jet object should land() and takeOff() but not verifyTickets()
+2. Each object should represent a single concept.
+    e.g. avoid a duck object that does quacking and represents a yellow duck.
+3. Unused properties are a dead giveaway.
+    If you've an object that is often used with null or no-values for some of its attributes.
+    Then you clearly have an object that is doing more than one job.
+    
+
+In the Guitar application,
+The clients are not really providing Guitar object.
+As they never provide the serial number and the price.   =>   Thus we create a new object, "GuitarSpec", that stores just the specs
+                                                                that the clients provide for the search method.
+                                                                
+
+This will create duplicate code => As both GuitarSpec and Guitar have similar guitar attibutes and methods.
