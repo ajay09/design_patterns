@@ -1,0 +1,13 @@
+inline std::string to_string(Builder b)
+inline std::string to_string(Type t)
+inline std::string to_string(Wood w)
+
+These had to be declared inline   =>   to avoid   error : "duplicate symbol for architecture x86_64"
+This error can be avoided by using
+1. macro
+2. inline
+3. static
+
+
+
+

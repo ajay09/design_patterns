@@ -1,0 +1,22 @@
+The current version is not working expectedly =>
+        the guitar being searched is there is the inventory. Still we are not getting results.
+        
+
+This is because the way in which we are comparing the guitar properties.
+Since we are comparing string and upper and lower case strings are considered different.
+Thus our comparision is failing.
+        "fender"  ==  "Fender"   =>  False
+        
+
+We can have 2 solutions for this issue:
+ - Use case-insensitive string comparision.
+ - Use enum in place of string and avoid string comparision.
+ 
+Avoiding string comparision using enum would be a better choice.
+This avoids the headache of ensuring that string comparisions are case-insensitive all the time.
+
+The most important benefit of using enum is that
+classes and methods that use them are protected
+from any values not defined in the enum.
+A misspelling will give a compiler error.
+Thus it provides not only 'type safety' but also 'value safety'.
