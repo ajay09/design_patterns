@@ -1,0 +1,31 @@
+
+Encapsulate
+    We know that fly() and quack() are parts of the Duck class that vary across ducks.
+    So we pull both the methods our of the Duck class and create a new set of classes to represent each behavior.
+
+
+Program to interface not implementaiton
+    We use and interface to represent each behavior and each implementation of a behavior will implement one of those interfaces.
+    The Duck subclasses will use a behavior represented by an interface so that the actual impelentation of the
+        behavior won't be locked into the Duck subclass.
+    
+    Earlier we were relying on the implementation : as the behavior came either from the Duck superclass
+                                                    or as a specialized implementaiton in the subclass itself.
+                                                    
+
+    Program to an interface    =>(means)=>      Program to a Supertype.
+    The point is to exploit polymorphism by programming to a supertype so that the actual runtime object
+        isn't locked into the code.  i.e. the declared type of the variable should be a supertype.
+    
+
+
+- With the new design, the Duck subclasses will use a behavior represented by an interface, so that the
+    actual implementation of the behavior won't be locked into the Duck subclass.
+
+- Also other types of objects can reuse our fly and quack behavior.
+
+- We can add new behaviors without modifying any existing behavior classes
+  or touching any of the Duck classes.
+
+
+

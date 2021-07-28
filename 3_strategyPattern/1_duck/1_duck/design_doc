@@ -1,0 +1,41 @@
+1st design  =>  Inheritance
+    We start our design of the Duck class using inheritance.
+
+    All the common functionality is defined in the base class and the derived classes override their specific implementations.
+    Each sub-type is resposible for implementing its own display() behavior for how it looks on the screen.
+
+    The issue with this design starts once we create a  =>  RubberDuck
+    Because a RubberDuck can't fly. Thus we solve the issue by overriding the fly method of the Duck base class.
+    Few that was close. We made the design work till now.
+    Also a RubberDuck doesn't quack()  =>  so we override quack() to squeak().
+
+    Thus we could always override the fly(), display() and quack() methods
+    Problems with designing using inheritance here :
+        - Runtime behavior chages are difficult.
+        - Changes can unintentionally affect other ducks.
+    
+    
+
+
+
+2nd design  =>  Interface
+    Take the fly() and quack() methods our of the Duck superclass and make a Flyable and Quackable interface
+    with a fly() and quack() method respectively.
+    Now every subclass of Duck that wants to fly() and quack() can implement these interfaces.
+
+    Problem with  Interface :
+        - IF you need to modify the fly behavior then you've to track down and change it in all
+          the different subclasses where that behavior is defined.
+        - No code reuse.
+
+
+
+
+
+3rd design  =>  Identify the parts that vary and encapsulate them,i.e. separate them from what stays the same.
+                So that later you can alter or extend the parts that vary without affecting those that don't
+                
+                Thus we put the fly() and quack() into a set of classes to represent each behavior
+                
+                We use the strategy pattern.
+               
