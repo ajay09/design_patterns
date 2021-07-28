@@ -1,0 +1,20 @@
+Motivation
+
+Sometimes we need to be informed when certain things happen
+- Property of some object changes
+- Object does something
+- Some external even occurs
+
+We want to listen to evets and be notified when they occur.
+
+C++ has no built-in functionality for this (C# does)
+Thus we need to rely on function pointer, std::funciton, OOP constructs
+
+
+Observer
+An observer is an object that wishes to be informed about events happening in
+a system, typically by providing a callback function to call when the event
+occurs.
+The entity generating the events is called observable.
+
+
