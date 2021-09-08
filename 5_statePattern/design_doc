@@ -1,0 +1,25 @@
+Motivation
+
+Consider an ordinary telephone :
+What you can do with it depends on the state of the phone
+	- If it's ringing or you want to make a call, you can pick it up
+	- Phone must be off the hook to take/make call
+	- if you are calling someone and it's busy then you put the handset down
+	  or leave a message or stay on hold
+
+Changes in state can be explicit or in response to events. (e.g. observer)
+(someone is calling you and the observer pick it up)
+
+
+State
+A pattern in which the object's behavior is determined by its state.
+An object transitions from one state to another(something needs to trigger the transition).
+A formalized construct which manages states and transitions from one state to another is
+called a state machine.
+
+
+Can define
+- State entry/exit behaviors
+- Action when a particular even causes a transition
+- Guard conditions enabling/disabling a transition
+- Default action when no transitions are found for an even
