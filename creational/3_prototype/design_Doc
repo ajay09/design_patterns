@@ -1,0 +1,14 @@
+Motivation
+
+Coplicated objects e.g. cars aren't designed from scratch.
+You already got a desgin for a car that is pretty good but then you can subsequently fine tune
+things, you can install new components at certain locations and you get a better product
+as a result.
+
+You take an existing partially constructed desgin as a Prototype and then you
+fine tune it.
+
+We make a copy(clone) of the prototype and customize it.
+	      (requires deep copy)
+
+To make the cloning convenient we do it via a Factory.

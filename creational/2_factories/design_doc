@@ -1,0 +1,26 @@
+Factory is a centralized location where things are created.
+
+Factory Method
+Factory External Class
+Factory Inner Class
+Abstract Factory
+
+
+Motivation
+ - Object creation logic becomes too convoluted
+ - Constructor is not descriptive
+ 	- Name mandated by name of containing type
+ 	- Cannot overload with same sets of arguments with different names
+ 	- can turn into 'optional parameter hell'
+ - Objet creation (non-piecewise, unlike Builder) can be outsourced to
+ 	- A separate function (Factory Method)
+ 	- A separate class (Factory)
+ 	- A hierarchy of classes with Abstract Factory
+
+
+Factory  =>  is a separate component responsible solely for the creation of objects (not piecewise).
+
+Factory Method => A function that helps create objects. Like a constructor
+                  but more descriptive.
+
+Abstract Factory  =>  a factory construct used to construct object in hierarchies.

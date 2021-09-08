@@ -1,0 +1,44 @@
+Motivation
+
+For some components (a classe) it only makes sense to have one in the system.
+e.g. in memory database : a db that you load from an xml file and keep in memory
+						  you would not like people to be instantiating more than one of them
+e.g. object factory
+
+
+Thus a singleton basically guards access to a resource.
+e.g. Constructor call is expensive
+		- We would like to do it only once and provide everyone the same instance.
+
+e.g. Want to prevent anyone creating additional copies.
+
+
+Trivial concerns : lazy instantiation
+				   multithreading
+
+
+Singleton : A component which is instantiated only once.
+
+
+
+Approaches
+
+- Global Variable
+	Is not really a singleton.
+
+- Global Static Variable
+	still have to prevent construction
+
+- Completely static clss
+	lose oop functionality
+
+- NonStatic class with some static members
+	lose some oop functionality
+
+- A more sophisticated approach
+
+
+To enforce singleton property we should block the three ways of object construction :
+  1. using constructor  	   			e.g. SingletonDatabase db;
+  2. using copy-constructor    			e.g. auto db2(db);
+  3. using copy-assignment-operator 	e.g. auto db3 = db;

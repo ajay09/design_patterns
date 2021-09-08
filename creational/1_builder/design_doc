@@ -1,0 +1,4 @@
+Motivation
+
+When you need piecewise object construction and that piecewise construction is compicated.
+Builder pattern provides an API for doing it succinctly piece by piece.
