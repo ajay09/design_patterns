@@ -1,0 +1,41 @@
+Motivation
+
+Sometimes we need to define a new operation not just on a single class but on and
+entire class hierarchy.
+e.g. You have a document model. Now you need make it printable to HTML/Markdown
+	 To do this you'll have to modify every class in the hierarchy to enabling printing.
+
+But we don't want to keep modifying every class in the hierarchy whenever we need to
+add a new operation.
+
+Thus we would like to create external components to handle the rendering of doucuments for e.g.
+But we don't want our code to end up being a huge mess of type checks as you check the type
+in order to render it.
+So there has to be some sort of in-between solution where you can maybe modify the entire
+hierarch once and then use that as a way of actually rendering or traversing or whatever
+it is that you want to do to the entire hierarchy of types.
+
+Visitor
+A pattern where a component (visitor) is allowed to traverse the entire inheritance 
+hierarchy. Implemented by propagating a single visit() funciton through the entire hierarchy.
+( To do this add a pure virtual function to the first base class  visit()
+  This function is then implemented by every member of the hierarchy.
+  visit() takes a visitor parameter, visitor can be anything and it simply 
+  returns the control back to the visitor and in doing that it returns the 
+  specified type of the object being visited.
+  This is double dispatch
+)
+
+Dispatch
+Simply means, How do we know which function to call?
+Single Dispatch : function to call depends on name of the request(function) and type of the receiver.
+(C++ uses it)
+
+Double Dispatch : depends on the name of the request and type of two receivers (type of visitor, type of 
+				  element being visited)
+
+
+
+- Propagate a pure virtual accept(Visitor&) function throught the entire hierarchy
+- Create Visitor, interface, with visit(Foo&), visit(Bar&) for each of the type in the hierarchy
+- Each accept(Visitor &v) simply calls v.visit(*this)
