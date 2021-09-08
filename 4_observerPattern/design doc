@@ -18,3 +18,6 @@ occurs.
 The entity generating the events is called observable.
 
 
+- An observable must provide subscribe/unsubscribe funcitons.
+- and must have an explicit notification code.
+- Special care to prevent issues in multithreaded scenarios.
