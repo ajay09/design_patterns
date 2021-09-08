@@ -1,0 +1,12 @@
+Motivation
+
+e.g. Power Adapter : electrical devices have different power (interface) requirements
+Specially if you travel from one country to another.
+	- Voltage (5V, 220V)
+	- Socket/plug type
+
+We can not modify our gadgets to support every possible interface.
+Thus we usa a device(an adapter) that gives us the interface we require.
+
+
+Adapter => A construct which adapts an existing interface X to conform to the required interface Y.
