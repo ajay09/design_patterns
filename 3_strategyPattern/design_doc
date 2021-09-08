@@ -1,0 +1,22 @@
+Motivation
+
+many algo can be decomposed into higher and lower-level parts
+e.g. Making a tea can be decomposed into
+     - Higher-level : The process of making a hot beverage (boil water, pour into cup)
+     - Lower level  : Teas-specific things (put the teabag into cup)
+
+
+The high-level algo can then be reused for making other types of hot beverages (coffee or hot chocolate)
+It is generic.
+And to make a beverage it(the high levl algo) has to be supported by a beverage-specific strategy.
+
+
+Strategy
+Enables the exact behavior of a system to be selected at either run-time (dynamic) or compile-time (static).
+Also known as policy.
+
+
+Steps :
+- Define an algo at a high level
+- Define an interface for your strategies to follow
+- Provide for either dynamic or static(template) composition of strategy in the high level algo
