@@ -1,0 +1,18 @@
+Motivation
+
+Algo can be decomposed into common parts + specifics
+e.g. Strategy pattern does this through composition
+	 - High-level algo uses an interface
+	 - Concrete implementations implement the interface
+	 - And these are assigned at run time as member of the high-level
+
+
+Template Method does the same thing through inheritance rather than composition.
+It allows us to define the skeleton of the algorithm with concrete implementations
+defined in subclasses.
+(In strategy the concrete are members of the skeleton algo but here they are the subclasses)
+
+
+- Define an algo at a high level
+- Define the constituent parts as pure virtual functions
+- Inherit the algo class, providing necessary virtual function implementations.
