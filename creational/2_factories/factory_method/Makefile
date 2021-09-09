@@ -30,12 +30,20 @@ $(BUILD_DIR)/1_basic_factory_method_2 : $(SRC_DIR)/1_basic_factory_method_2.cpp 
 .PHONY : 1_basic_factory_method_2
 
 
-$(BUILD_DIR)/2_factoryMethod : $(SRC_DIR)/2_factoryMethod.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_app_framework_1 : $(SRC_DIR)/2_app_framework_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_factoryMethod : $(BUILD_DIR)/2_factoryMethod
+2_app_framework_1 : $(BUILD_DIR)/2_app_framework_1
 	$<
 
-.PHONY : 2_factoryMethod
+.PHONY : 2_app_framework_1
+
+
+$(BUILD_DIR)/2_app_framework_2 : $(SRC_DIR)/2_app_framework_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+2_app_framework_2 : $(BUILD_DIR)/2_app_framework_2
+	$<
+
+.PHONY : 2_app_framework_2
 
 
 $(BUILD_DIR)/3_factory : $(SRC_DIR)/3_factory.cpp $(BUILD_DIR)
