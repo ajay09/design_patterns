@@ -89,6 +89,16 @@ $(BUILD_DIR)/9_CRTP : $(SRC_DIR)/9_CRTP.cpp $(BUILD_DIR)
 9_CRTP : $(BUILD_DIR)/9_CRTP
 	$<
 
+$(BUILD_DIR)/10_eg_clock : $(SRC_DIR)/10_eg_clock.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+10_eg_clock : $(BUILD_DIR)/10_eg_clock
+	$<
+
+$(BUILD_DIR)/10_eg_clock_monostate : $(SRC_DIR)/10_eg_clock_monostate.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+10_eg_clock_monostate : $(BUILD_DIR)/10_eg_clock_monostate
+	$<
+
 
 
 clean :
