@@ -29,13 +29,21 @@ $(BUILD_DIR)/1_basic_factory_method_2 : $(SRC_DIR)/1_basic_factory_method_2.cpp 
 	
 .PHONY : 1_basic_factory_method_2
 
-
 $(BUILD_DIR)/2_app_framework_1 : $(SRC_DIR)/2_app_framework_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 2_app_framework_1 : $(BUILD_DIR)/2_app_framework_1
 	$<
 
 .PHONY : 2_app_framework_1
+
+
+$(BUILD_DIR)/3_parameterised_factory_method : $(SRC_DIR)/3_parameterised_factory_method.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+3_parameterised_factory_method : $(BUILD_DIR)/3_parameterised_factory_method
+	$<
+
+.PHONY : 3_parameterised_factory_method
+
 
 
 $(BUILD_DIR)/2_app_framework_2 : $(SRC_DIR)/2_app_framework_2.cpp $(BUILD_DIR)

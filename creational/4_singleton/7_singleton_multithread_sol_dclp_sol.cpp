@@ -2,7 +2,7 @@
 	DCLP
 	Double-Checked Locking Pattern
 
-	A solution to DCLP problem is Meyer's Singleton
+	A solution to DCLP problem is "Meyer's Singleton"
 
 	Benefits :
 	- It's lazy instantialization
@@ -12,6 +12,11 @@
 	   The instance will automatically be destroyed by the runtime after
 	   main returns.
 	- From C++11 onwards static variable construction is thread-safe.
+	- Another problem with the normal static member instance type singleton is that
+	  in a program with multiple files the order of instantiasation can't be ascertained.
+	  Thus it can happen that some file might try to use the singleton object before
+	  it is instantiated. Meyer's singleton solves this issue. Here the Singleton will
+	  be  instantiated at the time of its first use.
 
 */
 
