@@ -3,3 +3,4 @@
 */build/*
 .DS_Store
 creational/4_singleton/build/
+creational/2_factories/factory_method/build/

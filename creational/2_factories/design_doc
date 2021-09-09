@@ -24,3 +24,34 @@ Factory Method => A function that helps create objects. Like a constructor
                   but more descriptive.
 
 Abstract Factory  =>  a factory construct used to construct object in hierarchies.
+
+
+
+Factory Method
+- Using this pattern we can create instance of a class without knowing the name of the class.
+- we have new operator to create an instance of the class, but for that we need to know the
+   name of the class. This makes the calling code tightly coupled with the name.
+  In future if you want to create instance of a new Class then you've to modify the code.
+- Another is, an application may not which instance to create at compile time.
+    or the class whose instance is created will be specified at runtime.
+  we can't use new in these cases and have to use Factory Method.
+
+Factory Method parovides a method or a function that creates the instance of the class.
+So the clients can use this function to create the instance and the same function can
+create instances of different classes. This makes factory method a very flexible alternative
+to new.
+
+Factory Method defines an interface for creating an object but let the subclasses decide which
+class to instantiate. Factory method lets class defer instantiation to subclasses.
+So using Factory method a class can create instance of other classes.
+
+Implementaion: (Factory method can be implemented in different ways)
+- Provide an overridable method that returns instance of a class.
+- This method can be overridden by subclasses to return instance of a different class.
+- It is also called Virtual Constructor.
+- It can return instances of only those classes that are related by some base class and 
+   not of any arbitrary class.
+
+
+
+
