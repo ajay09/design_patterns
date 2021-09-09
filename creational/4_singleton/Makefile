@@ -4,7 +4,7 @@ BOOST_LIB_DIR := /Users/ajay/homebrew/Cellar/boost/1.76.0/lib
 GTEST_LIB_DIR := /Users/ajay/homebrew/lib/
 BOOST_LIB := -L $(BOOST_LIB_DIR) -lboost_system # for linking boost library
 GTEST_LIB := -L $(GTEST_LIB_DIR) -lgtest -lgtest_main
-CFLAGS := -g -O0 -Wall -Werror -std=c++14
+CFLAGS := -g -O0 -Wall -Werror -std=c++17
 SRC_DIR := .
 BUILD_DIR := $(SRC_DIR)/build
 INCLUDE := -I /Users/ajay/homebrew/Cellar/boost/1.76.0/include -I /Users/ajay/homebrew/include/
@@ -97,6 +97,31 @@ $(BUILD_DIR)/10_eg_clock : $(SRC_DIR)/10_eg_clock.cpp $(BUILD_DIR)
 $(BUILD_DIR)/10_eg_clock_monostate : $(SRC_DIR)/10_eg_clock_monostate.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
 10_eg_clock_monostate : $(BUILD_DIR)/10_eg_clock_monostate
+	$<
+
+$(BUILD_DIR)/11_singleton_issues : $(SRC_DIR)/11_singleton_issues.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+11_singleton_issues : $(BUILD_DIR)/11_singleton_issues
+	$<
+
+$(BUILD_DIR)/11_singleton_issues_sol : $(SRC_DIR)/11_singleton_issues_sol.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+11_singleton_issues_sol : $(BUILD_DIR)/11_singleton_issues_sol
+	$<
+
+$(BUILD_DIR)/11_singleton_issues_sol_2 : $(SRC_DIR)/11_singleton_issues_sol_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+11_singleton_issues_sol_2 : $(BUILD_DIR)/11_singleton_issues_sol_2
+	$<
+
+$(BUILD_DIR)/11_singleton_issues_sol_3 : $(SRC_DIR)/11_singleton_issues_sol_3.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+11_singleton_issues_sol_3 : $(BUILD_DIR)/11_singleton_issues_sol_3
+	$<
+
+$(BUILD_DIR)/11_singleton_issues_sol_4 : $(SRC_DIR)/11_singleton_issues_sol_4.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) $(GTEST_LIB) -o $@ $<
+11_singleton_issues_sol_4 : $(BUILD_DIR)/11_singleton_issues_sol_4
 	$<
 
 

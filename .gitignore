@@ -2,3 +2,4 @@
 4_observerPattern/build/*
 */build/*
 .DS_Store
+creational/4_singleton/build/
