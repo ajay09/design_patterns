@@ -1,0 +1,28 @@
+Object Pool
+
+This is also a Factory Pattern and is implemented through Factory Method.
+The difference between them is that Factory Method always creates a new instance while the 
+ObjectPool may return a cached instance.
+
+It is very useful in games. You might want to use it if your application is constructing 
+and destroying lots of objects repetitively and this causes performance problems in the
+application.
+The problem may be because creating may be expensive or repetitive construction and destruction
+may cause heap to fragment.
+
+To avoid these issues an application can store the instances of the class inside a pool.
+When it needs an instance it will request the pool for the object and use it. Once it is done
+it will be returned to the pool and can be reused later.
+
+Intent of the pattern is to improve performance and memory use by
+reusing objects from a fixed pool instead of allocating and freeing
+them repetitively.
+
+- ObjectPool maintans an array or a list of SHaredObject instances
+- SharedObject instances are not created by the clients, instead they use the ObjectPool
+- ObjectPool itself must have only one instance (i.e. a Singleton or Monostate)
+- ObjectPool provides a factory method which can be used by the clients to acquire SharedObject 
+  instance.
+- The ObjectPool is responsible for deleting the pooled instances.
+- To avoid tight coupling with concrete pooled objects ObjectPool can use a factory to instantiate 
+  them
