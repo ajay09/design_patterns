@@ -54,20 +54,20 @@ $(BUILD_DIR)/3_multiple_actors_2 : $(SRC_DIR)/3_multiple_actors_2.cpp $(BUILD_DI
 .PHONY : 3_multiple_actors_2
 
 
-$(BUILD_DIR)/3_factory : $(SRC_DIR)/3_factory.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_generic_pool_1 : $(SRC_DIR)/4_generic_pool_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_factory : $(BUILD_DIR)/3_factory
+4_generic_pool_1 : $(BUILD_DIR)/4_generic_pool_1
 	$<
 
-.PHONY : 3_factory
+.PHONY : 4_generic_pool_1
 
 
-$(BUILD_DIR)/4_innerFactory : $(SRC_DIR)/4_innerFactory.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_generic_pool_2 : $(SRC_DIR)/4_generic_pool_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_innerFactory : $(BUILD_DIR)/4_innerFactory
+4_generic_pool_2 : $(BUILD_DIR)/4_generic_pool_2
 	$<
 
-.PHONY : 4_innerFactory
+.PHONY : 4_generic_pool_2
 
 
 $(BUILD_DIR)/5_abstractFactory : $(SRC_DIR)/5_abstractFactory.cpp $(BUILD_DIR)
