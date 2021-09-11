@@ -37,21 +37,21 @@ $(BUILD_DIR)/2_missile_game_2 : $(SRC_DIR)/2_missile_game_2.cpp $(BUILD_DIR)
 .PHONY : 2_missile_game_2
 
 
-$(BUILD_DIR)/1_multiple_actors : $(SRC_DIR)/1_multiple_actors.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_multiple_actors : $(SRC_DIR)/3_multiple_actors.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_multiple_actors : $(BUILD_DIR)/1_multiple_actors
+3_multiple_actors : $(BUILD_DIR)/3_multiple_actors
 	$<
 
-.PHONY : 1_multiple_actors
+.PHONY : 3_multiple_actors
 
 
 
-$(BUILD_DIR)/2_app_framework_2 : $(SRC_DIR)/2_app_framework_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_multiple_actors_2 : $(SRC_DIR)/3_multiple_actors_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_app_framework_2 : $(BUILD_DIR)/2_app_framework_2
+3_multiple_actors_2 : $(BUILD_DIR)/3_multiple_actors_2
 	$<
 
-.PHONY : 2_app_framework_2
+.PHONY : 3_multiple_actors_2
 
 
 $(BUILD_DIR)/3_factory : $(SRC_DIR)/3_factory.cpp $(BUILD_DIR)
