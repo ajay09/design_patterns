@@ -1,0 +1,24 @@
+Abstract Factory Design Pattern
+This is used when you want to create instances of Classes that belong to some
+specific set or a family. These classes are designed to work together but at a time
+you should be able to use instances of Classes only from a specific set.
+
+With Abastract clients can create instances of different classes without 
+depending on their concrete types.
+
+
+Set 1
+has classes from A1, B1, and C1
+
+
+Set 2
+has classes from A2, B2, and C2
+
+				  |``````````````````````` Factory1---------------Set1
+				  |
+client  ----------|
+				  |
+ 				  |_______________________ Factory2---------------Set2
+
+
+The client should get instances only from one set at a time.
