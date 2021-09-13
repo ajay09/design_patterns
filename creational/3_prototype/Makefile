@@ -36,6 +36,14 @@ $(BUILD_DIR)/3_prototypeFactory : $(SRC_DIR)/3_prototypeFactory.cpp $(BUILD_DIR)
 .PHONY : 3_prototypeFactory
 
 
+$(BUILD_DIR)/4_prototype_basic : $(SRC_DIR)/4_prototype_basic.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+4_prototype_basic : $(BUILD_DIR)/4_prototype_basic
+	$<
+
+.PHONY : 4_prototype_basic
+
+
 
 
 

@@ -1,6 +1,6 @@
 Motivation
 
-Coplicated objects e.g. cars aren't designed from scratch.
+Complicated objects e.g. cars aren't designed from scratch.
 You already got a desgin for a car that is pretty good but then you can subsequently fine tune
 things, you can install new components at certain locations and you get a better product
 as a result.
@@ -12,3 +12,33 @@ We make a copy(clone) of the prototype and customize it.
 	      (requires deep copy)
 
 To make the cloning convenient we do it via a Factory.
+
+
+This pattern returns a copy or a clone of an existing instance which is called the Prototype.
+Why would you want to clone an existing object, why not make a new from scratch?
+One reason could be creating from scratch can be expensive.
+
+
+Specify the kinds of objects to create using a prototypical istance and create
+new objects by copying this prototype.
+
+- The classes whose objects need to be cloned inherit from a common base class.
+- This class provides an overridable method called clone.
+- This method can be overridden by the sub-classes to create a copy of themselves.
+- The client can then call this method to create copies/clones of existing objects.
+- After cloning, the client may change some state of the cloned objects.
+- The clone method behaves like a virtual copy constructor.
+
+
+
+Shallow Copy :
+- A copy is created by copying the state of the object.
+- Default implementations of these methods will copy the references(c++ pointers) in the
+  object instead of copying the actual data.
+
+Deep Copy :
+- The state is copied as usual but references(c++ pointers) are copied differently.
+  Actual references are not copied instead the objects they refer to are copied.
+-  This has to be implemented manually by the programmer.
+
+
