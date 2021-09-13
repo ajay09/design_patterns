@@ -38,37 +38,37 @@ $(BUILD_DIR)/2_database_framework : $(SRC_DIR)/2_database_framework.cpp $(BUILD_
 .PHONY : 2_database_framework
 
 
-$(BUILD_DIR)/3_multiple_actors : $(SRC_DIR)/3_multiple_actors.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_MySql_database_framework_2 : $(SRC_DIR)/2_MySql_database_framework_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_multiple_actors : $(BUILD_DIR)/3_multiple_actors
+2_MySql_database_framework_2 : $(BUILD_DIR)/2_MySql_database_framework_2
 	$<
 
-.PHONY : 3_multiple_actors
+.PHONY : 2_MySql_database_framework_2
 
 
 
-$(BUILD_DIR)/3_multiple_actors_2 : $(SRC_DIR)/3_multiple_actors_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_MySql_database_framework_3 : $(SRC_DIR)/2_MySql_database_framework_3.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_multiple_actors_2 : $(BUILD_DIR)/3_multiple_actors_2
+2_MySql_database_framework_3 : $(BUILD_DIR)/2_MySql_database_framework_3
 	$<
 
-.PHONY : 3_multiple_actors_2
+.PHONY : 2_MySql_database_framework_3
 
 
-$(BUILD_DIR)/4_generic_pool_1 : $(SRC_DIR)/4_generic_pool_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_MySql_database_framework_4 : $(SRC_DIR)/2_MySql_database_framework_4.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_generic_pool_1 : $(BUILD_DIR)/4_generic_pool_1
+2_MySql_database_framework_4 : $(BUILD_DIR)/2_MySql_database_framework_4
 	$<
 
-.PHONY : 4_generic_pool_1
+.PHONY : 2_MySql_database_framework_4
 
 
-$(BUILD_DIR)/4_generic_pool_2 : $(SRC_DIR)/4_generic_pool_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_MySql_database_framework_5 : $(SRC_DIR)/2_MySql_database_framework_5.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_generic_pool_2 : $(BUILD_DIR)/4_generic_pool_2
+2_MySql_database_framework_5 : $(BUILD_DIR)/2_MySql_database_framework_5
 	$<
 
-.PHONY : 4_generic_pool_2
+.PHONY : 2_MySql_database_framework_5
 
 
 $(BUILD_DIR)/5_abstractFactory : $(SRC_DIR)/5_abstractFactory.cpp $(BUILD_DIR)
