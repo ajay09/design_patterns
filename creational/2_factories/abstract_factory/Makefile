@@ -30,12 +30,12 @@ $(BUILD_DIR)/1_basic_abstract_factory_2 : $(SRC_DIR)/1_basic_abstract_factory_2.
 .PHONY : 1_basic_abstract_factory_2
 
 
-$(BUILD_DIR)/2_missile_game_2 : $(SRC_DIR)/2_missile_game_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_database_framework : $(SRC_DIR)/2_database_framework.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_missile_game_2 : $(BUILD_DIR)/2_missile_game_2
+2_database_framework : $(BUILD_DIR)/2_database_framework
 	$<
 
-.PHONY : 2_missile_game_2
+.PHONY : 2_database_framework
 
 
 $(BUILD_DIR)/3_multiple_actors : $(SRC_DIR)/3_multiple_actors.cpp $(BUILD_DIR)
