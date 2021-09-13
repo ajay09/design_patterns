@@ -4,4 +4,5 @@
 .DS_Store
 creational/4_singleton/build/
 creational/2_factories/*/build/
+creational/*/build/
 creational/5_object_pool/build/
