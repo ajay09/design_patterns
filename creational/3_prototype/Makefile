@@ -43,6 +43,20 @@ $(BUILD_DIR)/4_prototype_basic : $(SRC_DIR)/4_prototype_basic.cpp $(BUILD_DIR)
 
 .PHONY : 4_prototype_basic
 
+$(BUILD_DIR)/5_game_1 : $(SRC_DIR)/5_game_1.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+5_game_1 : $(BUILD_DIR)/5_game_1
+	$<
+
+.PHONY : 5_game_1
+
+$(BUILD_DIR)/5_game_2 : $(SRC_DIR)/5_game_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+5_game_2 : $(BUILD_DIR)/5_game_2
+	$<
+
+.PHONY : 5_game_2
+
 
 
 
