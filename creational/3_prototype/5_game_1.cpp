@@ -39,7 +39,7 @@ class Animation {
 	std::string m_AnimationData;
 public:
 	Animation() = default;
-	Animation(std::string &file);
+	Animation(const std::string &file);
 	const std::string& GetAnimationData() const {
 		return m_AnimationData;
 	}
@@ -53,7 +53,7 @@ public:
 /////////////////////////////////////////////
 #include <thread>
 #include <iostream>
-Animation::Animation(std::string &file) {
+Animation::Animation(const std::string &file) {
 	using namespace std;
 	std::cout << "[Animation Loading : " << file << " ";
 	for (int i = 0; i < 10; ++i) {
@@ -84,10 +84,10 @@ class Vehicle {
 	Animation *m_pAnimation;
 	Position m_Position;
 public:
-	Vehicle(int speed, int hitPoints, std::string &name, std::string &animFile, Position &pos)
+	Vehicle(int speed, int hitPoints, const std::string &name, const std::string &animFile, const Position &pos)
 	 : m_Speed{speed}, m_HitPoints{hitPoints}, m_Name{name}, m_Position{pos} 
 	 {
-	 	m_pAnimation = new Animation[animFile];
+	 	m_pAnimation = new Animation(animFile);
 	 }
 
 	virtual ~Vehicle() { delete m_pAnimation; }
@@ -124,7 +124,7 @@ class GreenCar : public Vehicle {
 	// arguments as the constructors from the base class and that just forward those 
 	// arguments to the base class.
 	// The scope will be same as that in the Base class
-	using Vehile::Vehile;   // Inherit Base's constructors.
+	using Vehicle::Vehicle;   // Inherit Base's constructors.
     // Equivalent to:
     // GreenCar(int speed, int hitPoints, std::string &name, std::string &animFile, Position &pos) : 
     //   Vehicle(int speed, int hitPoints, std::string &name, std::string &animFile, Position &pos) {}
@@ -147,7 +147,7 @@ public:
 
 class RedCar : public Vehicle {
 	// Inheriting constructor
-	using Vehile::Vehile;   // Inherit Base's constructors.
+	using Vehicle::Vehicle;   // Inherit Base's constructors.
 	float m_SpeedFactor{1.5}; // the factor by which a red car can increase its speed.
 
 	// Since we have to modify the speed of the red car randomly, so we will use random
@@ -171,7 +171,7 @@ public:
 			std::cout << "\tIncrease the speen temporarily : " << GetSpeed() * m_SpeedFactor << "\n";
 		}
 		else {
-			std::cout << "\tSpeed : " << GetSpeed() << "\n"
+			std::cout << "\tSpeed : " << GetSpeed() << "\n";
 		}	
 		std::cout << "\tHitPoints : " << GetHitPoints() << "\n"
 				  << "\tPosition : " << GetPosition() << "\n";
@@ -183,14 +183,95 @@ public:
 /////////////////////////////////////////////
 //////////////////////  BlueBus.h
 /////////////////////////////////////////////
-
-
 class BlueBus : public Vehicle {
 	using Vehicle::Vehicle;
+	std::default_random_engine m_Engine{500};
+	std::bernoulli_distribution m_Dist{0.5};
 public:
 	// If there is a space and the player honks then the bus moves out of the way.
-	// To implement this we will use the random functionality.
+	// To implement this we will use the random functionality. i.e. move bus out of the way randomly
+	// This is how we implement honking by the player.
 	void Update() override {
-
+				std::cout << "[" << GetName() << "]\n"
+				  << "\tAnimation : " << GetAnimation() << "\n";
+		if (m_Dist(m_Engine)) {
+			std::cout << "\tMoving out of the way\n";
+		}
+		std::cout << "\tSpeed : " << GetSpeed() << "\n";
+		std::cout << "\tHitPoints : " << GetHitPoints() << "\n"
+				  << "\tPosition : " << GetPosition() << "\n";
 	}
 };
+
+
+
+/////////////////////////////////////////////
+//////////////////////  YellowBus.h
+/////////////////////////////////////////////
+class YellowBus : public Vehicle {
+	using Vehicle::Vehicle;
+	std::default_random_engine m_Engine{500};
+	std::bernoulli_distribution m_Dist{0.5};
+public:
+	void Update() override {
+				std::cout << "[" << GetName() << "]\n"
+				  << "\tAnimation : " << GetAnimation() << "\n";
+		if (m_Dist(m_Engine)) {
+			std::cout << "\tMoving out of the way\n";
+		}
+		std::cout << "\tSpeed : " << GetSpeed() << "\n";
+		std::cout << "\tHitPoints : " << GetHitPoints() << "\n"
+				  << "\tPosition : " << GetPosition() << "\n";
+	}
+};
+
+
+
+
+// Game manager has the game loop that will invoke the update methods of all the vehicles.
+/////////////////////////////////////////////
+//////////////////////  GameManager
+/////////////////////////////////////////////
+#include <vector>
+
+class GameManager {
+	std::vector<Vehicle*> m_Vehicles{};
+public:
+	void Run() {
+		m_Vehicles.push_back(new RedCar{30, 10, "RedCar", "red.anim", {0, 0}});
+		m_Vehicles.push_back(new GreenCar{30, 15, "GreenCar", "green.anim", {100, 0}});
+		m_Vehicles.push_back(new YellowBus{25, 20, "YellowBus", "yellow.anim", {100, 200}});
+		m_Vehicles.push_back(new BlueBus{25, 25, "BlueBus", "blue.anim", {200, 200}});
+
+		int count{5};
+		using namespace std;
+		while (count != 0) {
+			std::this_thread::sleep_for(1s);
+			system("cls");
+			for (auto vehicle : m_Vehicles)
+				vehicle->Update();
+			if (count == 2) {
+				m_Vehicles.push_back(new RedCar{30, 15, "RedCar", "red.anim", {50, 50}});
+			}
+			if (count ==3) {
+				m_Vehicles.push_back(new YellowBus{20, 20, "YellowBus", "yellow.anim", {150, 250}});
+			}
+			count--;
+		}
+	}
+
+	~GameManager() {
+		for (auto &v : m_Vehicles)
+			delete v;
+	}
+};
+
+
+
+
+
+int main() {
+	GameManager game;
+	game.Run();
+	return 0;
+}
