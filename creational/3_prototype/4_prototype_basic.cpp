@@ -1,3 +1,10 @@
+
+/*
+	The current implementation has an issue.
+	The clones are created via new but never deleted.
+	So you must delete it manually or use smart-pointers.
+*/
+
 //////////////////////////////////////////
 /////////////////////  Prototype.h
 //////////////////////////////////////////
