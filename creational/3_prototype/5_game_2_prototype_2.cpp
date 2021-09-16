@@ -1,44 +1,28 @@
 /*
-	Use of Prototype Design Pattern : 
-		Now when every time a new instance of the vehicle is created during the gameplay, it
-		will cause a lag because the animation has to be loaded from a file. To avoid the lag,
-		we can try implementing the Prototype Design Pattern.
-
-	So instead of creating a new instance from the scratch, we will create a copy of the existing one.
-	That will be much faster. Objects are already initialized with the common attributes,
-	we just need to modify a few ones.
-
-	
-	In c++ we can use the copy-constructor and the copy-assignment operator to create a copy.
-	With copy-constructor, the constructor argument type should be a concrete type, but in our
-	Vehicle vector we have Vehicle* so we will have to dereference the pointer to get the object.
-	And also apply a type-cast.
-	
-		RedCar rc{*(static_cast<RedCar*>(m_Vehicles[0]))};
-
-	But the other problem is our code is now exposed to the Concrete Class Red Car
-	and this makes the factory redundant. We used the factory to avoid tight coupling
-	between the game manager and the vehicle classes. But with the use of copy-constructor the
-	game manager will be tightly coupled with these classes.
-	So we can't use a copy-constructor.
-
-	So we need the functionality of a copy-constructor without knowing the type of object
-	that is copied. So in a way we need a virtual copy-constructor (which is not provided by c++)
-	Thus we need to use the Prototype Design Pattern to implement a virtual copy-constructor.
-
-	How to implement?
-	In the base-calss we can add the clone method and the child classes can implement that
-	method and create a copy of themselves. This clone method can be invoked polymorphically.
-	Thus gives the same functionality as a virtual copy-constructor.
-	
-
-	When the objects are cloned there won't be any lag because the animations have been
-	already loaded in the other objects. And we are only cloning the animiation data and
-	not loading it from the file. Thus we don't pay the price of creating an expensive object
-	from scratch, instead we clone an existing instance.
-
-
+	In 5_game_2_prototype_1
 	We need to provide a copy constructor in the Vehicle class.
+	Because if we don't provide one then the compiler would generate the default copy-constructor
+	which will perform a Shallow-Copy when we create a clone of a Vehicle type.
+	Since Vehicle stores a pointer to Animation object the default copy-constructor would
+	only copy the pointer instead of creating a copy of the actual Animation object.
+	This we cause crash when we delete the original and the cloned object.
+	Delete on original object would delete the Animation object then a subsequet delete
+	on the cloned object would try deleting the already deleted Animation object which would
+	crash the program.
+	The other copies would be left with dangling pointer and a delete on it would lead
+	to double-delete.
+
+	The Animation pointer represents a resource which is acquired in the constructor
+	and released in the destructor. Thus Vehicle class has "Ownership Semantics".
+	When a class has ownership semantics then we have to implement the Rule-of-5.
+	(copy-ctor, copy-assignment operator, move-ctor, move-assignment)
+
+
+	In the child classes, if we have ownership semantics then we would have to implement
+	the Rule-of-5. But here we are not managing any resource in the child classes.
+	And since we have not implemented any other constructor, the compiler will
+	automatically synthesize the appropriate functions from the Rule-of-5 for these
+	classes.
 
 */
 
@@ -106,14 +90,18 @@ public:
 	 	m_pAnimation = new Animation(animFile);
 	 }
 
-	Vehicle(const Vehicle &other) : m_Speed{other.m_Speed}, m_HitPoints{other.m_HitPoints},
-								    m_Name{other.m_Name}, m_Position{other.m_Position}
+	 // copy constructor
+	Vehicle(const Vehicle &other) : 
+		m_Speed{other.m_Speed}, 
+		m_HitPoints{other.m_HitPoints},
+		m_Name{other.m_Name}, 
+		m_Position{other.m_Position}
 	{
 		m_pAnimation = new Animation{};
 		m_pAnimation->SetAnimationData(other.GetAnimation());
 	}
 
-
+	// copy assignment operator
 	Vehicle& operator=(const Vehicle &other) {
 		if (this != &other) {
 			m_Speed = other.m_Speed;
@@ -122,6 +110,41 @@ public:
 			m_Position = other.m_Position;
 			m_pAnimation = new Animation{};
 			m_pAnimation->SetAnimationData(other.GetAnimation());
+		}
+		return *this;
+	}
+
+	// move constructor
+	Vehicle(Vehicle &&other) noexcept : 
+		m_Speed{other.m_Speed}, 
+		m_HitPoints{other.m_HitPoints},
+		m_Name{std::move(other.m_Name)},
+		m_Position{other.m_Position}
+	{
+		m_pAnimation = other.m_pAnimation;
+		
+		other.m_Speed = 0;
+		other.m_HitPoints = 0;
+		other.m_Name.clear();
+		other.m_Position = {0, 0};
+		other.m_pAnimation = nullptr;
+	}
+
+	// move assignment operator
+	Vehicle& operator=(Vehicle &&other) noexcept {
+		if (this != &other) {
+			m_Speed = other.m_Speed;
+			m_HitPoints = other.m_HitPoints;
+			m_Name = other.m_Name;
+			m_Position = other.m_Position;
+			delete m_pAnimation;
+			m_pAnimation = other.m_pAnimation;
+
+			other.m_Speed = 0;
+			other.m_HitPoints = 0;
+			other.m_Name.clear();
+			other.m_Position = {0, 0};
+			other.m_pAnimation = nullptr;
 		}
 		return *this;
 	}
