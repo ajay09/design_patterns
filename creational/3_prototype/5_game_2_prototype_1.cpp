@@ -1,19 +1,41 @@
 /*
-	Game_1 is working fine. But we have 1 issue:
-	If we add a new vehicle in  this game then to create their instances
+	Use of Prototype Design Pattern : 
+		Now when every time a new instance of the vehicle is created during the gameplay, it
+		will cause a lag because the animation has to be loaded from a file. To avoid the lag,
+		we can try implementing the Prototype Design Pattern.
 
-	This can be done in the Run() method.
-	 TO create instances we would have to modify
-	 m_Vehicles.push_back(new RedCar{30, 15, "RedCar", "red.anim", {50, 50}});
+	So instead of creating a new instance from the scratch, we will create a copy of the existing one.
+	That will be much faster. Objects are already initialized with the common attributes,
+	we just need to modify a few ones.
 
-	 The GameManager is tightly coupled with the Vicles child classes.
-	 So how do we remove this coupling of game management with specific class?
-	 The answer is   "Parameterised Factory Method."
-	We can implement it as a class or a function. And in this case, the Factory Method
-	only needs to create the instance, it doesn't need to store any state. SO we can 
-	easily create a function as a Factory Method.
+	
+	In c++ we can use the copy-constructor and the copy-assignment operator to create a copy.
+	With copy-constructor, the constructor argument type should be a concrete type, but in our
+	Vehicle vector we have Vehicle* so we will have to dereference the pointer to get the object.
+	And also apply a type-cast.
+	
+		RedCar rc{*(static_cast<RedCar*>(m_Vehicles[0]))};
 
-	This will remove the dependency of the GameManager on the Vehicle classes.
+	But the other problem is our code is now exposed to the Concrete Class Red Car
+	and this makes the factory redundant. We used the factory to avoid tight coupling
+	between the game manager and the vehicle classes. But with the use of copy-constructor the
+	game manager will be tightly coupled with these classes.
+	So we can't use a copy-constructor.
+
+	So we need the functionality of a copy-constructor without knowing the type of object
+	that is copied. So in a way we need a virtual copy-constructor (which is not provided by c++)
+	Thus we need to use the Prototype Design Pattern to implement a virtual copy-constructor.
+
+	How to implement?
+	In the base-calss we can add the clone method and the child classes can implement that
+	method and create a copy of themselves. This clone method can be invoked polymorphically.
+	Thus gives the same functionality as a virtual copy-constructor.
+	
+
+	When the objects are cloned there won't be any lag because the animations have been
+	already loaded in the other objects. And we are only cloning the animiation data and
+	not loading it from the file. Thus we don't pay the price of creating an expensive object
+	from scratch, instead we clone an existing instance.
 
 */
 
@@ -81,6 +103,27 @@ public:
 	 	m_pAnimation = new Animation(animFile);
 	 }
 
+	Vehicle(const Vehicle &other) : m_Speed{other.m_Speed}, m_HitPoints{other.m_HitPoints},
+								    m_Name{other.m_Name}, m_Position{other.m_Position}
+	{
+		m_pAnimation = new Animation{};
+		m_pAnimation->SetAnimationData(other.GetAnimation());
+	}
+
+
+	Vehicle& operator=(const Vehicle &other) {
+		if (this != &other) {
+			m_Speed = other.m_Speed;
+			m_HitPoints = other.m_HitPoints;
+			m_Name = other.m_Name;
+			m_Position = other.m_Position;
+			m_pAnimation = new Animation{};
+			m_pAnimation->SetAnimationData(other.GetAnimation());
+		}
+		return *this;
+	}
+
+
 	virtual ~Vehicle() { delete m_pAnimation; }
 
 	int GetSpeed() const { return m_Speed; }
@@ -89,7 +132,7 @@ public:
 	int GetHitPoints() const { return m_HitPoints; }
 	const std::string& GetAnimation() const { return m_pAnimation->GetAnimationData(); }
 	void SetSpeed(int speed) { m_Speed = speed; };
-	void SetPosition(Position &pos) { m_Position = pos; }
+	void SetPosition(const Position &pos) { m_Position = pos; }
 	void SetName(const std::string &name) { m_Name = name; }
 	void SetHitPoints(int points) { m_HitPoints = points; }
 	void SetAnimationData(const std::string &animData) {
@@ -100,6 +143,8 @@ public:
 	// The game objects will have to perform their tasks, eg. taking input or animating objects.
 	// But in our case we will only print the details of the object
 	virtual void Update() = 0;
+
+	virtual Vehicle* Clone() = 0;
 };
 
 
@@ -127,6 +172,11 @@ public:
 				  << "\tSpeed : " << GetSpeed() << "\n"
 				  << "\tHitPoints : " << GetHitPoints() << "\n"
 				  << "\tPosition : " << GetPosition() << "\n";
+	}
+
+	Vehicle* Clone() override {
+		std::cout << "Cloning->" << GetName() << "\n";
+		return new GreenCar{*this};
 	}
 };
 
@@ -167,6 +217,11 @@ public:
 		std::cout << "\tHitPoints : " << GetHitPoints() << "\n"
 				  << "\tPosition : " << GetPosition() << "\n";
 	}
+
+	Vehicle* Clone() override {
+		std::cout << "Cloning->" << GetName() << "\n";
+		return new RedCar{*this};
+	}
 };
 
 
@@ -192,6 +247,11 @@ public:
 		std::cout << "\tHitPoints : " << GetHitPoints() << "\n"
 				  << "\tPosition : " << GetPosition() << "\n";
 	}
+
+	Vehicle* Clone() override {
+		std::cout << "Cloning->" << GetName() << "\n";
+		return new BlueBus{*this};
+	}
 };
 
 
@@ -213,6 +273,11 @@ public:
 		std::cout << "\tSpeed : " << GetSpeed() << "\n";
 		std::cout << "\tHitPoints : " << GetHitPoints() << "\n"
 				  << "\tPosition : " << GetPosition() << "\n";
+	}
+
+	Vehicle* Clone() override {
+		std::cout << "Cloning->" << GetName() << "\n";
+		return new YellowBus{*this};
 	}
 };
 
@@ -244,22 +309,37 @@ public:
 		using namespace std;
 		while (count != 0) {
 			std::this_thread::sleep_for(1s);
-			system("cls");
+			system("clear");
+			
 			for (auto vehicle : m_Vehicles)
 				vehicle->Update();
+
 			if (count == 2) {
-				m_Vehicles.push_back(Create("redcar", 30, 15, "RedCar", "red.anim", {50, 50}));
+				// m_Vehicles.push_back(Create("redcar", 30, 15, "RedCar", "red.anim", {50, 50}));
+				// Using the prototype design pattern to create a copy of an existing instance
+				// instead of creating the object from scratch.
+				auto vehicle = m_Vehicles[0]->Clone();
+				vehicle->SetPosition({50, 50});
+				vehicle->SetHitPoints(15);
+				m_Vehicles.push_back(vehicle);
 			}
 			if (count ==3) {
-				m_Vehicles.push_back(Create("yellowbus", 20, 20, "YellowBus", "yellow.anim", {150, 250}));
+				// m_Vehicles.push_back(Create("yellowbus", 20, 20, "YellowBus", "yellow.anim", {150, 250}));
+
+				auto vehicle = m_Vehicles[2]->Clone();
+				vehicle->SetPosition({150, 250});
+				vehicle->SetSpeed(10);
+				m_Vehicles.push_back(vehicle);
 			}
 			count--;
 		}
 	}
 
 	~GameManager() {
-		for (auto &v : m_Vehicles)
+		for (auto &v : m_Vehicles) {
+			std::cout << "Deleting " << v->GetName() << std::endl;
 			delete v;
+		}
 	}
 };
 
@@ -299,14 +379,7 @@ int main() {
 
 /*
 	
-	Use of Prototype Design Pattern : 
-		Now when every time a new instance of the vehicle is created during the gameplay, it
-		will cause a lag because the animation has to be loaded from a file. To avoid the lag,
-		we can try implementing the Prototype Design Pattern.
-
-	So instead of creating a new instance from the scratch, we will create a copy of the existing one.
-	That will be much faster. Objects are already initialized with the common attributes,
-	we just need to modify a few ones.
+	
 
 
 
