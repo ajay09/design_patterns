@@ -11,12 +11,12 @@ last : $(basename $(notdir $(LAST_MODIFIED)))
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(BUILD_DIR)/1_SRP : $(SRC_DIR)/1_SRP.cpp $(BUILD_DIR)
+$(BUILD_DIR)/1_basic_builder : $(SRC_DIR)/1_basic_builder.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_SRP : $(BUILD_DIR)/1_SRP
+1_basic_builder : $(BUILD_DIR)/1_basic_builder
 	$<
 
-.PHONY : 1_SRP
+.PHONY : 1_basic_builder
 
 
 $(BUILD_DIR)/2_OCP : $(SRC_DIR)/2_OCP.cpp $(BUILD_DIR)

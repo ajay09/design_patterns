@@ -2,3 +2,32 @@ Motivation
 
 When you need piecewise object construction and that piecewise construction is compicated.
 Builder pattern provides an API for doing it succinctly piece by piece.
+
+
+It also creates intances of Classes, but it creates the instances in a different way.
+During development, a class may become complex as you keep on adding more and more
+functionality to it.
+We may need to initialize the class with different structures or different internal
+states. This may require a multitude of consturctors with lot of parameters.
+
+- It can help simplify the construction of a complex object.
+- Instead of having various constructors to create different kinds of objects.
+  Builder encapsulates the construction logic in a separate class.
+- The object is constructed step-by-step.
+  Other patterns normally use factory which constructs objects in one shot.
+
+
+
+. Separate the construction of a complex object from its representation so that the
+   same construction process can create different representations.
+. The construction process of an object is directed by a class called director.
+. The director uses the builder to assemble an object in steps.
+. To create different kidns of objects, the director will use different builders.
+. All the builder classes may inherit from a common base class.
+. The base class will have the appropriate interface to allow creation of
+  different kind of objects in steps or different representations of the object.
+
+
+
+
+
