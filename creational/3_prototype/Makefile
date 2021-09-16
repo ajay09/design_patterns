@@ -79,6 +79,13 @@ $(BUILD_DIR)/5_game_2_prototype_3 : $(SRC_DIR)/5_game_2_prototype_3.cpp $(BUILD_
 .PHONY : 5_game_2_prototype_3
 
 
+$(BUILD_DIR)/6_game_2_prototype_manager_1 : $(SRC_DIR)/6_game_2_prototype_manager_1.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+6_game_2_prototype_manager_1 : $(BUILD_DIR)/6_game_2_prototype_manager_1
+	$<
+
+.PHONY : 6_game_2_prototype_manager_1
+
 
 
 

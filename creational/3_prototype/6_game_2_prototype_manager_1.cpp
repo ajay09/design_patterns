@@ -1,22 +1,17 @@
 /*
-	Instead of creating new classes for specifying new objects.
-		e.g. We can club classes of RedCar and GreenCar into a single Class Car
-		     And then have an attribute in the class Car to vary the color.
-	We can vary the state of the existing objects. This will reduce the number of classes.
+	The Car and Bus Classes act as prototypes.
 
-	Lets make a change to 5_game_2_prototype_2
+	But in the Factory we are not utilizing it fully, as we are creating each object 
+	from scratch. Instead of creating the instance from scratch for all vehicle types,
+	we can clone an existing instance.
 
-
-	Earlier we had a separate Class for each car with a different color, and we
-	also had separate classes for buses with different colors. But instead of having
-	a separate class for each color of a Vehicle type, we can have a single class for
-	each category and customize the color in each instance.
-	With just one Car class we can create different instances and each instance can
-	represent a different kind of Car. We could do this by modifying the color attribute
-	of the instances. Thus to add new objects to the game we don't have to create new
-	classes, we just have to create more instances with different states.
-
-	Thus Car and Bus Classes act as prototypes.
+	So when the game starts we will create just one instance of car and bus. And when the
+	game needs a new instance of either of these two classes, we can clone the existing
+	instance. So we have to store the instances and create their prototypes.
+						||
+					    \/
+	This can be managed in a separate class  =>  the Prototype Manager class.
+	It manages the prototypes that the clients can clone and use.
 */
 
 /////////////////////////////////////////////
@@ -78,6 +73,9 @@ class Vehicle {
 	Position m_Position;
 	std::string m_Color;
 public:
+	Vehicle() {
+		m_pAnimation = new Animation{} ;
+	}
 	Vehicle(int speed, int hitPoints, const std::string &name, const std::string &animFile, const Position &pos, const std::string &color)
 	 : m_Speed{speed}, m_HitPoints{hitPoints}, m_Name{name}, m_Position{pos}, m_Color{color} 
 	 {
@@ -250,27 +248,125 @@ public:
 
 
 
-Vehicle* Create(
-	const std::string &type,
-	int speed, 
-	int hitPoints, 
-	const std::string &name, 
-	const std::string &animFile, 
-	const Position &pos);
+// Prototype Manager class
+/////////////////////////////////////////////
+//////////////////////  VehiclePrototype.h
+//////////////////////  This will store all the prototypes of the Vehicles
+//////////////////////  and create a copy whenever a new instance is required.
+//////////////////////
+////////////////////// This class should have only one instance.
+////////////////////// Anyway if the client creates multiple instances, all the 
+////////////////////// instances will share the same state.
+/////////////////////////////////////////////
+#include <unordered_map>
+#include <vector>
+
+class VehiclePrototype {
+	static std::unordered_map<std::string, Vehicle*> m_Prototypes;
+	VehiclePrototype() = default;
+public:
+	// This function will just return a vector of strings representing the type of prototype
+	static std::vector<std::string> GetKeys();
+	static void RegisterPrototype(const std::string &key, Vehicle *prototype);
+	static Vehicle* DeregisterPrototype(const std::string &key);
+	static Vehicle* GetPrototype(const std::string &key);
+};
+
+
+std::unordered_map<std::string, Vehicle*> VehiclePrototype::m_Prototypes;
+
+std::vector<std::string> VehiclePrototype::GetKeys() {
+	std::vector<std::string> keys;
+	keys.reserve(m_Prototypes.size());
+	for (const auto &entry : m_Prototypes) {
+		keys.push_back(entry.first);
+	}
+	return keys;
+}
+
+void VehiclePrototype::RegisterPrototype(const std::string &key, Vehicle *prototype) {
+	if (m_Prototypes.find(key) == end(m_Prototypes)) {
+		m_Prototypes[key] = prototype;
+	} else {
+		std::cout << "Key already exists\n";
+	}
+}
+
+Vehicle* VehiclePrototype::DeregisterPrototype(const std::string &key) {
+	if (m_Prototypes.find(key) != end(m_Prototypes)) {
+		auto vehicle = m_Prototypes[key];
+		m_Prototypes.erase(key);
+		return vehicle;
+	}
+	return nullptr;
+}
+
+Vehicle* VehiclePrototype::GetPrototype(const std::string &key) {
+	if (m_Prototypes.find(key) != end(m_Prototypes)) {
+		return m_Prototypes[key]->Clone();
+	}
+	std::cout << key << " is not registered with Prototype Manager.\n";
+	return nullptr;
+}
+
+
+
+
 // Game manager has the game loop that will invoke the update methods of all the vehicles.
 /////////////////////////////////////////////
 //////////////////////  GameManager
 /////////////////////////////////////////////
 #include <vector>
 
+Vehicle* GetRedCar() {
+	auto vehicle = VehiclePrototype::GetPrototype("car") ;
+	vehicle->SetColor("Red") ;
+	vehicle->SetHitPoints(10) ;
+	vehicle->SetSpeed(30) ;
+	vehicle->SetPosition({0,0}) ;
+	Animation anim{"red.anim"} ;
+	vehicle->SetAnimationData(anim.GetAnimationData()) ;
+	return vehicle ;
+}
+Vehicle* GetGreenCar() {
+	auto vehicle = VehiclePrototype::GetPrototype("car") ;
+	vehicle->SetColor("Green") ;
+	vehicle->SetHitPoints(5) ;
+	vehicle->SetSpeed(30) ;
+	vehicle->SetPosition({100,0}) ;
+	Animation anim{"green.anim"} ;
+	vehicle->SetAnimationData(anim.GetAnimationData()) ;
+	return vehicle ;
+}
+Vehicle* GetYellowBus() {
+	auto vehicle = VehiclePrototype::GetPrototype("bus") ;
+	vehicle->SetColor("Yellow") ;
+	vehicle->SetHitPoints(20) ;
+	vehicle->SetSpeed(25) ;
+	vehicle->SetPosition({100,200}) ;
+	Animation anim{"ybus.anim"} ;
+	vehicle->SetAnimationData(anim.GetAnimationData()) ;
+	return vehicle ;
+}
+Vehicle* GetBlueBus() {
+	auto vehicle = VehiclePrototype::GetPrototype("bus") ;
+	vehicle->SetColor("Blue") ;
+	vehicle->SetHitPoints(25) ;
+	vehicle->SetSpeed(25) ;
+	vehicle->SetPosition({200,200}) ;
+	Animation anim{"bbus.anim"} ;
+	vehicle->SetAnimationData(anim.GetAnimationData()) ;
+	return vehicle ;
+}
+
 class GameManager {
 	std::vector<Vehicle*> m_Vehicles{};
 public:
 	void Run() {
-		m_Vehicles.push_back(Create("redcar", 30, 10, "Car", "red.anim", {0, 0}));
-		m_Vehicles.push_back(Create("greencar", 30, 15, "Car", "green.anim", {100, 0}));
-		m_Vehicles.push_back(Create("yellowbus", 25, 20, "Bus", "yellow.anim", {100, 200}));
-		m_Vehicles.push_back(Create("bluebus", 25, 25, "Bus", "blue.anim", {200, 200}));
+		m_Vehicles.push_back(GetRedCar());
+		m_Vehicles.push_back(GetGreenCar());
+		m_Vehicles.push_back(GetYellowBus());
+		m_Vehicles.push_back(GetBlueBus());
 
 		int count{5};
 		using namespace std;
@@ -282,17 +378,12 @@ public:
 				vehicle->Update();
 
 			if (count == 2) {
-				// m_Vehicles.push_back(Create("redcar", 30, 15, "RedCar", "red.anim", {50, 50}));
-				// Using the prototype design pattern to create a copy of an existing instance
-				// instead of creating the object from scratch.
 				auto vehicle = m_Vehicles[0]->Clone();
 				vehicle->SetPosition({50, 50});
 				vehicle->SetHitPoints(15);
 				m_Vehicles.push_back(vehicle);
 			}
 			if (count ==3) {
-				// m_Vehicles.push_back(Create("yellowbus", 20, 20, "YellowBus", "yellow.anim", {150, 250}));
-
 				auto vehicle = m_Vehicles[2]->Clone();
 				vehicle->SetPosition({150, 250});
 				vehicle->SetSpeed(10);
@@ -313,32 +404,13 @@ public:
 
 
 
-// Factory Method
-Vehicle* Create(
-	const std::string &type,
-	int speed, 
-	int hitPoints, 
-	const std::string &name, 
-	const std::string &animFile, 
-	const Position &pos) 
-{
-	if (type == "redcar") {
-		return new Car{speed, hitPoints, name, animFile, pos, "Red"};
-	} else if (type == "greencar") {
-		return new Car{speed, hitPoints, name, animFile, pos, "Green"};
-	} else if (type == "yellowbus") {
-		return new Bus{speed, hitPoints, name, animFile, pos, "Yellow"};
-	} else if (type == "bluebus") {
-		return new Bus{speed, hitPoints, name, animFile, pos, "Blue"};
-	}
-
-	return nullptr;
-}
 
 
 
 int main() {
-	GameManager game;
-	game.Run();
+	VehiclePrototype::RegisterPrototype("car", new Car{});
+	VehiclePrototype::RegisterPrototype("bus", new Bus{});
+	GameManager mgr;
+	mgr.Run();
 	return 0;
 }
