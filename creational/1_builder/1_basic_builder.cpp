@@ -1,17 +1,32 @@
 ////////////////////////////////////////////////////////
+///////////////////////  Product.h
+///////////////////////  The class whose construction process is complex.
+///////////////////////  or we may to create different instances of class with different states.
+////////////////////////////////////////////////////////
+#include <iostream>
+class Product {
+public:
+	void DoSomething() {
+		std::cout << "[Product] Doing something\n";
+	}
+};
+
+
+////////////////////////////////////////////////////////
 ///////////////////////  Builder.h
 ////////////////////////////////////////////////////////
 class Builder {
 public:
 	virtual void BuildPart() = 0;
-	virtual ~Builder = default;
+	virtual ~Builder() = default;
 };
+
 
 ////////////////////////////////////////////////////////
 ///////////////////////  ConcreteBuilder.h
 ////////////////////////////////////////////////////////
 #include <iostream>
-class Product;
+
 class ConcreteBuilder : public Builder{
 	Product *m_pProduct;
 public:
@@ -23,23 +38,17 @@ public:
 		std::cout << "\t Part A\n";
 		std::cout << "\t Part B\n";
 		std::cout << "\t Part C\n";
+
+		m_pProduct = new Product();
 	}
 
 	Product* GetResult() {
 		std::cout << "[ConcreteBuilder] Returning result\n";
-		rerturn product;
+		return m_pProduct;
 	}
 };
 
 
-////////////////////////////////////////////////////////
-///////////////////////  Product.h
-///////////////////////  The class whose construction process is complex.
-///////////////////////  or we may to create different instances of class with different states.
-////////////////////////////////////////////////////////
-
-class Product {
-};
 
 
 ////////////////////////////////////////////////////////
@@ -68,7 +77,8 @@ public:
 int main() {
 	ConcreteBuilder builder;
 	Director director(&builder);
-	director->Construct();
+	director.Construct();
 	Product *p = builder.GetResult();
+	p->DoSomething();
 	return 0;
 }

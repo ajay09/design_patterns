@@ -7,3 +7,4 @@ creational/2_factories/*/build/
 creational/*/build/
 creational/5_object_pool/build/
 creational/3_prototype/Prototype/
+creational/1_builder/Builder/

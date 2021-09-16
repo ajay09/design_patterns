@@ -19,12 +19,12 @@ $(BUILD_DIR)/1_basic_builder : $(SRC_DIR)/1_basic_builder.cpp $(BUILD_DIR)
 .PHONY : 1_basic_builder
 
 
-$(BUILD_DIR)/2_OCP : $(SRC_DIR)/2_OCP.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_file_class : $(SRC_DIR)/2_file_class.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_OCP : $(BUILD_DIR)/2_OCP
+2_file_class : $(BUILD_DIR)/2_file_class
 	$<
 
-.PHONY : 2_OCP
+.PHONY : 2_file_class
 
 
 $(BUILD_DIR)/3_LSP : $(SRC_DIR)/3_LSP.cpp $(BUILD_DIR)
