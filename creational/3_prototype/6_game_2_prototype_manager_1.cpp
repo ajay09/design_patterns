@@ -65,21 +65,28 @@ struct Position {
 		return os << "(" << p.x << "," << p.y << ")";
 	}
 };
+#include <memory>
+
+class Vehicle;
+using VehiclePtr = std::shared_ptr<Vehicle>;
+using AnimationPtr = std::shared_ptr<Animation>;
+
+
 class Vehicle {
 	int m_Speed;
 	int m_HitPoints;
 	std::string m_Name;
-	Animation *m_pAnimation;
+	AnimationPtr m_pAnimation;
 	Position m_Position;
 	std::string m_Color;
 public:
 	Vehicle() {
-		m_pAnimation = new Animation{} ;
+		m_pAnimation = std::make_shared<Animation>();
 	}
 	Vehicle(int speed, int hitPoints, const std::string &name, const std::string &animFile, const Position &pos, const std::string &color)
 	 : m_Speed{speed}, m_HitPoints{hitPoints}, m_Name{name}, m_Position{pos}, m_Color{color} 
 	 {
-	 	m_pAnimation = new Animation(animFile);
+	 	m_pAnimation = std::make_shared<Animation>(animFile);
 	 }
 
 	 // copy constructor
@@ -90,7 +97,7 @@ public:
 		m_Position{other.m_Position},
 		m_Color{other.m_Color}
 	{
-		m_pAnimation = new Animation{};
+		m_pAnimation = std::make_shared<Animation>();
 		m_pAnimation->SetAnimationData(other.GetAnimation());
 	}
 
@@ -102,7 +109,7 @@ public:
 			m_Name = other.m_Name;
 			m_Position = other.m_Position;
 			m_Color = other.m_Color;
-			m_pAnimation = new Animation{};
+			m_pAnimation = std::make_shared<Animation>();
 			m_pAnimation->SetAnimationData(other.GetAnimation());
 		}
 		return *this;
@@ -116,7 +123,7 @@ public:
 		m_Position{other.m_Position},
 		m_Color{std::move(other.m_Color)}
 	{
-		m_pAnimation = other.m_pAnimation;
+		m_pAnimation = std::move(other.m_pAnimation);
 		
 		other.m_Speed = 0;
 		other.m_HitPoints = 0;
@@ -133,8 +140,7 @@ public:
 			m_Name = other.m_Name;
 			m_Position = other.m_Position;
 			m_Color = other.m_Color;
-			delete m_pAnimation;
-			m_pAnimation = other.m_pAnimation;
+			m_pAnimation = std::move(other.m_pAnimation);
 
 			other.m_Speed = 0;
 			other.m_HitPoints = 0;
@@ -147,7 +153,7 @@ public:
 	}
 
 
-	virtual ~Vehicle() { delete m_pAnimation; }
+	virtual ~Vehicle() { }
 
 	int GetSpeed() const { return m_Speed; }
 	Position GetPosition() const { return m_Position; }
@@ -171,7 +177,7 @@ public:
 	// But in our case we will only print the details of the object
 	virtual void Update() = 0;
 
-	virtual Vehicle* Clone() = 0;
+	virtual VehiclePtr Clone() = 0;
 };
 
 
@@ -213,9 +219,9 @@ public:
 				  << "\tPosition : " << GetPosition() << "\n";
 	}
 
-	Vehicle* Clone() override {
+	VehiclePtr Clone() override {
 		std::cout << "Cloning->" << GetName() << "\n";
-		return new Car{*this};
+		return std::make_shared<Car>(*this);
 	}
 };
 
@@ -240,9 +246,9 @@ public:
 				  << "\tPosition : " << GetPosition() << "\n";
 	}
 
-	Vehicle* Clone() override {
+	VehiclePtr Clone() override {
 		std::cout << "Cloning->" << GetName() << "\n";
-		return new Bus{*this};
+		return std::make_shared<Bus>(*this);
 	}
 };
 
@@ -262,18 +268,18 @@ public:
 #include <vector>
 
 class VehiclePrototype {
-	static std::unordered_map<std::string, Vehicle*> m_Prototypes;
+	static std::unordered_map<std::string, VehiclePtr> m_Prototypes;
 	VehiclePrototype() = default;
 public:
 	// This function will just return a vector of strings representing the type of prototype
 	static std::vector<std::string> GetKeys();
-	static void RegisterPrototype(const std::string &key, Vehicle *prototype);
-	static Vehicle* DeregisterPrototype(const std::string &key);
-	static Vehicle* GetPrototype(const std::string &key);
+	static void RegisterPrototype(const std::string &key, VehiclePtr prototype);
+	static VehiclePtr DeregisterPrototype(const std::string &key);
+	static VehiclePtr GetPrototype(const std::string &key);
 };
 
 
-std::unordered_map<std::string, Vehicle*> VehiclePrototype::m_Prototypes;
+std::unordered_map<std::string, VehiclePtr> VehiclePrototype::m_Prototypes;
 
 std::vector<std::string> VehiclePrototype::GetKeys() {
 	std::vector<std::string> keys;
@@ -284,7 +290,7 @@ std::vector<std::string> VehiclePrototype::GetKeys() {
 	return keys;
 }
 
-void VehiclePrototype::RegisterPrototype(const std::string &key, Vehicle *prototype) {
+void VehiclePrototype::RegisterPrototype(const std::string &key, VehiclePtr prototype) {
 	if (m_Prototypes.find(key) == end(m_Prototypes)) {
 		m_Prototypes[key] = prototype;
 	} else {
@@ -292,7 +298,7 @@ void VehiclePrototype::RegisterPrototype(const std::string &key, Vehicle *protot
 	}
 }
 
-Vehicle* VehiclePrototype::DeregisterPrototype(const std::string &key) {
+VehiclePtr VehiclePrototype::DeregisterPrototype(const std::string &key) {
 	if (m_Prototypes.find(key) != end(m_Prototypes)) {
 		auto vehicle = m_Prototypes[key];
 		m_Prototypes.erase(key);
@@ -301,7 +307,7 @@ Vehicle* VehiclePrototype::DeregisterPrototype(const std::string &key) {
 	return nullptr;
 }
 
-Vehicle* VehiclePrototype::GetPrototype(const std::string &key) {
+VehiclePtr VehiclePrototype::GetPrototype(const std::string &key) {
 	if (m_Prototypes.find(key) != end(m_Prototypes)) {
 		return m_Prototypes[key]->Clone();
 	}
@@ -318,7 +324,7 @@ Vehicle* VehiclePrototype::GetPrototype(const std::string &key) {
 /////////////////////////////////////////////
 #include <vector>
 
-Vehicle* GetRedCar() {
+VehiclePtr GetRedCar() {
 	auto vehicle = VehiclePrototype::GetPrototype("car") ;
 	vehicle->SetColor("Red") ;
 	vehicle->SetHitPoints(10) ;
@@ -328,7 +334,7 @@ Vehicle* GetRedCar() {
 	vehicle->SetAnimationData(anim.GetAnimationData()) ;
 	return vehicle ;
 }
-Vehicle* GetGreenCar() {
+VehiclePtr GetGreenCar() {
 	auto vehicle = VehiclePrototype::GetPrototype("car") ;
 	vehicle->SetColor("Green") ;
 	vehicle->SetHitPoints(5) ;
@@ -338,7 +344,7 @@ Vehicle* GetGreenCar() {
 	vehicle->SetAnimationData(anim.GetAnimationData()) ;
 	return vehicle ;
 }
-Vehicle* GetYellowBus() {
+VehiclePtr GetYellowBus() {
 	auto vehicle = VehiclePrototype::GetPrototype("bus") ;
 	vehicle->SetColor("Yellow") ;
 	vehicle->SetHitPoints(20) ;
@@ -348,7 +354,7 @@ Vehicle* GetYellowBus() {
 	vehicle->SetAnimationData(anim.GetAnimationData()) ;
 	return vehicle ;
 }
-Vehicle* GetBlueBus() {
+VehiclePtr GetBlueBus() {
 	auto vehicle = VehiclePrototype::GetPrototype("bus") ;
 	vehicle->SetColor("Blue") ;
 	vehicle->SetHitPoints(25) ;
@@ -360,7 +366,7 @@ Vehicle* GetBlueBus() {
 }
 
 class GameManager {
-	std::vector<Vehicle*> m_Vehicles{};
+	std::vector<VehiclePtr> m_Vehicles{};
 public:
 	void Run() {
 		m_Vehicles.push_back(GetRedCar());
@@ -392,13 +398,6 @@ public:
 			count--;
 		}
 	}
-
-	~GameManager() {
-		for (auto &v : m_Vehicles) {
-			std::cout << "Deleting " << v->GetName() << std::endl;
-			delete v;
-		}
-	}
 };
 
 
@@ -408,8 +407,8 @@ public:
 
 
 int main() {
-	VehiclePrototype::RegisterPrototype("car", new Car{});
-	VehiclePrototype::RegisterPrototype("bus", new Bus{});
+	VehiclePrototype::RegisterPrototype("car", std::make_shared<Car>());
+	VehiclePrototype::RegisterPrototype("bus", std::make_shared<Bus>());
 	GameManager mgr;
 	mgr.Run();
 	return 0;
