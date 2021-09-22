@@ -155,11 +155,13 @@ DWORD File::Read(char* pBuffer, DWORD size) {
 }
 
 DWORD File::Write(const char* pBuffer, DWORD size) {
-	DWORD written{} ;
+	DWORD written{0} ;
 
+	// std::cout << size << std::endl;
 	if (!m_hFile.write(pBuffer, size)) {
 		throw std::runtime_error{"Error while writing"} ;
 	}
+	written = size;
 	return written ;
 }
 
@@ -197,7 +199,10 @@ public:
 
 	virtual ~FileBuilder() = default;
 
-	virtual File Build() = 0;
+	// We can't use File here and instead have to use File*
+	// The implicit copy-ctor for File class is deleted becuase
+	// the copy-ctor for one of its member variable is also deleted.
+	virtual File* Build() = 0;
 };
 
 
@@ -243,9 +248,8 @@ public:
 	}
 
 
-	File Build() override {
-		return File{m_pFileName, m_DesiredAccess, 0, nullptr, 
-			CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr};
+	File* Build() override {
+		return new File{m_pFileName, m_DesiredAccess, 0, nullptr, 1, 1, nullptr};
 	}
 
 };
@@ -257,9 +261,17 @@ public:
 class Director {
 	FileBuilder *m_pBuilder;
 public:
-	Director(FileBuilder *builder);
+	Director(FileBuilder *builder) : m_pBuilder{builder} {}
+
 	void Create(const char *pFileName, DWORD desiredAccess) {
-		m_pBuilder->
+		m_pBuilder->SetFileName(pFileName);
+		m_pBuilder->SetDesiredAccess(desiredAccess);
+		m_pBuilder->SetShareMode();
+		m_pBuilder->SetSecurityAttributes();
+		m_pBuilder->SetCreationDisposition();
+		m_pBuilder->SetFlagAttributes();
+		m_pBuilder->SetTemplateFile();
+
 	}
 };
 
@@ -300,15 +312,16 @@ void Read() {
 }
 
 void Write() {
-		try {
+	try {
 		File f{"abc_hello", WRITE, 1, nullptr, 1, 1, nullptr};
 		if (!f.IsOpen()) {
 			std::cout << "Could not open the file\n";
 		}
-		std::cout << "File is open\n";
+		// std::cout << "File is open\n";
 		
-		auto str = "Hello world!";
+		auto str = "Hello world!\n";
 		f.Write(str, strlen(str));
+		(&f)->Write("ABC", 3);
 	}
 	catch(std::exception &e) {
 		std::cout << e.what() << std::endl;
@@ -317,14 +330,21 @@ void Write() {
 
 
 int main() {
+	SimpleFileBuilder builder{};
+	Director director(&builder);
 
-	Write();
-
-	// fstream fs;
-	// fs.open ("test.txt", std::fstream::in | std::fstream::out | std::fstream::app);
-	// fs << "hello world\n";
-	// fs.close();
+	director.Create("abc_hello", WRITE);
+	File *fi = builder.Build();
+	try {
+		auto str = "Hello world!\n";
+		fi->Write(str, strlen(str));
+	}
+	catch(std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
 	
+	// Write();
+
 	return 0;
 }
 
