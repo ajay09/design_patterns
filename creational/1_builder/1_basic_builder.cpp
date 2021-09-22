@@ -30,6 +30,9 @@ public:
 class ConcreteBuilder : public Builder{
 	Product *m_pProduct;
 public:
+	~ConcreteBuilder() {
+		delete m_pProduct;
+	}
 	ConcreteBuilder() {
 		std::cout << "[ConcreteBuilder] Created\n";
 	}
@@ -60,6 +63,8 @@ class Director {
 	Builder *builder;
 public:
 	Director(Builder *builder) : builder{builder} {}
+
+	~Director() {  }
 	
 	void Construct() {
 		std::cout << "[Director] Construction process started\n";
