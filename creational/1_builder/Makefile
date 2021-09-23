@@ -50,12 +50,12 @@ $(BUILD_DIR)/2_file_class_4 : $(SRC_DIR)/2_file_class_4.cpp $(BUILD_DIR)
 .PHONY : 2_file_class_4
 
 
-$(BUILD_DIR)/3_LSP : $(SRC_DIR)/3_LSP.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_fluent_builder : $(SRC_DIR)/3_fluent_builder.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_LSP : $(BUILD_DIR)/3_LSP
+3_fluent_builder : $(BUILD_DIR)/3_fluent_builder
 	$<
 
-.PHONY : 3_LSP
+.PHONY : 3_fluent_builder
 
 
 $(BUILD_DIR)/4_ISP : $(SRC_DIR)/4_ISP.cpp $(BUILD_DIR)
