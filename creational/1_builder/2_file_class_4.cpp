@@ -1,5 +1,7 @@
 /*
 	File class using the Builder Design Pattern
+
+	To work with encrypted files we can simply add a new builder.
 */
 
 // typedef unsigned long DWORD;
@@ -75,6 +77,7 @@ public:
 #define FILE_SHARED_READ 1
 
 
+#define FILE_ATTRIBUTE_ENCRYPTED 64
 #define CREATE_ALWAYS  128
 #define FILE_ATTRIBUTE_NORMAL 256
 
@@ -252,6 +255,54 @@ public:
 };
 
 
+
+/////////////////////////////////////////////////
+//////////////////////////  EncryptedFileBuilder.h
+/////////////////////////////////////////////////
+class EncryptedFileBuilder : public FileBuilder {
+	const char *m_pFileName;
+	DWORD m_DesiredAccess;
+	DWORD m_ShareMode;
+	DWORD m_FlagsAttributes;
+public:
+	void SetFileName(const char *pFile) override {
+		m_pFileName = pFile;
+	}
+
+	void SetDesiredAccess(DWORD access) override {
+		m_DesiredAccess = access;
+	}
+
+	// Since we are using in encrypted mode thus we don't want
+	// anyone else to use the file while it is in use.
+	void SetShareMode()  override {
+		m_ShareMode = 0;
+	}
+
+	void SetSecurityAttributes()  override {
+
+	}
+
+	void SetCreationDisposition()  override {
+
+	}
+
+	void SetFlagAttributes()  override {
+		m_FlagsAttributes = FILE_ATTRIBUTE_ENCRYPTED;
+	}
+
+	void SetTemplateFile()  override {
+
+	}
+
+
+	File* Build() override {
+		return new File{m_pFileName, m_DesiredAccess, 0, nullptr, 1, m_FlagsAttributes, nullptr};
+	}
+};
+
+
+
 /////////////////////////////////////////////////
 //////////////////////////  Director.h
 /////////////////////////////////////////////////
@@ -343,6 +394,21 @@ int main() {
 		std::cout << e.what() << std::endl;
 	}
 	
+
+	EncryptedFileBuilder builder2{};
+	Director director2(&builder2);
+
+	director.Create("abc_hello_encrypt", WRITE);
+	File *fi2 = builder.Build();
+	try {
+		auto str = "Hello world!\n";
+		fi2->Write(str, strlen(str));
+	}
+	catch(std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+
 	// Write();
 
 	return 0;

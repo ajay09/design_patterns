@@ -42,6 +42,14 @@ $(BUILD_DIR)/2_file_class_3 : $(SRC_DIR)/2_file_class_3.cpp $(BUILD_DIR)
 .PHONY : 2_file_class_3
 
 
+$(BUILD_DIR)/2_file_class_4 : $(SRC_DIR)/2_file_class_4.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+2_file_class_4 : $(BUILD_DIR)/2_file_class_4
+	$<
+
+.PHONY : 2_file_class_4
+
+
 $(BUILD_DIR)/3_LSP : $(SRC_DIR)/3_LSP.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 3_LSP : $(BUILD_DIR)/3_LSP
