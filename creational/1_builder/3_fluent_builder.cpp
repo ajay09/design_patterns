@@ -1,6 +1,11 @@
 /*
 	Use Fluent Interface to chani methods and reduce syntactical noise.
+	
+	Method chaining involves each methode to return the instance of the
+	calling object (current object) and then object is used to invoke the
+	next method in the chain.
 
+	The return type for the Builder class method should be "Builder&"
 
 */
 
