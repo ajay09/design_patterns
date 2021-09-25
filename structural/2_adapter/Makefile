@@ -24,12 +24,21 @@ $(BUILD_DIR)/1_adapter : $(SRC_DIR)/1_adapter.cpp $(BUILD_DIR)
 
 .PHONY : 1_adapter
 
+
 $(BUILD_DIR)/2_adapter : $(SRC_DIR)/2_adapter.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) -o $@ $<
 2_adapter : $(BUILD_DIR)/2_adapter
 	$<
 
 .PHONY : 2_adapter
+
+
+$(BUILD_DIR)/3_adapter : $(SRC_DIR)/3_adapter.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+3_adapter : $(BUILD_DIR)/3_adapter
+	$<
+
+.PHONY : 3_adapter
 
 
 clean :

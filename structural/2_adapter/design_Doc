@@ -9,4 +9,75 @@ We can not modify our gadgets to support every possible interface.
 Thus we usa a device(an adapter) that gives us the interface we require.
 
 
-Adapter => A construct which adapts an existing interface X to conform to the required interface Y.
+Adapter => 
+A construct which adapts an existing interface X to conform to the required interface Y.
+
+Convert the interface of a class into another interface that the client expects.
+Adater lets classes work together that couldn't otherwise beecause of incompatible interfaces.
+
+
+There are two ways of implementing the Adapter pattern.
+
+
+1. Object Adapter
+	The client uses the functionality provided throught the target interface.
+	So the client will call the method Request(), but the client wishes to use the method
+	SpecificRequest(), but the client can't invoke it directly.
+	So we will create another class Adapter that will inherit from the class Target
+	and then compose the Adaptee.
+
+	Since it is inheriting from Target class, so the Adapter class will have the interface
+	that the client expects but internally the functionality will be provided by the
+	Adaptee Class.
+	In the object Adapter we will compose the Adaptee and calss its methods through 
+	a reference/pointer indirection.
+
+Client  ---------->| Target    |					
+				   -------------
+				   | Request() |
+				   |	       |
+				   -------------						| Adaptee           |
+				   	     /_\				 |-------->	--------------------
+				   		  |		 			 |			| SpecificRequest() |
+				   		  |					 |			|           	    |
+				   		  |					 |			---------------------
+				   		  |                  |
+				   	___________	  	adaptee  |
+				   | Adapter   | -------------
+				   -------------
+				   | Request() |         adaptee->SpecificRequest()
+				   |	       |
+				   -------------
+
+
+
+2. Class Adapter
+	In class Adapter the Adapter Class will inherit from the Target and the Adaptee class.
+	Adapter inherits from Target so that it can inherit its interface.
+	        inherits from Adaptee so that it can inherit its implementation.
+
+	Adapter inherits from the adaptee and calls the methods directly.
+
+
+
+Client  ---------->| Target    |			| Adaptee           |		
+				   ------------- 			---------------------
+				   | Request() |			| SpecificRequest() |
+				   |	       |			|	                |
+				   -------------			---------------------						
+				   		 /_\                    /_\
+				   		  |				    	 |
+				   	      |			    	     |
+				   		  -----------|-----------
+				   		  		     |			
+				   		  		     |			
+				   		  		     |           
+				   				___________	  	
+				   			   | Adapter   |        
+				   			   -------------
+				   			   | Request() |    Requests()----->SpecificRequest()
+				   			   |	       |
+				   			   -------------
+
+
+
