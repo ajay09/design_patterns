@@ -23,20 +23,20 @@ $(BUILD_DIR)/1_basic_proxy : $(SRC_DIR)/1_basic_proxy.cpp $(BUILD_DIR)
 .PHONY : 1_basic_proxy
 
 
-$(BUILD_DIR)/4_game_input : $(SRC_DIR)/4_game_input.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_virtual_proxy_1 : $(SRC_DIR)/2_virtual_proxy_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_game_input : $(BUILD_DIR)/4_game_input
+2_virtual_proxy_1 : $(BUILD_DIR)/2_virtual_proxy_1
 	$<
 
-.PHONY : 4_game_input
+.PHONY : 2_virtual_proxy_1
 
 
-$(BUILD_DIR)/2_console_project_1 : $(SRC_DIR)/2_console_project_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_virtual_proxy_2 : $(SRC_DIR)/2_virtual_proxy_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_console_project_1 : $(BUILD_DIR)/2_console_project_1
+2_virtual_proxy_2 : $(BUILD_DIR)/2_virtual_proxy_2
 	$<
 
-.PHONY : 2_console_project_1
+.PHONY : 2_virtual_proxy_2
 
 
 $(BUILD_DIR)/2_console_project_2 : $(SRC_DIR)/2_console_project_2.cpp $(BUILD_DIR)
