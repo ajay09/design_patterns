@@ -36,6 +36,7 @@
 //////////////////  Image.h
 ///////////////////////////////////////////////
 #include <string>
+#include <iostream>
 
 class Image {
 	std::string m_FileName;
@@ -46,9 +47,12 @@ protected:
 	}
 public:
 	Image() = default;
-	Image(const std::string &file) : m_FileName{file} {}
+	Image(const std::string &file) : m_FileName{file} {
+		std::cout << "Image file is : " << m_FileName << std::endl;
+	}
 
 	const std::string& GetFileName() const {
+		std::cout << "[Image] GetFileName() : " << m_FileName << "\n";
 		return m_FileName;
 	}
 
@@ -90,6 +94,7 @@ public:
 
 	void Load() {
 		m_Buffer.clear();
+		std::cout << "[Bitmap] " << GetFileName() << std::endl;
 		std::ifstream file{GetFileName()};
 		if (!file) {
 			throw std::runtime_error{"Failed to open file!"};
@@ -124,21 +129,28 @@ class BitmapProxy : public Image {
 	Bitmap *m_pBitmap;
 	bool m_IsLoaded{false};
 public:
-	using Image::Image;
+	BitmapProxy() : BitmapProxy{""} {}
+	BitmapProxy(const std::string &name) {
+		m_pBitmap = new Bitmap{name};
+	}
 
 	~BitmapProxy() {
 		delete m_pBitmap;
 	}
 
 	void Display() {
+		std::cout << "[BitmapProxy] Display() \n";
 		if (!m_IsLoaded) {
-			std::cout << "[Proxy] Loading Bitmap\n";
-			Image::Load();
+			// std::cout << "[BitmapProxy] " << GetFileName() << std::endl;
+			std::cout << "[BitmapProxy] Loading Bitmap\n";
+			m_pBitmap->Load();
 		}
+		m_pBitmap->Display();
 	}
 
 	void Load() {
-		SetFileName("");
+		std::cout << "[BitmapProxy] Load() \n";
+		// SetFileName("");
 	}
 
 	void Load(const std::string &filename) {
@@ -158,9 +170,10 @@ public:
 
 
 int main() {
-	Image *p = new Bitmap{"design_doc"};
+	Image *p = new BitmapProxy{"design_doc"};
 	p->Load();
-	p->Display();
+	// The image will now be actually loaded only when Display() is called.
+	// p->Display();
 	delete p;
 }
 
