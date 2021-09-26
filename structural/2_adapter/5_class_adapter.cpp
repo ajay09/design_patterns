@@ -98,6 +98,9 @@ class Input;
 	When you create an instance of  AccAdapter
 	If you use public inheritance then the public methods of the Accelerometer
 	class will be exposed and can be used by the clients.
+		Try the following and see the exposed methods.
+		AccAdapter a;
+		a.
 
 	If you don't want to expose them then you should use private inheritance.
 */
