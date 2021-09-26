@@ -1,0 +1,139 @@
+Proxy Design Pattern
+
+A proxy is simply an alias. It provides functionality for another object. 
+This is useful in case you cannot modify the original object or do not want to modify it.
+And you want to add some more features to this object and also want to keep its existing 
+functionality intact.
+
+So we create a proxy for this object that rewards the additional functionality. 
+
+
+One important property of the proxy is that its interface is exactly the same as that of
+the real object. The advantage is that the clients will not be able to see the difference 
+between the proxy and the real object.
+
+So you can easily use one or the other in your code.
+
+
+
+Another reason for using the Proxy is to control access to the real object.
+And this might be useful in case of multithreaded environments where you may 
+have to apply locks on an object before accessing it, or you may want to provide 
+some kind of authentication for the object.
+
+
+
+So you see a Proxy can provide a wide array of functionalities.
+However, the functionality you want will depend on your requirements.
+
+
+
+
+The alternate name for Proxy is "Surrogate", and its intent is : 
+Provide a surrogate or placeholder for another object to control access to it.
+
+So the proxy is an allias term object, and through the proxy, we control access 
+to the real object. 
+
+
+
+
+Structure of the pattern.
+
+Client  ---------->| Subject   |					
+				   -------------
+				   | Request() |
+				   |	       |
+				   -------------						
+				   		 /_\								
+				   	      |								| RealSubject       |
+				   	      |----------------------------	 --------------------
+				   		  |		 			 			| SpecificRequest() |
+				   		  |					 |-------->	|           	    |
+				   		  |					 |			---------------------
+				   		  |                  |
+				   	___________	  	         |
+				   | Proxy     | -------------
+				   -------------
+				   | Request() |     realSubject->Request()
+				   |	       |
+				   -------------
+
+
+
+This is the real subject that contains the functionality that the client wants to use, 
+but we don't want that client to access this object directly.
+
+So that's why we create a Proxy class here. The proxy's interface should match 
+the real subject's interface. That is why it may inherit from the same base class 
+as that of the real subject.
+
+The client will then use the features of the real subject through the proxy, 
+so client may never see the real subject directly.
+
+When the client calls the method of the proxy, the proxy will apply some functionality 
+and then invoke the functions in the real subject. The additional functionality that 
+the proxy provides depends on your requirement, we will see with different examples 
+what proxy is capable of.
+
+
+		One important thing is that the proxy should have the same interface 
+		as that of the real object. This is important because the clients should 
+		not be able to distinguish between the real subject and the proxy.
+
+
+		One way to ensure that the proxy has the same interface as that of the real 
+		subject is to inherit the proxy from the same class that the real subject 
+		inherits from. This will allow us to replace an object with the proxy without 
+		making any significant changes in the client.
+
+
+	    Then the Proxy will have to implement all the methods that the real subject has. 
+	
+		In C++, we can avoid implementing all the functions.
+		Instead, we can simply overload the * ,member access, and
+										   -> ,the dereference operator,.
+					without having to implement all the methods of the real subject
+	    These operators will allow access to all the methods of the real subject.
+
+
+
+		Some implementations of the proxy may create instance of the real subject.
+		  
+		  Because it made clear the object on demand. 
+		  This may be required when the object that you're using is too expensive to use. 
+		  So we would like to instantiated only when it is actually required.
+
+
+
+		One proxy can work with multiple subjects through an abstract interface
+		  If we have multiple subjects and we want to use them through a proxy, 
+		  we can create an abstract interface. So this way, the coupling between the 
+		  classes will be reduced. 
+		  But this is possible only when the different subjects inherit from a 
+		  common base class. In that case, the proxy can work with the 
+		  real subjects through their base class.
+
+
+
+As I said earlier, a proxy can provide different kinds of functionalities.
+This leads us to different types of proxies :
+
+	- Virtual Proxy
+		this proxy creates expensive objects on demand
+
+	- Cache proxies
+	 	some proxies will cache expensive calls
+
+	- Remote proxies.
+	   allow access to remote components without having to deal 
+	   with the complexity of implementing the calls or the network.
+	   They simplify client implementation.
+
+	- Protection proxies.
+	   Some proxies do not allow direct access to the real subject.
+
+	- Smart proxy
+	   a Smart proxy simply performs additional actions when the real subject is accessed.
+
+
