@@ -1,0 +1,56 @@
+Facade Design Pattern
+
+
+ 		Facade is simply a layer around a system, but why do you want to create a layer?
+		
+		Possibly because the system contains many components that have complex interfaces.
+		So the clients may find it difficult to use the functionality of the components 
+		through the complex interfaces.
+		
+		Another reason could be that clients do not want to be tightly coupled with the 
+		components of the system.
+		
+		In both the cases, we can create a layer around the system and this layer can 
+		expose the functionality of the components through a simple interface.
+
+						This layer is called the Facade.
+		
+
+	So with the Facade, there are two advantages : 
+
+	- One is that the clients are no longer tightly coupled with the components of the system.
+	- Secondly, the complex interface of the components gets converted into a simple interface.
+
+
+
+
+
+
+"Provide a unified interface to a set of interfaces in a subsystem.
+ Facade defines a higher-level interface that makes the subsystem easier to use.""
+
+
+So Facade simply converts a complex interface of a system into a simple interface.
+
+
+Implementations
+	- A facade can be a function, class or a set of classes.
+	- You can create multiple facades for a system.
+	- Each facade may provide a simplifed interface of a particular functionality.
+	- Different facades can inherit a common base class, that may be abstract.
+	- This can further reduce the coupling between the client and the classes in
+	   the system.
+    - Facade can be implemented as a Singleton.(we don't need multiple instances of the facade)
+
+    - Facades don't encapsulate the classes of the system. So the clients can access
+      the individual components of the system.
+    - However some facades may hide the implementation classes to reduce coupling.
+    
+    - This leads to two types of facades
+    	- transparent -> allows direct access to the underlying classes.
+    	- opaque 	  -> hides the underlying classes.
+
+    - Responsibilities of a facade :
+    	- It may pass the client request to the underlying classes
+    	-        perform additional processing.
+

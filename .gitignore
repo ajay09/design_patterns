@@ -10,3 +10,4 @@ creational/3_prototype/Prototype/
 creational/1_builder/Builder/
 structural/2_Adapter/Adapter.zip
 structural/*/build
+structural/*/*.zip
