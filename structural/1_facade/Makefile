@@ -31,20 +31,20 @@ $(BUILD_DIR)/4_game_input : $(SRC_DIR)/4_game_input.cpp $(BUILD_DIR)
 .PHONY : 4_game_input
 
 
-$(BUILD_DIR)/4_game_input_adapter : $(SRC_DIR)/4_game_input_adapter.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_console_project_1 : $(SRC_DIR)/2_console_project_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_game_input_adapter : $(BUILD_DIR)/4_game_input_adapter
+2_console_project_1 : $(BUILD_DIR)/2_console_project_1
 	$<
 
-.PHONY : 4_game_input_adapter
+.PHONY : 2_console_project_1
 
 
-$(BUILD_DIR)/5_class_adapter : $(SRC_DIR)/5_class_adapter.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_console_project_2 : $(SRC_DIR)/2_console_project_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-5_class_adapter : $(BUILD_DIR)/5_class_adapter
+2_console_project_2 : $(BUILD_DIR)/2_console_project_2
 	$<
 
-.PHONY : 5_class_adapter
+.PHONY : 2_console_project_2
 
 
 
