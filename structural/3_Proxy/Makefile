@@ -47,6 +47,14 @@ $(BUILD_DIR)/3_protection_proxy_1 : $(SRC_DIR)/3_protection_proxy_1.cpp $(BUILD_
 .PHONY : 3_protection_proxy_1
 
 
+$(BUILD_DIR)/3_protection_proxy_2 : $(SRC_DIR)/3_protection_proxy_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+3_protection_proxy_2 : $(BUILD_DIR)/3_protection_proxy_2
+	$<
+
+.PHONY : 3_protection_proxy_2
+
+
 
 
 
