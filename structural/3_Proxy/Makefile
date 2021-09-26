@@ -15,12 +15,12 @@ $(BUILD_DIR):
 
 
 
-$(BUILD_DIR)/1_basic_facade : $(SRC_DIR)/1_basic_facade.cpp $(BUILD_DIR)
+$(BUILD_DIR)/1_basic_proxy : $(SRC_DIR)/1_basic_proxy.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_basic_facade : $(BUILD_DIR)/1_basic_facade
+1_basic_proxy : $(BUILD_DIR)/1_basic_proxy
 	$<
 
-.PHONY : 1_basic_facade
+.PHONY : 1_basic_proxy
 
 
 $(BUILD_DIR)/4_game_input : $(SRC_DIR)/4_game_input.cpp $(BUILD_DIR)
