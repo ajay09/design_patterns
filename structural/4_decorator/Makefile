@@ -15,12 +15,12 @@ $(BUILD_DIR):
 
 
 
-$(BUILD_DIR)/1_basic_proxy : $(SRC_DIR)/1_basic_proxy.cpp $(BUILD_DIR)
+$(BUILD_DIR)/1_basic_decorator_1 : $(SRC_DIR)/1_basic_decorator_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_basic_proxy : $(BUILD_DIR)/1_basic_proxy
+1_basic_decorator_1 : $(BUILD_DIR)/1_basic_decorator_1
 	$<
 
-.PHONY : 1_basic_proxy
+.PHONY : 1_basic_decorator_1
 
 
 $(BUILD_DIR)/2_virtual_proxy_1 : $(SRC_DIR)/2_virtual_proxy_1.cpp $(BUILD_DIR)
