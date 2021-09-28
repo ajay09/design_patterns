@@ -64,6 +64,35 @@ $(BUILD_DIR)/4_remote_proxy_1 : $(SRC_DIR)/4_remote_proxy_1.cpp $(BUILD_DIR)
 
 
 
+$(BUILD_DIR)/4_remote_proxy_2 : $(SRC_DIR)/4_remote_proxy_2.cpp $(BUILD_DIR)
+# 	$(CC) $(CFLAGS) -o $@ $<
+4_remote_proxy_2 : $(BUILD_DIR)/4_remote_proxy_2
+# 	$<
+
+.PHONY : 4_remote_proxy_2
+
+
+
+$(BUILD_DIR)/5_smart_proxy_1 : $(SRC_DIR)/5_smart_proxy_1.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+5_smart_proxy_1 : $(BUILD_DIR)/5_smart_proxy_1
+	$<
+
+.PHONY : 5_smart_proxy_1
+	
+
+
+$(BUILD_DIR)/5_smart_proxy_2 : $(SRC_DIR)/5_smart_proxy_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+5_smart_proxy_2 : $(BUILD_DIR)/5_smart_proxy_2
+	$<
+
+.PHONY : 5_smart_proxy_2
+
+
+
+
+
 
 clean :
 	rm -rf build
