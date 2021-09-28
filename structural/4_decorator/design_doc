@@ -1,0 +1,140 @@
+Decorator Design Pattern
+
+
+	In software development, we often have to add new features to existing code, but to do that,
+	we may have to modify the existing code.
+	And this violates the "Open Close principle", which states that modules should be open 
+	for extension, but close for modification.
+
+
+	If we modify existing code, then it may lead to bugs or worse, it may cause the code to fail.
+
+
+
+	We can add additional behaviors to existing code to inheritance, but it adds behaviors 
+	to a class and because of that it is a static relationship.
+	What if we want to remove the additional behavior at runtime?   We cannot do that.
+
+	Secondly, inheritance may not be always possible.
+	The class may be declared final, and thus not support subclassing.
+
+
+
+	Now there is a structural pattern that allows us to add additional behaviors 
+	at runtime and that is the Decorator pattern.
+
+	It decorates an existing object with a new behavior. It uses "composition" instead of inheritance.
+	A client can then choose to add new behavior and even remove it at runtime.
+	It also allows you to add multiple behaviors to an object.
+
+
+	This follows the Open Closed principle because we do not have to modify existing code.
+	We are also not adding new behaviors to existing class. So this is In line with the single responsibility principle. We don't overload an existing class with too many responsibilities.
+
+
+
+	Decorator is also known as a Wrapper.
+    It also provides the same interface that the object it decorates has. This way, the clients won't see any changes if the original object is replaced with a decorator. This might seem very similar to a proxy, but there are some major differences.
+
+
+
+	First, let's discuss the intent of the pattern.
+
+	- The intent of the Decorative pattern is attach additional responsibilities to
+	  an object dynamically. Decorators provide a flexible alternative to subclassing
+	  for extending functionality.
+
+	The core part of this intent is that you should be able to add more features to an object at 
+	runtime and note that the features are added to an object, not to a class.
+	And since objects are created at runtime, the additional features that are added can be added at 
+	runtime.
+
+	We frequently use inheritance to extend functionality instead of using inheritance, 
+	we can use a Decorator which provides a flexible alternative to inheritance.
+
+
+Structure of the pattern.
+
+						| Component   | <-----------------------------:
+						---------------								  |
+						| Operation() |								  |
+						---------------								  |
+							  /_\									  |
+							   |									  |
+			___________________|_________________					  |
+		   |									 | 					  |
+		   |									 |					  |
+| ConcreteComponent  |					| 	  Decorator      |<>-------
+----------------------					---------------------- 
+|					 |					|					 |       component->Operation() 
+| Operation() 		 |					| Operation() 		 |
+---------------------					----------------------
+											  /_\							
+											   |							
+							___________________|_______________			
+						   |					    		  | 			
+						   |								  |			
+				| ConcreteDecoratorA |			  | ConcreteDecoratorB |
+				----------------------			  ----------------------   Decorator::Operation()
+				| Operation()	     |			  | Operation()  	   |   AddedBehavior()
+				| addedState    	 |			  | AddedBehavior()    |
+				---------------------		      ----------------------
+
+
+The ConcreteComponent that contains all the features that the client wants to use, but we want 
+to add some more features on top of this component, but we do not want to modify this component
+at all because that will violate Open Close principle. 
+		Open Close principle states that a class or module should be open for extension, 
+		but closed for modification.
+
+So we have to use some mechanism through which we can add more features to this component.
+Now, one of the common ways is to use inheritance, but the problem with inheritance is 
+that it is static.
+
+So that is why we use a Decorator.
+
+	ConcreteDecoratorA and ConcreteDecoratorB provide additional functionalities to ConcreteComponent.
+	This is possible because all decorator's inherit from component.
+	That is the same class from which concrete component inherits.
+
+
+Additionally, the decorator class points to the component. This means a Decorator class
+ can point to any subclass of Component. This includes a ConcreteComponent and the Concrete 
+ Decorator's. So this way at runtime, you can add more Decorator's on top of this ConcreteComponent.
+
+
+The decorator will internally use the features of the component while providing additional 
+functionality, the client will interact with this decorator.
+Because the client is interacting with the objects, objects are runtime entities, they can be
+created and destroyed at runtime, so you can easily are more behaviour's by creating more 
+decorator.
+
+
+
+The client uses the component class.
+We can attach more responsibilities by creating a Decorator.
+This Decorator is nothing but a wrapper class and will add more features to the component.
+In the same way, we can add another Decorator on top of the first Decorator and keep on doing it.
+Each Decorator will successively add more features to the component.
+So all of these Decorators are Wrappers now, because these decorators are created and 
+destroyed at runtime, it is possible to remove all the Decorators and have the client use 
+the component directly.
+This makes the Decorator pattern very flexible.
+
+
+
+When you implement a Decorator, it's interface must match exactly the interface of the object that
+it decorates. That is why all the Decorators must inherit from the same base class as that of the component.
+
+
+Any Decorator you create will always contain the abstract decorator and its base class.
+When you implement these classes, you should focus on defining interface and not for storing data,
+because if you are concrete implementation, then not all the subclasses may require it and it will
+make the decorator objects too heavy to use.
+
+
+
+Note that, a decorator changes the skin of an object and alternative is to change the guts, and that
+is done through the "Strategy pattern".
+
+
