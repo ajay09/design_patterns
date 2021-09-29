@@ -23,20 +23,23 @@ $(BUILD_DIR)/1_basic_decorator_1 : $(SRC_DIR)/1_basic_decorator_1.cpp $(BUILD_DI
 .PHONY : 1_basic_decorator_1
 
 
-$(BUILD_DIR)/2_virtual_proxy_1 : $(SRC_DIR)/2_virtual_proxy_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/1_basic_decorator_2 : $(SRC_DIR)/1_basic_decorator_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_virtual_proxy_1 : $(BUILD_DIR)/2_virtual_proxy_1
+1_basic_decorator_2 : $(BUILD_DIR)/1_basic_decorator_2
 	$<
 
-.PHONY : 2_virtual_proxy_1
+.PHONY : 1_basic_decorator_2
 
 
-$(BUILD_DIR)/2_virtual_proxy_2 : $(SRC_DIR)/2_virtual_proxy_2.cpp $(BUILD_DIR)
+
+
+
+$(BUILD_DIR)/2_stream_1 : $(SRC_DIR)/2_stream_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_virtual_proxy_2 : $(BUILD_DIR)/2_virtual_proxy_2
+2_stream_1 : $(BUILD_DIR)/2_stream_1
 	$<
 
-.PHONY : 2_virtual_proxy_2
+.PHONY : 2_stream_1
 
 
 $(BUILD_DIR)/3_protection_proxy_1 : $(SRC_DIR)/3_protection_proxy_1.cpp $(BUILD_DIR)
