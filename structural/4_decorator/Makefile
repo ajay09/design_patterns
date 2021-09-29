@@ -1,6 +1,6 @@
 CC := g++
 # c++14 for make_unique
-CFLAGS := -g -O0 -Wall -Werror -std=c++14
+CFLAGS := -g -O0 -Wall -std=c++14
 SRC_DIR := .
 BUILD_DIR := $(SRC_DIR)/build
 LAST_MODIFIED := $(shell ls -rt *.cpp | tail -n 1)
@@ -31,15 +31,28 @@ $(BUILD_DIR)/1_basic_decorator_2 : $(SRC_DIR)/1_basic_decorator_2.cpp $(BUILD_DI
 .PHONY : 1_basic_decorator_2
 
 
-
-
-
 $(BUILD_DIR)/2_stream_1 : $(SRC_DIR)/2_stream_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
 2_stream_1 : $(BUILD_DIR)/2_stream_1
 	$<
 
 .PHONY : 2_stream_1
+
+
+$(BUILD_DIR)/2_stream_2 : $(SRC_DIR)/2_stream_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+2_stream_2 : $(BUILD_DIR)/2_stream_2
+	$<
+
+.PHONY : 2_stream_2
+
+
+$(BUILD_DIR)/2_stream_3 : $(SRC_DIR)/2_stream_3.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+2_stream_3 : $(BUILD_DIR)/2_stream_3
+	$<
+
+.PHONY : 2_stream_3
 
 
 $(BUILD_DIR)/3_protection_proxy_1 : $(SRC_DIR)/3_protection_proxy_1.cpp $(BUILD_DIR)

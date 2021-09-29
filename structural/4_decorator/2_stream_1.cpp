@@ -90,7 +90,7 @@ public:
 #include <string>
 #include <fstream>
 
-class FileOutputStream {
+class FileOutputStream : public OutputStream{
 	std::ofstream m_Writer;
 public:
 	FileOutputStream() = default;
@@ -100,11 +100,11 @@ public:
 			throw std::runtime_error("Could not open file for writing.");
 		}
 	}
-	void Write(const std::string &text) {
-		m_Writer << text;
+	void Write(const std::string &text) override {
+		m_Writer << text << "\n";
 	}
 
-	void Close() {
+	void Close() override {
 		if (m_Writer.is_open()) {
 			m_Writer.close();
 		}
