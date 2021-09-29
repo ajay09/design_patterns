@@ -59,8 +59,13 @@ public:
 
 int main() {
 	ConcreteComponent component{};
-	ConcreteDecoratorA decA{component};
+	ConcreteDecoratorA decA{&component};
 	decA.Operation();
+	
+	std::cout << std::endl;
+
+	ConcreteDecoratorB decB{&decA};
+	decB.Operation();
 	return 0;
 }
 
