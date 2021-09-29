@@ -2,43 +2,6 @@
 	File stream library, which will provide classes that'll help you perform, 
 	read and write operations on files.
 
-	Currently these two classes do not support buffering.
-	Unbuffered IO will lead to a lot of read and write oeprations on the disk
-	and may have negative impact on the performance of the application.
-
-	To make IO operations efficient we have to provide buffering.
-	
-
-	But where to impement the buffering?
-		Should we implement it FileInputStream and FileOutputStream or separate classes.
-
-	- If we implement buffering in FileInputStream/FileOutputStream then we would violate
-	  the Open-Closed principle.
-	- Even if we modify the existing code and implement buffering in 
-	  FileInputStream/FileOutputStream, then this class will have to focus on multiple things.
-	  This would violate Single Responsibility Principle. As it already has the responsibility
-	  of writing to the file.
-	- Still if we implement buffering in FileInputStream/FileOutputStream, not all clients
-	  may want it. Some clients may want to use unbuffered IO.
-
-
-
-	Thus we won't implement buffering in FileInputStream/FileOutputStream and instead
-	create a new class and implement buffering there.
-
-	Buffering Write => write into a buffer instead of writing to a file.
-					   When the buffer is full, write the buffer to file.
-
-	Buffering Read => FileInputStream class will first read some data from the file and
-					  put in a buffer. It will then read from the buffer until it becomes
-					  empty and then the process is repeated
-
-	
-	Thus we wish to override the functionality of Read/Write in FileInputStream/FileOutputStream
-	classes.
-
-	
-
 	Thus when client requested new features, we added new classes and supported those
 	requests through inheritence rather than modifying the existing classes.
 
@@ -47,6 +10,15 @@
 	Now some clients work witha encrypted data and they want us to implement encrypted streams.
 	i.e while writing data should be first encrypted and then written.
 	    and during read operation the data should be read from the file and decrypted.
+
+
+	The problem with this implementation is that clients can use any of the feature at a time.
+	e.g. They can either write encrypted data or compressed data or buffered output.
+	They can't mix-match the different features.
+
+	There may be clients that use encrypted stream and and also use buffering along with it.
+
+		One solution can be, use multiplte inheritance.
 */
 
 /////////////////////////////////////////////////
@@ -153,7 +125,11 @@ public:
 
 	bool Read(std::string &text) override {
 		std::cout << "[DecompressedInputStream Read]\n";
-		return FileInputStream::Read(text);
+		std::string compressed;
+		auto result = FileInputStream::Read(compressed);
+		text.resize(compressed.size());
+		std::transform(begin(compressed), end(compressed), begin(text), [](char ch) { return ch - 2; });
+		return result;
 	}
 
 	void Close() override {
@@ -256,7 +232,10 @@ public:
 
 	void Write(const std::string &text) override {
 		std::cout << "[CompressedOutputStream Write]\n";
-		FileOutputStream::Write(text);
+		std::string compressed{};
+		compressed.resize(text.size());
+		std::transform(begin(text), end(text), begin(compressed), [](char ch) { return ch + 2; });
+		FileOutputStream::Write(compressed);
 	}
 
 	void Close() override {

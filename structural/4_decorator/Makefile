@@ -55,12 +55,20 @@ $(BUILD_DIR)/2_stream_3 : $(SRC_DIR)/2_stream_3.cpp $(BUILD_DIR)
 .PHONY : 2_stream_3
 
 
-$(BUILD_DIR)/3_protection_proxy_1 : $(SRC_DIR)/3_protection_proxy_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_stream_4 : $(SRC_DIR)/2_stream_4.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_protection_proxy_1 : $(BUILD_DIR)/3_protection_proxy_1
+2_stream_4 : $(BUILD_DIR)/2_stream_4
 	$<
 
-.PHONY : 3_protection_proxy_1
+.PHONY : 2_stream_4
+
+
+$(BUILD_DIR)/2_stream_5 : $(SRC_DIR)/2_stream_5.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+2_stream_5 : $(BUILD_DIR)/2_stream_5
+	$<
+
+.PHONY : 2_stream_5
 
 
 $(BUILD_DIR)/3_protection_proxy_2 : $(SRC_DIR)/3_protection_proxy_2.cpp $(BUILD_DIR)
