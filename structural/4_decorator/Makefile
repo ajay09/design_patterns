@@ -71,12 +71,12 @@ $(BUILD_DIR)/2_stream_5 : $(SRC_DIR)/2_stream_5.cpp $(BUILD_DIR)
 .PHONY : 2_stream_5
 
 
-$(BUILD_DIR)/3_protection_proxy_2 : $(SRC_DIR)/3_protection_proxy_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_static_decorator : $(SRC_DIR)/3_static_decorator.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_protection_proxy_2 : $(BUILD_DIR)/3_protection_proxy_2
+3_static_decorator : $(BUILD_DIR)/3_static_decorator
 	$<
 
-.PHONY : 3_protection_proxy_2
+.PHONY : 3_static_decorator
 
 
 $(BUILD_DIR)/4_remote_proxy_1 : $(SRC_DIR)/4_remote_proxy_1.cpp $(BUILD_DIR)
