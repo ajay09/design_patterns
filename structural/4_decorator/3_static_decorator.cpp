@@ -17,6 +17,7 @@
 	
 	- Using the Mixin we can add behavior at compile time.
 	- In Static Decorator the behavior will not be added to the object but to the class.
+		Thus the decorator is added at compile time.
 	
 */
 
@@ -38,15 +39,18 @@ public:
 		// Stream classes contain the bool type conversion operator
 		// so the straem object can be used directly in boolean expressions.
 		// operator! is overloaded for ifstream
-		if (!m_Reader) {
+		if (!m_Reader.is_open()) {
 			throw std::runtime_error{"Could not open the file for reading."};
 		}
+		std::cout << "[FileInputStream] Opened " << file << " for reading." << "\n";
 	}
 
 	// here text is the output parameter.
 	bool Read(std::string &text) {
 		text.clear();
 		std::getline(m_Reader, text);
+		if (text.empty())
+			std::cout << "[FileInputStream] Nothing to Read.\n";
 		return !text.empty();
 	}
 
@@ -131,7 +135,7 @@ public:
 	DecompressedInputStream(Args&&...args) : 
 			T{ std::forward<Args>(args)... } {}
 
-	bool Read(std::string &text) override {
+	bool Read(std::string &text) {
 		std::cout << "[DecompressedInputStream Read]\n";
 		std::string compressed;
 		auto result = T::Read(compressed);
@@ -140,7 +144,7 @@ public:
 		return result;
 	}
 
-	void Close() override {
+	void Close() {
 		T::Close();
 	}
 };
@@ -162,6 +166,7 @@ public:
 		if (!m_Writer) {
 			throw std::runtime_error("Could not open file for writing.");
 		}
+		std::cout << "[FileOutputStream] Opened " << file << " for writing." << "\n";
 	}
 	void Write(const std::string &text) {
 		m_Writer << text << "\n";
@@ -248,13 +253,18 @@ public:
 
 
 
+void Read() {
+	DecompressedInputStream<DecryptedStream<FileInputStream>> in{"test.txt"};
+	std::string text{};
+	if (!in.Read(text))
+		std::cout << "Failed to read\n";
+	std::cout << text << std::endl;
+}
+
 
 void Write() {
-	EncryptedStream<FileOutputStream> out{"test.txt"};
+	CompressedOutputStream<EncryptedStream<FileOutputStream>> out{"test.txt"};
 	out.Write("Using mixin to implement Static Decorator.");
-
-	DecryptedStream<FileInputStream> in{"test.txt"};
-	in.Read();
 }
 
 
@@ -270,6 +280,11 @@ int main() {
 
 
 	Write();
+	std::cout << std::endl;
+	Read();
 
 	return 0;
 }
+
+
+

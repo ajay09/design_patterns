@@ -12,3 +12,4 @@ structural/2_Adapter/Adapter.zip
 structural/*/build
 structural/*/Proxy
 structural/*/*.zip
+structural/4_decorator/Decorator

@@ -1,6 +1,6 @@
 CC := g++
 # c++14 for make_unique
-CFLAGS := -g -O0 -Wall -std=c++17
+CFLAGS := -g -O0 -Wall -std=c++14
 SRC_DIR := .
 BUILD_DIR := $(SRC_DIR)/build
 LAST_MODIFIED := $(shell ls -rt *.cpp | tail -n 1)
