@@ -79,30 +79,30 @@ $(BUILD_DIR)/3_static_decorator : $(SRC_DIR)/3_static_decorator.cpp $(BUILD_DIR)
 .PHONY : 3_static_decorator
 
 
-$(BUILD_DIR)/4_remote_proxy_1 : $(SRC_DIR)/4_remote_proxy_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_functional_Decorator_1 : $(SRC_DIR)/4_functional_Decorator_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_remote_proxy_1 : $(BUILD_DIR)/4_remote_proxy_1
+4_functional_Decorator_1 : $(BUILD_DIR)/4_functional_Decorator_1
 	$<
 
-.PHONY : 4_remote_proxy_1
+.PHONY : 4_functional_Decorator_1
 
 
 
-$(BUILD_DIR)/4_remote_proxy_2 : $(SRC_DIR)/4_remote_proxy_2.cpp $(BUILD_DIR)
-# 	$(CC) $(CFLAGS) -o $@ $<
-4_remote_proxy_2 : $(BUILD_DIR)/4_remote_proxy_2
-# 	$<
-
-.PHONY : 4_remote_proxy_2
-
-
-
-$(BUILD_DIR)/5_smart_proxy_1 : $(SRC_DIR)/5_smart_proxy_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_functional_Decorator_2 : $(SRC_DIR)/4_functional_Decorator_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-5_smart_proxy_1 : $(BUILD_DIR)/5_smart_proxy_1
+4_functional_Decorator_2 : $(BUILD_DIR)/4_functional_Decorator_2
 	$<
 
-.PHONY : 5_smart_proxy_1
+.PHONY : 4_functional_Decorator_2
+
+
+
+$(BUILD_DIR)/4_functional_Decorator_3 : $(SRC_DIR)/4_functional_Decorator_3.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+4_functional_Decorator_3 : $(BUILD_DIR)/4_functional_Decorator_3
+	$<
+
+.PHONY : 4_functional_Decorator_3
 	
 
 
