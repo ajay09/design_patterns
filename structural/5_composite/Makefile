@@ -23,12 +23,12 @@ $(BUILD_DIR)/1_basic_composite : $(SRC_DIR)/1_basic_composite.cpp $(BUILD_DIR)
 .PHONY : 1_basic_composite
 
 
-$(BUILD_DIR)/1_basic_decorator_2 : $(SRC_DIR)/1_basic_decorator_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_ui_1 : $(SRC_DIR)/2_ui_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_basic_decorator_2 : $(BUILD_DIR)/1_basic_decorator_2
+2_ui_1 : $(BUILD_DIR)/2_ui_1
 	$<
 
-.PHONY : 1_basic_decorator_2
+.PHONY : 2_ui_1
 
 
 $(BUILD_DIR)/2_stream_1 : $(SRC_DIR)/2_stream_1.cpp $(BUILD_DIR)
