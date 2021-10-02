@@ -47,20 +47,13 @@ $(BUILD_DIR)/2_ui_3 : $(SRC_DIR)/2_ui_3.cpp $(BUILD_DIR)
 .PHONY : 2_ui_3
 
 
-$(BUILD_DIR)/2_stream_3 : $(SRC_DIR)/2_stream_3.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_ui_4 : $(SRC_DIR)/2_ui_4.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_stream_3 : $(BUILD_DIR)/2_stream_3
+2_ui_4 : $(BUILD_DIR)/2_ui_4
 	$<
 
-.PHONY : 2_stream_3
+.PHONY : 2_ui_4
 
-
-$(BUILD_DIR)/2_stream_4 : $(SRC_DIR)/2_stream_4.cpp $(BUILD_DIR)
-	$(CC) $(CFLAGS) -o $@ $<
-2_stream_4 : $(BUILD_DIR)/2_stream_4
-	$<
-
-.PHONY : 2_stream_4
 
 
 $(BUILD_DIR)/2_stream_5 : $(SRC_DIR)/2_stream_5.cpp $(BUILD_DIR)
