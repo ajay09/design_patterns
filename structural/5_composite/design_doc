@@ -1,0 +1,205 @@
+Composite Design Pattern
+
+
+Many objects exhibit a high degree of composition.
+Objects are composed inside other objects to form larger structures, and each 
+structure may itself be part of a still larger structure.
+
+If we have to represent this kind of relationship in software, then we will 
+have to use composition of objects. But how to perform operations on individual 
+objects and their compositions.
+
+
+e.g. 
+We may want to present a file system in which each object may represent a file 
+or a folder. If we perform an operation on a folder object, then the same operation 
+must be performed on its composed objects, which can be files and other folders.
+We may want to do this without knowing the type of objects to avoid dependencies.
+
+
+
+We can present such composition of objects through the Composite design pattern, 
+it allows us to recursively compose objects to form larger structures.
+Then the client deals with individual objects and their compositions uniformly, thus 
+promoting loose coupling.
+
+
+e.g.
+
+Consider the Windows 10 task manager, it is made up of different kinds of 
+windows at the top level. We have the main window and that main window contains 
+tabs then menu, caption bar. Then there is an end task button and some other controls
+and the tab Control is itself made up of several tabs and each tab contains a list 
+view or some other controls.
+
+If you look at list view of processes itself is made up of the header, the items and
+then each item is made up of an icon and a text the, list view also contains different 
+columns.
+
+So here you can see these individual controls are composed to form larger structures, 
+e.g. icon and text form an item in the list view and 
+	 then multiple items along with the headers and different columns form the list view.
+
+
+	
+	So each object is recursively composed in another object, and this gives 
+	rise to larger structures.
+
+Window                                     at the top level we have the window.
+   |
+   |______Tabs
+   |        |_____ ListView
+   |				   |
+   |				   |______Header
+   |				   |______Item
+   |				   			|
+   |				   			|_______Icon
+   |				   			|_______Text
+   |
+   |______Menu
+   |______Caption Bar
+   
+
+
+When a window is moved or minimized and restored, then it has to be drawn 
+on the screen and this is done through the paint event. The paint event is 
+sent by the operating system to the top level window, and then it has to paint 
+itself, but it also needs to paint its children. So to paint the children, it 
+will send the paint event recursively to its children and each child will
+handle the paint event and draw itself.
+
+	The operating system does not know about the internal objects of the window.
+	It just sends the paint event to the top level window so it is not dependent on the 
+	internal objects of the window.
+
+
+							       Window
+					_________________|___________________
+					|			     |					|
+				   Tab              Menu              Caption Bar
+				    |				 |
+				ListView       ______|_______
+				    |		   |			|
+				  Items       File 		   Options
+
+
+In the tree like structure of the window we can see the window is made 
+up of other objects and in turn these objects compose other objects. 
+If we want to represent this kind of structure using objects, then we 
+will have to recursively compose one object inside the other.
+
+And if the application has to deal with these objects, then it might 
+get tightly coupled with the compositions of the objects and the 
+individual objects themselves. But the Composite design pattern helps 
+us create a structure where the client does not distinguish between
+an individual object and its compositions.
+
+					So this promotes loose coupling.
+
+
+
+
+
+Other examples of that exhibit recursive composition :
+
+	- a drawing is made up of different shapes and each shape may be made up of 
+	  primitives such as rectangles, circle, triangle, etc.
+
+	  And these, in turn, are made up of lines and the line itself is made up of pixels.
+
+	- And the same thing is applicable to an organization or mathematical expressions, 
+	  shipping containers  or filesystem.
+
+
+
+In all these cases, the Composite pattern helps us create a structure that allows the 
+client to treat all the objects uniformly.
+
+
+
+
+
+
+Intent : 
+	The intent of the Composite pattern is to 
+		"Compose objects into tree structures to represent part-whole hierarchies.
+		Composite lets clients treat individual objects and compositions of objects 
+		uniformally.
+
+	
+		So the essence of this pattern is to allow the clients to treat an 
+		individual object and its compositions uniformly, the clients should 
+		not have to make any distinctions between these two.
+
+Structure of the Composite pattern.
+
+
+			base class component that defines 
+			all the operations for its children.
+
+			  |   Component       |
+			  ---------------------
+			  | Operation()       |<------------------------------;
+			  | Add(Component)    |							      |
+			  | Remove(Component) |							      |
+			  | GetChild(int)     |							      |
+			  ---------------------							      |
+		               /_\									      |
+		                |									      |
+		________________|_________________ 					      |
+	    |					    		 |				children  |
+|     Leaf          |       	|   Composite       |<>-----------~
+---------------------       	---------------------
+| Operation()       |       	| Operation()       |    forall g in children
+|                   |       	| Add(Component)    |        g.Operation();
+|                   |       	| Remove(Component) |
+| 				    |       	| GetChild(int)     |
+---------------------       	---------------------
+This is the 					Since a Composite inherits from component
+Leaf class that 				so we can compose a composite inside 
+implements the 					another composite.
+Operation()						That is why Composite contains methods 
+								through which we can add components inside it.
+								
+
+
+Multiple leaf objects can 
+be composed as a Composite.
+
+
+
+
+
+			- And when any operation is performed on the Composite, 
+			  it will in turn recursively invoke the same operation
+			  on its children.
+
+
+			- Some of the methods that are there in component are not 
+			  implemented by the Leaf class. Some of these methods make 
+			  sense only for the Composite and not for the Leaf.
+
+
+When you implement a Composite pattern, the client should be able to treat the Leaf 
+and Composite uniformly, so they should not make any distinction between these two classes.
+
+			- The Component class should also define as many common operations 
+			  that are possible for all its subclasses. Then the clients will 
+			  not have to differentiate between Leaf and Composite.
+
+			- Composite needs to implement a data structure so that it can hold
+			  different kinds of components and the data structure to use will 
+			  depend on the required efficiency.
+
+			  In some cases, you may not even need any explicit data structure.
+			  It is possible for the Composite to create a link list out of the 
+			  components that are added to it.
+
+
+
+			- In languages that support garbage collection. The composite does not 
+			  have to deal with deletion of its children.
+			  But in languages like C++, which does not have garbage collection, 
+			  Composite will have to take care of deleting its children.
+
+

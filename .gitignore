@@ -13,3 +13,4 @@ structural/*/build
 structural/*/Proxy
 structural/*/*.zip
 structural/4_decorator/Decorator
+structural/5_composite/Composite
