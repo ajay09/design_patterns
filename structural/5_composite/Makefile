@@ -31,20 +31,20 @@ $(BUILD_DIR)/2_ui_1 : $(SRC_DIR)/2_ui_1.cpp $(BUILD_DIR)
 .PHONY : 2_ui_1
 
 
-$(BUILD_DIR)/2_stream_1 : $(SRC_DIR)/2_stream_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_ui_2 : $(SRC_DIR)/2_ui_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_stream_1 : $(BUILD_DIR)/2_stream_1
+2_ui_2 : $(BUILD_DIR)/2_ui_2
 	$<
 
-.PHONY : 2_stream_1
+.PHONY : 2_ui_2
 
 
-$(BUILD_DIR)/2_stream_2 : $(SRC_DIR)/2_stream_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_ui_3 : $(SRC_DIR)/2_ui_3.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_stream_2 : $(BUILD_DIR)/2_stream_2
+2_ui_3 : $(BUILD_DIR)/2_ui_3
 	$<
 
-.PHONY : 2_stream_2
+.PHONY : 2_ui_3
 
 
 $(BUILD_DIR)/2_stream_3 : $(SRC_DIR)/2_stream_3.cpp $(BUILD_DIR)
