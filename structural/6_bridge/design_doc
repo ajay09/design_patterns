@@ -1,0 +1,227 @@
+
+
+Abstraction is one of the elements of object oriented programming. It simply 
+represents an idea of an entity with relevant details. This entity can be an 
+object that exists in real life, and this object may have a lot of characteristics.
+But when we want to represent this object in software, we don't want all the 
+associated details. That is why we will represent the object without those 
+details. So the details that are irrelevant to us will be ignored. This way
+we can focus only on those details which are important to us.
+
+
+Inn object oriented languages, abstraction is implemented by creating a class.
+Let's assume we want to create a class that allows us to draw lines on the screen.
+So maybe this class can be then used by different kinds of drawing programs.
+So we will have to create a line as an abstraction and it will have several 
+behaviors, such as drawing, calculating, length, etc. and all of these behaviors 
+can be implemented in a class.
+
+
+
+So here there are two things.
+
+		One is the class represents an abstraction and the implementation of the 
+		abstraction will be in the same class.
+
+
+
+		e.g.
+			- So there could be a line drawn in the field or there could be a piping
+			  system and the pipes appear as lines, or there could be an assembly line
+			  which is used for packaging products, or there could be a bunch of power
+			  lines that are used to transmit electricity.
+
+			  Now, all of these lines in real life have different kinds of attributes,
+			  for example, in case of assembly line, one attribute could be how many 
+			  products can be packaged within a certain amount of time or for the power lines, One attribute could be how much power can be transmitted.
+
+			  But in our case, we don't want all of these characteristics because we just 
+			  want to draw a line. So that's why when we create an abstraction, we will 
+			  only put those attributes of the lines that are important to us.
+
+
+	This is a representation of a class using UML class program.
+
+		|     Line        |
+		-------------------
+		| start			  |
+		| end			  |
+		| color			  |
+		| thickness		  |
+		-------------------
+		| Erase			  |
+		| Draw			  |
+		-------------------
+
+The important attributes that we need for drawing would be the starting point, 
+the ending point, the color of the line and maybe its thickness and the important 
+behaviors required would be draw and erase. Now, we would like this line glass to 
+work on different kinds of systems without requiring any special drawing hardware.
+
+
+That is why the implementation of drawing in the line will be done through Win32 
+graphics device interface. Win32 GDI is a set of API's that allows you to draw 
+different kinds of primitives, and it uses software rendering. It does not depend 
+on any special kind of hardware.
+
+So one implementation of drawing in C++ could be like this.
+
+				void Draw() {
+					auto hdc = GetDC(m_hWnd);
+					MoveToEx(hdc, start.x, start.y, nullptr);
+					LineTo(hdc, end.x, end.y);
+					ReleaseDC(m_hWnd, hdc);
+				}
+
+
+
+Using GDI will allow us to use this Line class on standard windows machines and they
+will not require any special kind of hardware. Now, we would also like to add support
+for different kinds of shapes, so we would like to provide more classes that can draw 
+other kinds of shapes, such as circle or rectangle. But the implementation of drawing
+these shapes is quite different than how a line is drawn.
+
+	So can we implement the functionality of drawing these shapes in the Line class?
+
+	Obviously, no, we don't want to do that. That's why we will put the implementation 
+	of these shapes in their own classes.
+
+
+	So this can be done through inheritance and polymorphism, all we have to do is
+	create a base class shape and then line, circle, rectangle will inherit from that
+	shape and all of these subclasses will contain implementation for drawing the 
+	corresponding shape.
+
+
+	Now, all of these classes represent a single abstraction. That is the shape, but the 
+	implementations are in different classes, although all the classes belong to the same 
+	hierarchy.
+
+
+								|     Shape       |
+								-------------------
+								| 				  |
+								| 				  |
+								-------------------
+									    /_\
+									     |
+				_________________________|__________________________
+				|						 |							|
+				|						 |							|
+		|     Line        |		  |     Circle    |         |   Rectangle     |
+		-------------------		  -----------------         -------------------
+		| 				  |		  | 			  |         | 				  |
+		| 				  |		  | 			  |         | 				  |
+		-------------------		  -----------------         -------------------
+
+
+			- The shape base  class, this will contain the common behaviors and 
+			  the line, circle and rectangle can inherit from this shape.
+			 
+			- The shape hierarchy represents an abstraction and line, circle,
+			  and Rectangle represents different the different implementations
+			  of that abstraction.
+			  
+			  That is why the implementation of different kinds of shapes
+			  will be in their own classes.
+
+
+
+Note that the implementation of drawing is done through Win32 GDI API. We will 
+implement the same example later, but for now, imagine we want to utilize the 
+hardware capabilities of a system, so we would like to render different kinds 
+of shapes using hardware. And obviously that will be more efficient than software 
+rendering. 
+
+		So where will we implement the hardware rendering of these shapes?
+		Should we implement in the same classes or in different classes?
+
+		Obviously, we won't modify existing classes.
+		We will have to create new classes.	So maybe for rendering a line, 
+		we may create a class called as HardwareLine or for circle, we will
+		create HardwareCircle.
+		
+		And these classes that we have right now, line, circle and rectangle,
+		by default they use software rendering.
+
+
+	So you see in this case now we have to add new abstractions.
+	That is HardwareLine is a new abstraction and it will also have a new implementation.
+	So this means with a new requirement, not only is our implementation changing, but
+	the abstraction is also changing.
+
+	So for hardware rendering, we will have to create more classes, hardware line, 
+	hardware circle and hardware rectangle.
+
+
+		Now, with this, lot of classes will be created to avoid this explosion of classes.
+		Thus since both abstractiona and implementtion can vary, so to avoid creating
+		too many classes we can use the "Bridge Design Pattern".
+
+
+
+Bridge Design Pattern
+	It suggests a design where the abstrction and its implementation can vary
+	independently. It is possible because these are implemented in separate
+	hierarchies.
+
+	The connection between the abstraction and implementation hierarchy is called  Bridge.
+
+	Its also called  "handle-body"
+	Handle represents the abstraction and the body implementation.
+
+
+	Intent : Intent of this pattern is to decouple the abstraction from its implementation
+	         so that the two can vary independently.
+
+
+	         So if both your abstraction and implementation is going to change, then 
+	         instead of putting them in the same hierarchy, you separate them in
+	         different hierarchies so that both of them can vary independently.
+
+
+Client								impl
+  ----->|  Abstraction  |<>-------------------------->|   Implementor   |
+  		-----------------   						  -------------------
+  		| Operation()   |	impl->OperationImpl()     | OperationImpl() |
+  		-----------------						  	  -------------------
+  	    	  /_\ 											  /_\          
+  	    	   | 											   |
+  	    	   | 											   |
+  	    	   | 											   |
+  	    	   | 											   |
+  	    	   | 											   |
+  	    	   | 											   |
+     -----------------------			    |----------------------------|
+     | Refined Abstraction |			    |							 |
+     -----------------------			    |							 |
+     										|							 |
+  			  					-------------------------     ------------------------- 
+  			  					| Concrete ImplementorA |     | Concrete ImplementorA | 
+  			  					-------------------------     ------------------------- 
+
+
+The connection that you see here indicates that the abstraction will contain
+a reference of Implementor.
+		So that's why this connection is the Bridge.
+
+
+
+	- To implement this pattern, we will have to create two hierarchies, 
+	  one for the abstraction and other for the implementation, and both 
+	  the hierarchies can be extended independently.
+
+	- Note that you can also have a one to one connection between the 
+	  abstraction and its implementation if there is only one abstraction 
+	  and one implementation.
+	  This is also called the  "handle-body idiom"
+
+
+
+
+
+
+
+
+
+
