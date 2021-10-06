@@ -60,6 +60,8 @@ $(BUILD_DIR)/2_shapes_3: $(SRC_DIR)/2_shapes_3.cpp $(BUILD_DIR)
 .PHONY : 2_shapes_3
 
 
+
+
 $(BUILD_DIR)/2_shapes_4: $(SRC_DIR)/2_shapes_4.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) $(BOOST_INCLUDE) $(BOOST_LIB) -o $@ $<
 2_shapes_4: $(BUILD_DIR)/2_shapes_4
@@ -69,6 +71,36 @@ $(BUILD_DIR)/2_shapes_4: $(SRC_DIR)/2_shapes_4.cpp $(BUILD_DIR)
 
 
 
+$(BUILD_DIR)/3_handle_body_1: $(SRC_DIR)/3_handle_body_1.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -D TRACE $(BOOST_INCLUDE) $(BOOST_LIB) -o $@ $<
+3_handle_body_1: $(BUILD_DIR)/3_handle_body_1
+	$<
+
+.PHONY : 3_handle_body_1
+
+
+$(BUILD_DIR)/3_handle_body_2: $(SRC_DIR)/3_handle_body_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -D TRACE $(BOOST_INCLUDE) $(BOOST_LIB) -o $@ $<
+3_handle_body_2: $(BUILD_DIR)/3_handle_body_2
+	$<
+
+.PHONY : 3_handle_body_2
+
+
+$(BUILD_DIR)/4_PIMPL_1: $(SRC_DIR)/4_PIMPL_1.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -D TRACE $(BOOST_INCLUDE) $(BOOST_LIB) -o $@ $<
+4_PIMPL_1: $(BUILD_DIR)/4_PIMPL_1
+	$<
+
+.PHONY : 4_PIMPL_1
+
+
+$(BUILD_DIR)/4_PIMPL_2: $(SRC_DIR)/4_PIMPL_2.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -D TRACE $(BOOST_INCLUDE) $(BOOST_LIB) -o $@ $<
+4_PIMPL_2: $(BUILD_DIR)/4_PIMPL_2
+	$<
+
+.PHONY : 4_PIMPL_2
 
 
 
