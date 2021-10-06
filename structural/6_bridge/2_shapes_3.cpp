@@ -319,6 +319,8 @@ int main() {
 
 
 
+		   Abstraction Hierarchy				  Implementation Hierarchy
+
    			|     Shape       |<>-------------------|    Renderer     |			
 			-------------------						-------------------			
 			| 				  |						| 				  |			

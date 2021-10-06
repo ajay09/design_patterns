@@ -60,6 +60,14 @@ $(BUILD_DIR)/2_shapes_3: $(SRC_DIR)/2_shapes_3.cpp $(BUILD_DIR)
 .PHONY : 2_shapes_3
 
 
+$(BUILD_DIR)/2_shapes_4: $(SRC_DIR)/2_shapes_4.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(BOOST_INCLUDE) $(BOOST_LIB) -o $@ $<
+2_shapes_4: $(BUILD_DIR)/2_shapes_4
+	$<
+
+.PHONY : 2_shapes_4
+
+
 
 
 
