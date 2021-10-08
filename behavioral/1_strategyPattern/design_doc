@@ -1,0 +1,43 @@
+Motivation
+
+many algo can be decomposed into higher and lower-level parts
+e.g. Making a tea can be decomposed into
+     - Higher-level : The process of making a hot beverage (boil water, pour into cup)
+     - Lower level  : Teas-specific things (put the teabag into cup)
+
+
+The high-level algo can then be reused for making other types of hot beverages (coffee or hot chocolate)
+It is generic.
+And to make a beverage it(the high levl algo) has to be supported by a beverage-specific strategy.
+
+
+Strategy
+Enables the exact behavior of a system to be selected at either run-time (dynamic) or compile-time (static).
+Also known as policy.
+
+
+Steps :
+- Define an algo at a high level
+- Define an interface for your strategies to follow
+- Provide for either dynamic or static(template) composition of strategy in the high level algo
+
+
+Often we have to provide implementation of a behavior in a function.
+Most common way of implementing this is through conditional statements.
+Each conditional implements an algo that provides a variation of the behavior.
+However with the increase in the degree of variations we have to provide more
+such conditional statements. This increases the complexity of the code.
+
+Further to add new algorithms you've to add new conditional statements
+thus vioalates the Open-Closed principle.
+
+Strategy pattern offers and alternative. It uses the principle, "Separate that varies and encapsulate it."
+The conditional statements are taken out of the class. Each conditional statement can then be thought as 
+an algorithm and all such algo are encapsulated inside their own classes.
+Since all these classes have the same behavior but different implementaiton they can be inherited from
+a common base class. All these classes are called "Strategies" or "Policies".
+
+Thus the context will now use any of the algo through the base strategy thus eleiminating all conditional
+statements. This makes the code flexible and extensible. Because we 
+
+
