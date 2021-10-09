@@ -6,7 +6,7 @@ BUILD_DIR := $(SRC_DIR)/build
 
 
 last : $(basename $(notdir $(LAST_MODIFIED)))
-	echo $<
+# 	echo $<
 
 .PHONY : last
 
@@ -26,4 +26,12 @@ $(BUILD_DIR)/strategy_static : $(SRC_DIR)/strategy_static.cpp $(BUILD_DIR)
 strategy_static : $(BUILD_DIR)/strategy_static
 	$<
 
-.PHONY : strategy
+.PHONY : strategy_static
+
+
+$(BUILD_DIR)/1_basic_strategy : $(SRC_DIR)/1_basic_strategy.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+1_basic_strategy : $(BUILD_DIR)/1_basic_strategy
+	$<
+
+.PHONY : 1_basic_strategy

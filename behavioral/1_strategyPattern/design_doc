@@ -22,8 +22,13 @@ Steps :
 - Provide for either dynamic or static(template) composition of strategy in the high level algo
 
 
-Often we have to provide implementation of a behavior in a function.
-Most common way of implementing this is through conditional statements.
+
+
+
+
+
+Often we have to provide implementation of a behavior in a function or a 
+class. Most common way of implementing this is through conditional statements.
 Each conditional implements an algo that provides a variation of the behavior.
 However with the increase in the degree of variations we have to provide more
 such conditional statements. This increases the complexity of the code.
@@ -31,13 +36,89 @@ such conditional statements. This increases the complexity of the code.
 Further to add new algorithms you've to add new conditional statements
 thus vioalates the Open-Closed principle.
 
-Strategy pattern offers and alternative. It uses the principle, "Separate that varies and encapsulate it."
-The conditional statements are taken out of the class. Each conditional statement can then be thought as 
-an algorithm and all such algo are encapsulated inside their own classes.
-Since all these classes have the same behavior but different implementaiton they can be inherited from
-a common base class. All these classes are called "Strategies" or "Policies".
+Strategy pattern offers an alternative. It uses the principle, "Separate that varies and encapsulate it."
+     The conditional statements are taken out of the class, which is called the context. 
+     Each conditional statement can then be thought as 
+     an algorithm and all such algo are encapsulated inside their own classes.
+     Since all these classes have the same behavior but different implementaiton they can be inherited from
+     a common base class. All these classes are called "Strategies" or "Policies".
 
-Thus the context will now use any of the algo through the base strategy thus eleiminating all conditional
-statements. This makes the code flexible and extensible. Because we 
+     Thus the context will now use any of the algo through the base strategy thus eleiminating all conditional
+     statements. This makes the code flexible and extensible. Because we can easily add a new strategy without
+     modifying the existing code.
+
+
+
+
+
+Intent : 
+     Define a family of algoritms, encapsulate each one and make them interchangeable.
+     Strategy lets the algorigthm vary independently from clients that use it.
+
+     i.e.  Instead of using algorithms directly in the code, you encapsualte each in its own class.
+           These classes are inherited from a common base class. Thus the code can use any of the 
+           algorithm through their base class.
+
+           The code is loosly coupled with the algorithms that uses it. And it will be possible to 
+           modify the algorithm without modifying the calling code.
+
+
+
+
+
+This is the class that uses the                      Strategy provides a common interface to all the
+different algorithms.                                  algorithms.
+     
+     |       Context      |<>---------------------->|       Strategy       |
+     ----------------------                         ------------------------
+     | ContextInterface() |                         | AlgorithmInterface() |
+     ----------------------                         ------------------------
+                                                              /_\
+                                                               |
+                                                               |
+                              _________________________________|________________________________
+                              |                             |                                  |
+                              |                             |                                  |
+              |   ConcreteStrategyA  |            |   ConcreteStrategyB  |           |   ConcreteStrategyC  |
+              ------------------------            ------------------------           ------------------------
+              | AlgorithmInterface() |            | AlgorithmInterface() |           | AlgorithmInterface() |
+
+
+
+          - ConcreteStrategyA, ConcreteStrategyB, ConcreteStrategyC are different variants of the same algo.
+            And all of them inherit from the same base class Strategy.
+
+          - Strategy provides a common interface to all the algorithms, thus the Context class does not depend
+            an a particular concrete implementation.
+
+          - The strategy can also be specified at runtime. (called dynamic strategies.)
+
+          - This promotes loose coupling between the Context and a strategy.
+
+          - Strategies usually require data from the Context class to operate upon.
+              - One way to provide this data it to "push" the data when the Context uses a strategy.
+                 Although not all strategies may use all the data.
+
+              - The other ways is, the Context only calls a strategy and the strategy can pull the data
+                it requires from the Context.
+                This would be possible if the Context passes itself as an argument when calling a concrete
+                strategy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

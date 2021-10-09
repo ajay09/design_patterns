@@ -16,3 +16,5 @@ structural/4_decorator/Decorator
 structural/5_composite/Composite
 structural/6_bridge/simple2d
 structural/6_bridge/Bridge
+*/*/*.zip
+*/*/build
