@@ -76,12 +76,12 @@ different algorithms.                                  algorithms.
                                                               /_\
                                                                |
                                                                |
-                              _________________________________|________________________________
-                              |                             |                                  |
-                              |                             |                                  |
-              |   ConcreteStrategyA  |            |   ConcreteStrategyB  |           |   ConcreteStrategyC  |
-              ------------------------            ------------------------           ------------------------
-              | AlgorithmInterface() |            | AlgorithmInterface() |           | AlgorithmInterface() |
+                    ___________________________________________|______________________
+                    |                             |                                  |
+                    |                             |                                  |
+          |   ConcreteStrategyA  |       |   ConcreteStrategyB  |           |   ConcreteStrategyC  |
+          ------------------------       ------------------------           ------------------------
+          | AlgorithmInterface() |       | AlgorithmInterface() |           | AlgorithmInterface() |
 
 
 

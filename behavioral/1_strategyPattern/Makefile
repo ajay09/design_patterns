@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -g -O0 -Wall -Werror -std=c++14
+CFLAGS := -g -O0 -std=c++14 #-Wall -Werror 
 LAST_MODIFIED := $(shell ls -rt *.cpp | tail -n 1)
 SRC_DIR := .
 BUILD_DIR := $(SRC_DIR)/build
@@ -35,3 +35,42 @@ $(BUILD_DIR)/1_basic_strategy : $(SRC_DIR)/1_basic_strategy.cpp $(BUILD_DIR)
 	$<
 
 .PHONY : 1_basic_strategy
+
+
+
+$(BUILD_DIR)/2_spreadsheet_app_1 : $(SRC_DIR)/2_spreadsheet_app_1.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+2_spreadsheet_app_1 : $(BUILD_DIR)/2_spreadsheet_app_1
+	$<
+
+.PHONY : 2_spreadsheet_app_1
+
+
+$(BUILD_DIR)/2_spreadsheet_app_2 : $(SRC_DIR)/2_spreadsheet_app_2.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+2_spreadsheet_app_2 : $(BUILD_DIR)/2_spreadsheet_app_2
+	$<
+
+.PHONY : 2_spreadsheet_app_2
+
+
+$(BUILD_DIR)/2_spreadsheet_app_3 : $(SRC_DIR)/2_spreadsheet_app_3.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+2_spreadsheet_app_3 : $(BUILD_DIR)/2_spreadsheet_app_3
+	$<
+
+.PHONY : 2_spreadsheet_app_3
+
+
+$(BUILD_DIR)/2_spreadsheet_app_4 : $(SRC_DIR)/2_spreadsheet_app_4.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+2_spreadsheet_app_4 : $(BUILD_DIR)/2_spreadsheet_app_4
+	$<
+
+.PHONY : 2_spreadsheet_app_4
+
+
+
+
+
+
