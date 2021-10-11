@@ -253,6 +253,17 @@ int main() {
 
 
 
+	
+		- DataModel can now work with different kinds of Format classes and we don't have to 
+		  modify it even if we add new types of Format classes.
+
+		- We can set the strategies at runtime dynamically.
+
+		- Instead of using Inheritance we are using Composition, and since Composition is a
+		  dynamic relationship we can set any of the Format classes at runtime inside the
+		  DataModel
+
+		- Thus we use strategy pattern as a replacement for conditional statements.
 
 */
 

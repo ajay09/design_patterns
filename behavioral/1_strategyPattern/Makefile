@@ -62,12 +62,36 @@ $(BUILD_DIR)/2_spreadsheet_app_3 : $(SRC_DIR)/2_spreadsheet_app_3.cpp $(BUILD_DI
 .PHONY : 2_spreadsheet_app_3
 
 
-$(BUILD_DIR)/2_spreadsheet_app_4 : $(SRC_DIR)/2_spreadsheet_app_4.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/3_dynamic_array_1 : $(SRC_DIR)/3_dynamic_array_1.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-2_spreadsheet_app_4 : $(BUILD_DIR)/2_spreadsheet_app_4
+3_dynamic_array_1 : $(BUILD_DIR)/3_dynamic_array_1
 	$<
 
-.PHONY : 2_spreadsheet_app_4
+.PHONY : 3_dynamic_array_1
+
+
+$(BUILD_DIR)/3_dynamic_array_2 : $(SRC_DIR)/3_dynamic_array_2.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+3_dynamic_array_2 : $(BUILD_DIR)/3_dynamic_array_2
+	$<
+
+.PHONY : 3_dynamic_array_2
+
+
+$(BUILD_DIR)/3_dynamic_array_3 : $(SRC_DIR)/3_dynamic_array_3.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+3_dynamic_array_3 : $(BUILD_DIR)/3_dynamic_array_3
+	$<
+
+.PHONY : 3_dynamic_array_3
+
+
+$(BUILD_DIR)/3_dynamic_array_4 : $(SRC_DIR)/3_dynamic_array_4.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+3_dynamic_array_4 : $(BUILD_DIR)/3_dynamic_array_4
+	$<
+
+.PHONY : 3_dynamic_array_4
 
 
 
