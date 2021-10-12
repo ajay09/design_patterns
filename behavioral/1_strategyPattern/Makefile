@@ -86,12 +86,23 @@ $(BUILD_DIR)/3_dynamic_array_3 : $(SRC_DIR)/3_dynamic_array_3.cpp $(BUILD_DIR)
 .PHONY : 3_dynamic_array_3
 
 
+
 $(BUILD_DIR)/3_dynamic_array_4 : $(SRC_DIR)/3_dynamic_array_4.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
 3_dynamic_array_4 : $(BUILD_DIR)/3_dynamic_array_4
 	$<
 
 .PHONY : 3_dynamic_array_4
+
+
+
+
+$(BUILD_DIR)/3_dynamic_array_5 : $(SRC_DIR)/3_dynamic_array_5.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+3_dynamic_array_5 : $(BUILD_DIR)/3_dynamic_array_5
+	$<
+
+.PHONY : 3_dynamic_array_5
 
 
 
