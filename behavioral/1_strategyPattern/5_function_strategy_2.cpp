@@ -28,7 +28,12 @@
 		- Member Function
 		- Lambda Function
 		- Functor
-	
+
+
+
+	This kind of strategy is already used inside the standard library.
+	Algo such as  sort, count_if, remove_if  expect a callback that modifies the
+	behavior of the algo. Those callbacks are strategies.	
 */
 
 #include <vector>
