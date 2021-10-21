@@ -135,12 +135,20 @@ $(BUILD_DIR)/4_static_strategy : $(SRC_DIR)/4_static_strategy.cpp $(BUILD_DIR)
 .PHONY : 4_static_strategy
 
 
-$(BUILD_DIR)/5_function_strategy : $(SRC_DIR)/5_function_strategy.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/5_function_strategy_1 : $(SRC_DIR)/5_function_strategy_1.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-5_function_strategy : $(BUILD_DIR)/5_function_strategy
+5_function_strategy_1 : $(BUILD_DIR)/5_function_strategy_1
 	$<
 
-.PHONY : 5_function_strategy
+.PHONY : 5_function_strategy_1
+
+
+$(BUILD_DIR)/5_function_strategy_2 : $(SRC_DIR)/5_function_strategy_2.cpp $(BUILD_DIR) 
+	$(CC) $(CFLAGS) -o $@ $<
+5_function_strategy_2 : $(BUILD_DIR)/5_function_strategy_2
+	$<
+
+.PHONY : 5_function_strategy_2
 
 
 
