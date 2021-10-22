@@ -1,6 +1,6 @@
 .vscode
 4_observerPattern/build/*
-*/build/*
+*/build
 .DS_Store
 creational/4_singleton/build/
 creational/2_factories/*/build/
@@ -8,13 +8,10 @@ creational/*/build/
 creational/5_object_pool/build/
 creational/3_prototype/Prototype/
 creational/1_builder/Builder/
-structural/2_Adapter/Adapter.zip
 structural/*/build
 structural/*/Proxy
-structural/*/*.zip
 structural/4_decorator/Decorator
 structural/5_composite/Composite
 structural/6_bridge/simple2d
 structural/6_bridge/Bridge
-*/*/*.zip
 */*/build
