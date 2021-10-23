@@ -40,12 +40,12 @@ $(BUILD_DIR)/2_find_dialog_1 : $(SRC_DIR)/2_find_dialog_1.cpp $(BUILD_DIR)
 .PHONY : 2_find_dialog_1
 
 
-$(BUILD_DIR)/2_document_framework_3 : $(SRC_DIR)/2_document_framework_3.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/3_text_pad_1 : $(SRC_DIR)/3_text_pad_1.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-2_document_framework_3 : $(BUILD_DIR)/2_document_framework_3
+3_text_pad_1 : $(BUILD_DIR)/3_text_pad_1
 	$<
 
-.PHONY : 2_document_framework_3
+.PHONY : 3_text_pad_1
 
 
 $(BUILD_DIR)/3_dynamic_array_1 : $(SRC_DIR)/3_dynamic_array_1.cpp $(BUILD_DIR) 
