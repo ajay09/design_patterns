@@ -1,0 +1,151 @@
+Command Design Pattern
+
+- This pattern favours the UI based applications.
+
+- In UI based apps we try to separate the UI from the Applications core functionality.
+  This decoupling helps us to modify the UI and app functionality independently.
+
+- But due to this separation it may get hard to transform the user input into request
+  to the application. And additionally we may also have to support logging, auth, undo, redo, etc
+  And the same functionality may be required where a request from some component must be handled
+  by another component. We want to keep these components decoupled.
+
+  If we don't do this separation, it would be easy for a component to send a request to the application
+  The request would be in the form of simple function calls and funcitons can be invoked directly
+  using name of the function.
+
+  But this leads to a coupling or dependecy on the name of the function.
+
+- To avoid this dependency we can use callbacks. 
+  The callback mechanism is a way through which we invoke functions without depending on their names.
+  This allows the calling code to choose the functions at runtime.
+
+  In C/C++ callbacks are mostly implemented as C-functions and invoked using function pointers.
+
+
+  		
+
+  		------------------							--------------------
+  	    |     Invoker    |							|    Receiver      |
+  	    ------------------							--------------------
+  	    |	Function1(); |							|	Function1(){}  |
+  	    |	Function1(); |							|	Function1(){}  |
+  	    |	Function1(); |							|	Function1(){}  |
+  	    ------------------							--------------------
+  	    Invoker can invoke the functions			Receiver contains the functions that the invoker has to invoke.
+  	    directly using their names.
+  	    But this causes depedency on the 
+  	    Receiver and in future it would 
+  	    become difficult to modify them independently.
+
+
+
+
+  	    With callbacks the invoker doesn't
+  	    have to know about the names of the
+  	    functions inside the receiver.
+  	    It can invoke the functions through
+  	    their addresses.
+  		--------------------------							--------------------
+  	    |         Invoker        |							|    Receiver      |
+  	    --------------------------							--------------------
+  	    | fnptr = GetFunction(); |							|	Function1(){}  |
+  	    | fnptr();               |							|	Function1(){}  |
+  	    |						 |							|	Function1(){}  |
+  	    --------------------------							--------------------
+  	    Thus the ivoker doesn't depend
+  	    on the name of the function.
+
+
+- But we may want to do more than just invoking the function.
+	e.g. we may want to undo or rollback the actions the function has performed
+  Using callbacks will make this difficult and complex.
+
+  Instead we can use the "Command Pattern"
+                          It will help us implement the callbacks through which we
+                          can save the state when the action is performed and also
+                          restore the state at a later point of time.
+
+                          This is possible because the Command Pattern turns the callback
+                          into an object and this object stores state that can be resotred
+                          later. Additionally we can compbine these objects to create macro
+                          commands. 
+                          This is possible because the Command Pattern converts a simple
+                          function call into an object.
+
+
+
+
+Intent:
+		Encapsulate a request as an object, thereby letting you parameterize clients
+		with different requests, queue or log request, and support undo-able operations.
+		
+
+    ------------                                        <<Interface>>
+	|  Client  |                 -----------          --------------
+	------------                 | Invoker |<>------->| Command    |
+	  :      |                   -----------          --------------
+	  :		 |										  | Execute()  |
+	  :		 |           							  --------------
+	  :		 |											   /_\
+	  :		 |											    |
+	  :		 |			  ------------	                    |
+	  :		 '----------->| Receiver |    receiver  ---------------------     
+	  :                   ------------ <------------|  ConcreteCommand  |	 
+	  :                   | Action() |              ---------------------   								
+	  :                   ------------				|  Execute()		| '''''''''''[ receiver->Action();  ]
+	  :												--------------------- 		
+	  :...........................................> |  state			|
+	                                                ---------------------
+
+
+
+	   - The Invoker 	wants a request to be handled. 
+	     The Reciever   knows how to handle the request.
+
+	   - We don't want to couple the Invoker with the Receiver.
+	     Instead the Invoker will send a request to the Command.
+	     The Command may handle some part of the request and then
+	     forwart the call to the receiver.
+
+	     This way the invoker and the receiver are loosely coupled.
+
+	   - The Invoker will have a reference/pointer to the Command.
+	     And the Receiver will implement the Command interface.
+
+
+	   e.g. in Sublime 
+	        the Receiver is a text document
+	        and the Invoker is the find dialog box.
+
+
+
+Implementation :
+	- The main reaponsibility of the command object is to decouple the invoker and the receiver.
+
+	- The Command object can 
+		- perform all the operations itself without ever forwarding the
+	      calls to the receiver. Sometimes this is required if the receiver doesn't contain implementation
+	      of a particular command.
+
+	    - or it can just forward the call to the receiver.
+
+	    - or it can perform some operations and then forward the call to the receiver.
+
+	- Sometimes the Receiver can itself can act as a command specially when  you don't want to 
+	  do additional processing while handling the request and jsut wants to handle the request.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
