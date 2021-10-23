@@ -1,0 +1,114 @@
+Template Method Pattern
+
+
+- Template doesn't refer to cpp templates, instead it means a blueprint.
+  It just defines a blueprint of an algo and this algo can be customized by the clients.
+
+
+- Many framework provies algo that they want the clients to customize.
+	So they provide a class with a methods containing the structure of the method.
+	And inside the method they provide customization points which are called as "Hooks".
+
+
+	The clients can inherit from this class and customize the algo by overriding the Hooks.
+
+
+			----------------------------------------------
+			|				Base Class					 |
+			|											 |
+			|											 |
+			|		---------------------------			 |
+			|		|	Template Method		   |         |
+			|		|						   |		 |
+			|		|	---------------	<---------------------------- Fixed steps
+			|		|	***************		   |         | ``````````|
+			|		|	***************		   |         |			 |  Customizable Steps (Hooks)
+			|		|	---------------		   |         | ```````````
+			|		|						   |		 |
+			|		---------------------------			 |
+			|											 |
+			----------------------------------------------
+
+- This is similar to the Strategy Pattern, but Strategy Pattern varies the entire algo and this
+  varies only parts of the algo.
+
+
+
+
+Intent :
+		Define the skeleton of an algo in an operation, deferring some steps to the subclasses.
+		Template Method lets subclasses redefine certain steps of an algo without changing
+		the algorithm's structure.
+
+
+		This means if you want a customizable algo then you can define it in the base class.
+		And then the sub-classes can modify some parts of the algo without modifying the
+		structure of the algo.
+
+
+
+
+
+
+
+		AbstractClass is the base class and defines the
+		template method
+
+		|    AbstractClass      |
+		-------------------------
+		| TemplateMethod()  	|------------------  TemplateMethod() internally invokes two
+		| PrimitiveOperation1() |					  primitive operations and these are defined
+		| PrimitiveOperation2() |                     as pure-virtual inside the base class.
+		-------------------------					 The ConcreteClass will impelement these primitive
+				  /_\								  operations thereby cutomizing the algo that is
+				   |								  implemented in the base class.
+				   |								
+				   |								 So when the TemplateMethod() is invoked it automatically
+	    |    ConcreteClass      |					  calls the primitive methods implemented in the child class.
+	    -------------------------
+	    | TemplateMethod()  	|
+	    | PrimitiveOperation1() |
+	    | PrimitiveOperation2() |
+	    -------------------------
+
+
+Implementation :
+	- The base class defines the structure of teh algorithm in a method.
+	  This method is called the Template Method as it defines the skeleton of the algo.
+
+	- This gives the base class control over :
+	        - number of steps in the algo
+	        - order of steps.
+
+	- The steps in the template method are nothing but function calls that may be fixed
+	  or may be overridden or may be optional.
+
+	- The template method itself is not overridden.
+	  So when the template method invokes the steps, some of them are invoked from the child classes.
+	  This leads to an "Inverted structure", because the base class calls the child class methods.
+	  (aka the Hollywood principle => "don't call us, we will call you.")
+
+	  In this way the sub-classes gets a partial control over the algo.
+
+
+	- Opertions that must be overridden are declared abstract or pure-virtual.
+
+	  Optional operations are simply virtual functions and provide default behavior(or may be empty) in the base class.
+	  The child classes can hook into the virtual functions and provide their own implementations.
+	  That's why these operation are also called as "Hooks".
+	  	A hook provides a way for the subclass to provide their own implementation by overriding
+	  	the base-class method.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
