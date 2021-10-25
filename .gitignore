@@ -15,3 +15,4 @@ structural/5_composite/Composite
 structural/6_bridge/simple2d
 structural/6_bridge/Bridge
 */*/build
+behavioral/3_commandPattern/Command

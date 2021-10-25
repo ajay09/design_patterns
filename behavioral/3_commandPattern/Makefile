@@ -48,12 +48,12 @@ $(BUILD_DIR)/3_text_pad_1 : $(SRC_DIR)/3_text_pad_1.cpp $(BUILD_DIR)
 .PHONY : 3_text_pad_1
 
 
-$(BUILD_DIR)/3_dynamic_array_1 : $(SRC_DIR)/3_dynamic_array_1.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/3_text_pad_2 : $(SRC_DIR)/3_text_pad_2.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_1 : $(BUILD_DIR)/3_dynamic_array_1
+3_text_pad_2 : $(BUILD_DIR)/3_text_pad_2
 	$<
 
-.PHONY : 3_dynamic_array_1
+.PHONY : 3_text_pad_2
 
 
 $(BUILD_DIR)/3_dynamic_array_2 : $(SRC_DIR)/3_dynamic_array_2.cpp $(BUILD_DIR) 
