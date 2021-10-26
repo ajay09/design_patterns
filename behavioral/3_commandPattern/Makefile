@@ -56,29 +56,21 @@ $(BUILD_DIR)/3_text_pad_2 : $(SRC_DIR)/3_text_pad_2.cpp $(BUILD_DIR)
 .PHONY : 3_text_pad_2
 
 
-$(BUILD_DIR)/3_dynamic_array_2 : $(SRC_DIR)/3_dynamic_array_2.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/3_text_pad_3 : $(SRC_DIR)/3_text_pad_3.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_2 : $(BUILD_DIR)/3_dynamic_array_2
+3_text_pad_3 : $(BUILD_DIR)/3_text_pad_3
 	$<
 
-.PHONY : 3_dynamic_array_2
+.PHONY : 3_text_pad_3
 
 
-$(BUILD_DIR)/3_dynamic_array_3 : $(SRC_DIR)/3_dynamic_array_3.cpp $(BUILD_DIR) 
+
+$(BUILD_DIR)/3_text_pad_4 : $(SRC_DIR)/3_text_pad_4.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_3 : $(BUILD_DIR)/3_dynamic_array_3
+3_text_pad_4 : $(BUILD_DIR)/3_text_pad_4
 	$<
 
-.PHONY : 3_dynamic_array_3
-
-
-
-$(BUILD_DIR)/3_dynamic_array_4 : $(SRC_DIR)/3_dynamic_array_4.cpp $(BUILD_DIR) 
-	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_4 : $(BUILD_DIR)/3_dynamic_array_4
-	$<
-
-.PHONY : 3_dynamic_array_4
+.PHONY : 3_text_pad_4
 
 
 $(BUILD_DIR)/3_dynamic_array_5 : $(SRC_DIR)/3_dynamic_array_5.cpp $(BUILD_DIR) 
