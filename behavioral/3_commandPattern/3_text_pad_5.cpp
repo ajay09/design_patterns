@@ -110,6 +110,7 @@ public:
 
 class UndoManager {
 	static std::stack<std::shared_ptr<Command>> m_Undo;
+	static std::stack<std::shared_ptr<Command>> m_Redo;
 	UndoManager() = default;
 public:
 	static void AddCommand(std::shared_ptr<Command> pCmd) {
@@ -121,14 +122,27 @@ public:
 
 		auto pCmd = m_Undo.top(); m_Undo.pop();
 		pCmd->Undo();
+		m_Redo.push(pCmd);
 
 		return true;
 	}
 
 	static bool Redo() {
+		if (m_Redo.empty()) return false;
+
+		auto pCmd = m_Redo.top(); 
+		m_Redo.pop();
+		pCmd->Redo();
+		m_Undo.push(pCmd);
+
+
 		return true;
 	}
 };
+
+
+std::stack<std::shared_ptr<Command>> UndoManager::m_Undo;
+std::stack<std::shared_ptr<Command>> UndoManager::m_Redo;
 
 
 
@@ -159,6 +173,7 @@ public:
 	bool IsBold() const { return m_Bold; }
 	Color GetColor() const { return m_Color; }
 	const std::string& GetText() const { return m_Text; }
+
 	void Display() const { Console::WriteLine(m_Text, m_Color, m_Bold); }
 
 	// Menu class will invoke these and these will get input from user.
@@ -221,7 +236,9 @@ public:
 		m_pApp->RemoveText(index, count);
 	}
 
-	void Redo() override {}
+	void Redo() override {
+		m_pApp->AddText(m_Text);
+	}
 };
 
 ////////////////////////////////////
@@ -253,7 +270,9 @@ public:
 		m_pApp->InsertText(m_Index, m_Text);
 	}
 
-	void Redo() override {}
+	void Redo() override {
+		m_pApp->RemoveText(m_Index, m_Text.size());
+	}
 };
 
 ////////////////////////////////////
@@ -288,7 +307,11 @@ public:
 		m_Text = text; // for redo
 	}
 
-	void Redo() override {}
+	void Redo() override {
+		auto text = m_pApp->GetText().substr(m_Index, m_Text.size());
+		m_pApp->OverwriteText(m_Index, m_Text);
+		m_Text = text;
+	}
 };
 
 ////////////////////////////////////
@@ -320,7 +343,9 @@ public:
 		m_pApp->RemoveText(m_Index, count);
 	}
 
-	void Redo() override {}
+	void Redo() override {
+		m_pApp->InsertText(m_Index, m_Text);
+	}
 };
 
 
@@ -370,7 +395,11 @@ public:
 		m_Color = color;
 	}
 
-	void Redo() override {}
+	void Redo() override {
+		auto color = m_pApp->GetColor();
+		m_pApp->SetColor(m_Color);
+		m_Color = color;
+	}
 };
 
 ////////////////////////////////////
@@ -406,7 +435,11 @@ public:
 		m_IsBold = bold; // for redo
 	}
 
-	void Redo() override {}
+	void Redo() override {
+		auto bold = m_pApp->IsBold();
+		m_pApp->SetBold(m_IsBold);
+		m_IsBold = bold; // for redo
+	}
 };
 
 
@@ -423,6 +456,27 @@ public:
 		}
 		else {
 			Message("Nothing to undo.");
+		}
+	}
+
+	void Undo() override {
+	}
+	
+	void Redo() override {}
+};
+
+
+/////////////////////////////////
+/////////////////  CommandRedo.cpp
+/////////////////////////////////
+class CommandRedo : public Command {
+public:
+	void Execute() override {
+		if (UndoManager::Redo()) {
+			Message("Performed redo!");
+		}
+		else {
+			Message("Nothing to redo.");
 		}
 	}
 
@@ -502,7 +556,7 @@ public:
 
 
 
-std::stack<std::shared_ptr<Command>> UndoManager::m_Undo;
+
 
 
 
@@ -524,6 +578,7 @@ int main() {
 	std::shared_ptr<CommandSetColor>   cmdSetColor	 = std::make_shared<CommandSetColor>(&app);
 	std::shared_ptr<CommandSetBold>	   cmdSetBold	 = std::make_shared<CommandSetBold>(&app);
 	std::shared_ptr<CommandUndo>	   cmdUndo		 = std::make_shared<CommandUndo>();
+	std::shared_ptr<CommandRedo>	   cmdRedo		 = std::make_shared<CommandRedo>();
 
 	menu.Init(0, "",			  cmdDisplay);
 	menu.Init(1, "Add",			  cmdAdd);
@@ -532,6 +587,8 @@ int main() {
 	menu.Init(4, "Erase",		  cmdRemove);
 	menu.Init(5, "Change color",  cmdSetColor);
 	menu.Init(6, "Toggle bold",	  cmdSetBold);
+	menu.Init(7, "Undo",	  	  cmdUndo);
+	menu.Init(8, "Redo",	  	  cmdRedo);
 
 	menu.Run();
 
