@@ -73,12 +73,12 @@ $(BUILD_DIR)/3_text_pad_4 : $(SRC_DIR)/3_text_pad_4.cpp $(BUILD_DIR)
 .PHONY : 3_text_pad_4
 
 
-$(BUILD_DIR)/3_dynamic_array_5 : $(SRC_DIR)/3_dynamic_array_5.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/3_text_pad_5 : $(SRC_DIR)/3_text_pad_5.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_5 : $(BUILD_DIR)/3_dynamic_array_5
+3_text_pad_5 : $(BUILD_DIR)/3_text_pad_5
 	$<
 
-.PHONY : 3_dynamic_array_5
+.PHONY : 3_text_pad_5
 
 
 $(BUILD_DIR)/3_dynamic_array_6 : $(SRC_DIR)/3_dynamic_array_6.cpp $(BUILD_DIR) 

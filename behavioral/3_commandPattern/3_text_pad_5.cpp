@@ -69,6 +69,13 @@ Without using command pattern :
 	When we have to undo a command we simply pop the command form the stack and invoke its undo member
 	function. That member function will restore the state.
 
+
+	- Whenever a Command is executed we create a copy and store it in the stack.
+	  We need to create the copy because if the command is performed multiple times then the state that it store
+	  will get modified and we could not undo and redo. That's why create a copy before storing the command
+	  to the stack.
+	-
+
 */
 
 #include <iostream>
@@ -91,6 +98,38 @@ public:
 	virtual void Redo() = 0;
 	virtual ~Command() = default;
 };
+
+
+
+// Monostate
+// Will manage the stack of the Commands
+////////////////////////////////////////
+////////////////////  	UndoManager.h
+////////////////////////////////////////
+#include <stack>
+
+class UndoManager {
+	static std::stack<std::shared_ptr<Command>> m_Undo;
+	UndoManager() = default;
+public:
+	static void AddCommand(std::shared_ptr<Command> pCmd) {
+		m_Undo.push(pCmd);
+	}
+
+	static bool Undo() {
+		if (m_Undo.empty()) return false;
+
+		auto pCmd = m_Undo.top(); m_Undo.pop();
+		pCmd->Undo();
+
+		return true;
+	}
+
+	static bool Redo() {
+		return true;
+	}
+};
+
 
 
 ////////////////////////////////////////
@@ -165,7 +204,14 @@ public:
 		std::cin.ignore(); // to ignore any remaining characters in the input stream
 						   // required when using getline because getline by default reads till next \n
 		std::getline(std::cin, m_Text);
-		m_pApp->AddText(text);
+		m_pApp->AddText(m_Text);
+		
+		// create a copy and store to the stack.
+		// even though we have not added a copy constructor to the command classes
+		// but since these classes don't have ownership semantics so we can use the compiler genreated copy constructor.
+		// Or you can use the Prototype Desgin Pattern.
+		UndoManager::AddCommand(std::make_shared<CommandAdd>(*this));
+		
 		Message("Text added!");
 	}
 
@@ -190,16 +236,22 @@ public:
 	CommandRemove(Application* pApp) : m_pApp{pApp} {}
 
 	void Execute() override {
-		size_t start, count;
+		size_t count;
 		std::cout << "Starting index? ";
-		std::cin >> start;
+		std::cin >> m_Index;
 		std::cout << "How many characters to remove? ";
 		std::cin >> count;
-		m_pApp->RemoveText(start, count);
+		m_Text = m_pApp->GetText().substr(m_Index, count);
+		m_pApp->RemoveText(m_Index, count);
+
+		UndoManager::AddCommand(std::make_shared<CommandRemove>(*this));
+
 		Message("Text removed!");
 	}
 
-	void Undo() override {}
+	void Undo() override {
+		m_pApp->InsertText(m_Index, m_Text);
+	}
 
 	void Redo() override {}
 };
@@ -224,6 +276,9 @@ public:
 		std::cin >> m_Index;
 		m_Text = m_pApp->GetText().substr(m_Index, text.size());
 		m_pApp->OverwriteText(m_Index, text);
+
+		UndoManager::AddCommand(std::make_shared<CommandOverWrite>(*this));
+
 		Message("Text overwritten!");
 	}
 
@@ -254,6 +309,9 @@ public:
 		std::cout << "Position of insertion? ";
 		std::cin >> m_Index;
 		m_pApp->InsertText(m_Index, m_Text);
+
+		UndoManager::AddCommand(std::make_shared<CommandInsert>(*this));
+
 		Message("Text inserted!");
 	}
 
@@ -271,6 +329,8 @@ public:
 ////////////////////////////////////
 class CommandSetColor : public Command {
 	Application *m_pApp;
+
+	Color m_Color;
 public:
 	CommandSetColor(Application* pApp) : m_pApp{pApp} {}
 
@@ -296,11 +356,19 @@ public:
 				color = Color::DEFAULT;
 				break;
 		}
+		m_Color = m_pApp->GetColor();
 		m_pApp->SetColor(color);
+
+		UndoManager::AddCommand(std::make_shared<CommandSetColor>(*this));
+
 		Message("Text color set!");
 	}
 
-	void Undo() override {}
+	void Undo() override {
+		auto color = m_pApp->GetColor();
+		m_pApp->SetColor(m_Color);
+		m_Color = color;
+	}
 
 	void Redo() override {}
 };
@@ -310,6 +378,8 @@ public:
 ////////////////////////////////////
 class CommandSetBold : public Command {
 	Application *m_pApp;
+
+	bool m_IsBold;
 public:
 	CommandSetBold(Application* pApp) : m_pApp{pApp} {}
 
@@ -318,19 +388,49 @@ public:
 		std::cout << "Press (b) for bold or any other key for normal text";
 		char ch;
 		std::cin >> ch;
+		m_IsBold = m_pApp->IsBold();
 		if (ch == 'b') {
 			m_pApp->SetBold(true);
 		} else {
 			m_pApp->SetBold(false);
 		}
+
+		UndoManager::AddCommand(std::make_shared<CommandSetBold>(*this));
+
 		Message("Text bold property set!");
 	}
 
-	void Undo() override {}
+	void Undo() override {
+		auto bold = m_pApp->IsBold();
+		m_pApp->SetBold(m_IsBold);
+		m_IsBold = bold; // for redo
+	}
 
 	void Redo() override {}
 };
 
+
+
+
+/////////////////////////////////
+/////////////////  CommandUndo.cpp
+/////////////////////////////////
+class CommandUndo : public Command {
+public:
+	void Execute() override {
+		if (UndoManager::Undo()) {
+			Message("Performed undo!");
+		}
+		else {
+			Message("Nothing to undo.");
+		}
+	}
+
+	void Undo() override {
+	}
+	
+	void Redo() override {}
+};
 
 
 
@@ -402,6 +502,9 @@ public:
 
 
 
+std::stack<std::shared_ptr<Command>> UndoManager::m_Undo;
+
+
 
 
 
@@ -420,6 +523,7 @@ int main() {
 	std::shared_ptr<CommandRemove>	   cmdRemove	 = std::make_shared<CommandRemove>(&app);
 	std::shared_ptr<CommandSetColor>   cmdSetColor	 = std::make_shared<CommandSetColor>(&app);
 	std::shared_ptr<CommandSetBold>	   cmdSetBold	 = std::make_shared<CommandSetBold>(&app);
+	std::shared_ptr<CommandUndo>	   cmdUndo		 = std::make_shared<CommandUndo>();
 
 	menu.Init(0, "",			  cmdDisplay);
 	menu.Init(1, "Add",			  cmdAdd);
