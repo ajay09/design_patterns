@@ -81,20 +81,20 @@ $(BUILD_DIR)/3_text_pad_5 : $(SRC_DIR)/3_text_pad_5.cpp $(BUILD_DIR)
 .PHONY : 3_text_pad_5
 
 
-$(BUILD_DIR)/3_dynamic_array_6 : $(SRC_DIR)/3_dynamic_array_6.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/4_data_list_1 : $(SRC_DIR)/4_data_list_1.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_6 : $(BUILD_DIR)/3_dynamic_array_6
+4_data_list_1 : $(BUILD_DIR)/4_data_list_1
 	$<
 
-.PHONY : 3_dynamic_array_6
+.PHONY : 4_data_list_1
 
 
-$(BUILD_DIR)/3_dynamic_array_7 : $(SRC_DIR)/3_dynamic_array_7.cpp $(BUILD_DIR) 
+$(BUILD_DIR)/4_data_list_2 : $(SRC_DIR)/4_data_list_2.cpp $(BUILD_DIR) 
 	$(CC) $(CFLAGS) -o $@ $<
-3_dynamic_array_7 : $(BUILD_DIR)/3_dynamic_array_7
+4_data_list_2 : $(BUILD_DIR)/4_data_list_2
 	$<
 
-.PHONY : 3_dynamic_array_7
+.PHONY : 4_data_list_2
 
 
 $(BUILD_DIR)/3_dynamic_array_8 : $(SRC_DIR)/3_dynamic_array_8.cpp $(BUILD_DIR) 
