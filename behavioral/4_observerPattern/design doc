@@ -58,25 +58,25 @@ e.g. Alarm system in a game.
 
 Structure :
 
-		---------------------		observers                   ---------------------
+		---------------------		observers                       ---------------------
 		|      Subject      |-------------------------------------->|     Observer      |
-		---------------------				            ---------------------
-		| Attach(Observer)  |				            | Update()          |
-		| Detach(Observer)  |				            ---------------------
-		| Notify()	    |  for all o in obeservers {        	     /_\
-		---------------------      o->Update()		        	      |
-		        /_\            }			        	      |
-		         |					        	      |
-		         |					        	      |
-		         |					        	      |
-		         |					        	      |
-		---------------------			subject             ---------------------
+		---------------------				                        ---------------------
+		| Attach(Observer)  |				                        | Update()          |
+		| Detach(Observer)  |				                        ---------------------
+		| Notify()	   	    |  for all o in obeservers {        	        /_\
+		---------------------      o->Update()		        	             |
+		        /_\            }			        	                     |
+		         |					        	      					     |
+		         |					        	      					     |
+		         |					        	      					     |
+		         |					        	      					     |
+		---------------------			subject                     ---------------------
 		|  ConcreteSubject  |<--------------------------------------| ConcreteObserver  |
-		---------------------					    ---------------------
-		| GetState()        | return subjectState	            | Update()          |   observerState = subject->GetState()
-		| SetState()        |					    ---------------------
-		---------------------					    | observerState     |
-		| subjectState      |					    ---------------------
+		---------------------					                    ---------------------
+		| GetState()        | return subjectState	                | Update()          |   observerState = subject->GetState()
+		| SetState()        |					                    ---------------------
+		---------------------					                    | observerState     |
+		| subjectState      |					                    ---------------------
 		---------------------
 
 
