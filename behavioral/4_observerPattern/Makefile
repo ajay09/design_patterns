@@ -100,6 +100,23 @@ $(BUILD_DIR)/3_slide_deck_4: $(SRC_DIR)/3_slide_deck_4.cpp | $(BUILD_DIR)
 
 
 
+$(BUILD_DIR)/4_sensor_1: $(SRC_DIR)/4_sensor_1.cpp | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) -o $@ $<
+4_sensor_1: $(BUILD_DIR)/4_sensor_1
+	$<
+
+.PHONY : 4_sensor_1
+
+
+
+
+$(BUILD_DIR)/4_sensor_2: $(SRC_DIR)/4_sensor_2.cpp | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) -o $@ $<
+4_sensor_2: $(BUILD_DIR)/4_sensor_2
+	$<
+
+.PHONY : 4_sensor_2
+
 
 
 clean :
