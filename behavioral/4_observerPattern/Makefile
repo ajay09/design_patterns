@@ -118,6 +118,14 @@ $(BUILD_DIR)/4_sensor_2: $(SRC_DIR)/4_sensor_2.cpp | $(BUILD_DIR)
 .PHONY : 4_sensor_2
 
 
+$(BUILD_DIR)/5_change_manager: $(SRC_DIR)/5_change_manager.cpp | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) -o $@ $<
+5_change_manager: $(BUILD_DIR)/5_change_manager
+	$<
+
+.PHONY : 5_change_manager
+
+
 
 clean :
 	rm -rf build
