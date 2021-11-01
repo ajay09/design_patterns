@@ -38,17 +38,21 @@ $(BUILD_DIR)/observer3: $(SRC_DIR)/observer3.cpp | $(BUILD_DIR)
 observer3: $(BUILD_DIR)/observer3
 	$<
 
-.PHONY : observer2
+.PHONY : observer3
 
-order1:
-	echo order1
 
-.PHONY : order1
+$(BUILD_DIR)/1_basic_observer: $(SRC_DIR)/1_basic_observer.cpp | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE) $(BOOST_LIB) -o $@ $<
+1_basic_observer: $(BUILD_DIR)/1_basic_observer
+	$<
 
-order2:
-	echo order2
+.PHONY : 1_basic_observer
 
-.PHONY : order2
+
+
+
+
+
 
 clean :
 	rm -rf build

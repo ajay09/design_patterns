@@ -21,3 +21,84 @@ The entity generating the events is called observable.
 - An observable must provide subscribe/unsubscribe funcitons.
 - and must have an explicit notification code.
 - Special care to prevent issues in multithreaded scenarios.
+
+
+
+
+
+
+
+
+In a OO system with a set of cooperating objects, you may have to maintain some kind of consistency beetween them.
+This should be eachieved without directly coupling their classes.
+e.g. Alarm system in a game. 
+	 When an alarm is turned on, it notifies all the Non-Playable Characters(NPCs) about the presence of the 
+	 player. How do we implement the interaction between the alarm and the NPCs?
+	 There has to be some connection between the alarm object and the NPC object. BUt if the alarm object keeps
+	 track of all the NPC objects, then it gets tightly coupled with them and it will become difficult to update
+	 or modify the alarm system. It will also be difficult to add or remove new NPCs at runtime.
+
+	 Here we can use the "Observer Pattern"
+	 				It involves two kinds of objects, the subject and the observer.
+	 				Alarm is the subject and NPCs are the observers. When the alarm sounds
+	 				its state change and will send a notification to the NPCs. Then NPCs
+	 				in turn will update their state and respond accordingly.
+
+	 				This design is flexible enough to add or remove NPCs at runtime.
+
+
+
+
+	Observer Pattern :  Defines a one-to-may dependency between objects so that when one object 
+			    change state, all its dependents are notified and update automatically.
+
+
+
+
+
+Structure :
+
+		---------------------		observers                   ---------------------
+		|      Subject      |-------------------------------------->|     Observer      |
+		---------------------				            ---------------------
+		| Attach(Observer)  |				            | Update()          |
+		| Detach(Observer)  |				            ---------------------
+		| Notify()	    |  for all o in obeservers {        	     /_\
+		---------------------      o->Update()		        	      |
+		        /_\            }			        	      |
+		         |					        	      |
+		         |					        	      |
+		         |					        	      |
+		         |					        	      |
+		---------------------			subject             ---------------------
+		|  ConcreteSubject  |<--------------------------------------| ConcreteObserver  |
+		---------------------					    ---------------------
+		| GetState()        | return subjectState	            | Update()          |   observerState = subject->GetState()
+		| SetState()        |					    ---------------------
+		---------------------					    | observerState     |
+		| subjectState      |					    ---------------------
+		---------------------
+
+
+
+		- The base-class Subject provides functionality to maintain a list of Observers.
+		- Any class that wants a notification from the subject will inherit from the observer and register itself with the Subject.
+		- As the state inside the ConcreteSubject changes, it will call Notify() from the Subject class.
+		- Notify() will iterate over the list of observers and will call Update() for each
+
+		- The Subject will have a pointer/reference of each Observer stored in a list/array/
+		- An Observer can depend on more than one subject.
+		- There are ways of sending notification to only specific obeservers.
+
+
+
+
+
+
+
+
+
+
+
+
+
