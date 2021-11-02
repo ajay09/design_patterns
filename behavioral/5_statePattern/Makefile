@@ -83,6 +83,19 @@ $(BUILD_DIR)/1_lamp_6: $(SRC_DIR)/1_lamp_6.cpp $(BUILD_DIR)
 
 
 
+$(BUILD_DIR)/1_transition_table_1: $(SRC_DIR)/1_transition_table_1.cpp $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+1_transition_table_1: $(BUILD_DIR)/1_transition_table_1
+	$<
+
+.PHONY : 1_transition_table_1
+
+
+
+
+
+
+
 
 	
 
