@@ -23,3 +23,67 @@ Can define
 - Action when a particular even causes a transition
 - Guard conditions enabling/disabling a transition
 - Default action when no transitions are found for an even
+
+
+
+
+
+
+	This pattern is used to manage different states of an object. Some Objects are state-driven, i.e. they behave differently
+	based on their current state. This is normally implemented using flags and conditional statements.
+	This might lead to unmaintainable large conditional constructs.
+
+	Such an object can be considered as a State Machine. A state machine is an abstract machine that can be in exactly
+	one finite state at any given time and can change from one state to another in response to some event.
+	This transition can be implemented through conditional statements. Adding new states or transitions
+	might become difficult as the conditional statements increases.
+
+
+	State-Pattern provides an alternative to this design.
+		It separates the class into two parts the main class that will hold the data and state classes.
+		The state changes are then distributed among these classes.
+		The state objects provide the behavior for the main object which only hold the state data.
+		When its methods are invoked it will forward the call to the state object which will provide the behavior.
+
+		This eliminates conditional statements and make it convinient to add more states and transitions.
+
+
+
+	Intent : Allow an object to alter its behavior when its internal
+	         state changes.
+
+
+	Structure :
+
+	---------------		state				    ---------------
+	|   Context   |<>---------------------------|   State     |
+	---------------								---------------
+	| Request()   |                             | Handle()    |
+	---------------                             ---------------
+		state->Handle();					         /_\
+													  |
+											__________|_______________...
+											|		  		     |
+								  --------------------    --------------------
+								  |  ConcreteStateA  |    |  ConcreteStateA  |
+								  --------------------    --------------------
+								  | Handle()         |    | Handle()         |
+								  --------------------    --------------------
+
+
+		- Context is the main object, and is a Finite State Machine.
+		- Different state related behavior are in the concrete state classes.
+		  Instances of these classes are objects for states.
+		- When a request is made internally to the Context, internally it sends the request to
+		  the concrete state object.
+		- State object will provide the behavior and may also change the state of the Context class.
+
+		- Transitions:
+			- If there are few transitions, the Context class can implement them.
+			- But it is more flexible to let the State classes temselves specify the transition.
+			- If the transition logic is more complicated, it can be moved to a separate class.
+			  A distributed transition logic is more easy to extend and modify.
+
+
+
+
