@@ -33,62 +33,62 @@ $(BUILD_DIR)/1_basic_state_1: $(SRC_DIR)/1_basic_state_1.cpp $(BUILD_DIR)
 .PHONY : 1_basic_state_1
 
 
-$(BUILD_DIR)/1_lamp_1: $(SRC_DIR)/1_lamp_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_lamp_1: $(SRC_DIR)/2_lamp_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_lamp_1: $(BUILD_DIR)/1_lamp_1
+2_lamp_1: $(BUILD_DIR)/2_lamp_1
 	$<
 
-.PHONY : 1_lamp_1
+.PHONY : 2_lamp_1
 
 
-$(BUILD_DIR)/1_lamp_2: $(SRC_DIR)/1_lamp_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_lamp_2: $(SRC_DIR)/2_lamp_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_lamp_2: $(BUILD_DIR)/1_lamp_2
+2_lamp_2: $(BUILD_DIR)/2_lamp_2
 	$<
 
-.PHONY : 1_lamp_2
+.PHONY : 2_lamp_2
 
 
-$(BUILD_DIR)/1_lamp_3: $(SRC_DIR)/1_lamp_3.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_lamp_3: $(SRC_DIR)/2_lamp_3.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_lamp_3: $(BUILD_DIR)/1_lamp_3
+2_lamp_3: $(BUILD_DIR)/2_lamp_3
 	$<
 
-.PHONY : 1_lamp_3
+.PHONY : 2_lamp_3
 
 
 
-$(BUILD_DIR)/1_lamp_4: $(SRC_DIR)/1_lamp_4.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_lamp_4: $(SRC_DIR)/2_lamp_4.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_lamp_4: $(BUILD_DIR)/1_lamp_4
+2_lamp_4: $(BUILD_DIR)/2_lamp_4
 	$<
 
-.PHONY : 1_lamp_4
+.PHONY : 2_lamp_4
 
 
-$(BUILD_DIR)/1_lamp_5: $(SRC_DIR)/1_lamp_5.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_lamp_5: $(SRC_DIR)/2_lamp_5.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_lamp_5: $(BUILD_DIR)/1_lamp_5
+2_lamp_5: $(BUILD_DIR)/2_lamp_5
 	$<
 
-.PHONY : 1_lamp_5
+.PHONY : 2_lamp_5
 
 
-$(BUILD_DIR)/1_lamp_6: $(SRC_DIR)/1_lamp_6.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_lamp_6: $(SRC_DIR)/2_lamp_6.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_lamp_6: $(BUILD_DIR)/1_lamp_6
+2_lamp_6: $(BUILD_DIR)/2_lamp_6
 	$<
 
-.PHONY : 1_lamp_6
+.PHONY : 2_lamp_6
 
 
 
-$(BUILD_DIR)/1_transition_table_1: $(SRC_DIR)/1_transition_table_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_transition_table_1: $(SRC_DIR)/3_transition_table_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_transition_table_1: $(BUILD_DIR)/1_transition_table_1
+3_transition_table_1: $(BUILD_DIR)/3_transition_table_1
 	$<
 
-.PHONY : 1_transition_table_1
+.PHONY : 3_transition_table_1
 
 
 
