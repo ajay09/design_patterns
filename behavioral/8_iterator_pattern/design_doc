@@ -1,0 +1,83 @@
+Iterator
+	It is an object that allows you to access to elements inside an aggregate.
+	An aggreagate stores objects as elements and provides operations through with you can 
+	add, remove or update those elements.
+
+	Iterators help use achieve 2 things :
+	- To provide access to the elements of the aggregate without exposing the underlying implementation.
+	- all the clients to use different traversal algo
+
+	If the aggregate itself provide traversal capability, it will be violation of the SRP.
+	With the Iterator pattern the responsibility of traversal can be put inside another class.
+	The Iterator class has info about the aggregate's internal structure and knows how to traverse it.
+	This way we can add new traversal algo without modifying the aggregate, thus preventing violation of the OCP.
+
+
+	With Iterators we get a uniform interface which allows us to access elements of different kinds of aggregates.
+
+
+	Intent:
+			Provide a way to access the elements of an aggregate object
+			sequentially without exposing its underlying representation.
+
+
+	Structure:
+
+				--------------------					----------					 --------------------								
+				|    Aggregate     |<-------------------| Client |------------------>|    Iterator      |													
+				--------------------				    ----------					 --------------------								
+				| CreateIterator() |												 | First()          |	
+				--------------------												 | Next()           |  
+						/_\															 | IsDone() 		|
+						 |															 | CurrentItem()    |
+						 |															 --------------------
+						 |																	 /_\
+						 |																	  |
+						 |																	  |
+				---------------------												 --------------------
+				| ConcreteAggregate |...............................................>| ConcreteIterator |
+				---------------------												 -----;--------------
+				| CreateIterator()  |<-----------------------------------------------------
+				---------------------
+					return new ConcreteIterator(this);
+
+
+
+	Implementation:
+	- The CreateIterator() in the ConcreteAggregate creates the instance of the ConcreteIterator
+		so that its underlying implementation details are not exposed.
+
+	- Iterators can be internal or external
+	  
+	  Internal iterator are internally used by certain language constructs or libraries and their iteration can
+	    not be controlled by the user.
+
+	  External iterators are explicitly managed and controlled by the clients.
+
+	- The traversal algo may be implemented
+	     - inside the iterator itself.
+	     - or the aggreate may define the algo and the iterator may just hold the state.
+
+    - Iterators can also use static and dynamic polymorphic iteration.
+
+    - Null iterators can be used to represent the boundary condition. (e.g. the end iterator in STL)
+
+    - Operators may include:
+      ++, -- +=
+      *, ->
+
+    - Iterators can be made friends of the aggregates so that they can have direct access to its implementation.
+
+    - Memory management can be handledd using smart pointers in case of dynamic polymorphic iteration.
+
+    - Templates can be used for static polymorphic iteration in C++
+      (type-safe, fast and doesn't require manual memory mgmt.)
+
+
+
+
+
+
+
+
+
