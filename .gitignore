@@ -16,3 +16,4 @@ structural/6_bridge/simple2d
 structural/6_bridge/Bridge
 */*/build
 behavioral/3_commandPattern/Command
+behavioral/8_iterator_pattern/Iterator

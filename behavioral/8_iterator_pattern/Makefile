@@ -25,20 +25,20 @@ $(BUILD_DIR)/1_basic_iterator: $(SRC_DIR)/1_basic_iterator.cpp $(BUILD_DIR)
 .PHONY : 1_basic_iterator
 
 
-$(BUILD_DIR)/1_basic_state_1: $(SRC_DIR)/1_basic_state_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_organization_1: $(SRC_DIR)/2_organization_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-1_basic_state_1: $(BUILD_DIR)/1_basic_state_1
+2_organization_1: $(BUILD_DIR)/2_organization_1
 	$<
 
-.PHONY : 1_basic_state_1
+.PHONY : 2_organization_1
 
 
-$(BUILD_DIR)/2_lamp_1: $(SRC_DIR)/2_lamp_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/2_organization_2: $(SRC_DIR)/2_organization_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_lamp_1: $(BUILD_DIR)/2_lamp_1
+2_organization_2: $(BUILD_DIR)/2_organization_2
 	$<
 
-.PHONY : 2_lamp_1
+.PHONY : 2_organization_2
 
 
 $(BUILD_DIR)/2_lamp_2: $(SRC_DIR)/2_lamp_2.cpp $(BUILD_DIR)
