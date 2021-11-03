@@ -41,37 +41,37 @@ $(BUILD_DIR)/2_organization_2: $(SRC_DIR)/2_organization_2.cpp $(BUILD_DIR)
 .PHONY : 2_organization_2
 
 
-$(BUILD_DIR)/2_lamp_2: $(SRC_DIR)/2_lamp_2.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_container_1: $(SRC_DIR)/3_container_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_lamp_2: $(BUILD_DIR)/2_lamp_2
+3_container_1: $(BUILD_DIR)/3_container_1
 	$<
 
-.PHONY : 2_lamp_2
+.PHONY : 3_container_1
 
 
-$(BUILD_DIR)/2_lamp_3: $(SRC_DIR)/2_lamp_3.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_container_2: $(SRC_DIR)/3_container_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_lamp_3: $(BUILD_DIR)/2_lamp_3
+3_container_2: $(BUILD_DIR)/3_container_2
 	$<
 
-.PHONY : 2_lamp_3
+.PHONY : 3_container_2
 
 
 
-$(BUILD_DIR)/2_lamp_4: $(SRC_DIR)/2_lamp_4.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_container_3: $(SRC_DIR)/3_container_3.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_lamp_4: $(BUILD_DIR)/2_lamp_4
+3_container_3: $(BUILD_DIR)/3_container_3
 	$<
 
-.PHONY : 2_lamp_4
+.PHONY : 3_container_3
 
 
-$(BUILD_DIR)/2_lamp_5: $(SRC_DIR)/2_lamp_5.cpp $(BUILD_DIR)
+$(BUILD_DIR)/3_container_4: $(SRC_DIR)/3_container_4.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_lamp_5: $(BUILD_DIR)/2_lamp_5
+3_container_4: $(BUILD_DIR)/3_container_4
 	$<
 
-.PHONY : 2_lamp_5
+.PHONY : 3_container_4
 
 
 $(BUILD_DIR)/2_lamp_6: $(SRC_DIR)/2_lamp_6.cpp $(BUILD_DIR)
