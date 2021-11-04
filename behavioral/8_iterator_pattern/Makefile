@@ -74,32 +74,32 @@ $(BUILD_DIR)/3_container_4: $(SRC_DIR)/3_container_4.cpp $(BUILD_DIR)
 .PHONY : 3_container_4
 
 
-$(BUILD_DIR)/2_lamp_6: $(SRC_DIR)/2_lamp_6.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_cpp_iterators_1: $(SRC_DIR)/4_cpp_iterators_1.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-2_lamp_6: $(BUILD_DIR)/2_lamp_6
+4_cpp_iterators_1: $(BUILD_DIR)/4_cpp_iterators_1
 	$<
 
-.PHONY : 2_lamp_6
+.PHONY : 4_cpp_iterators_1
 
 
 
-$(BUILD_DIR)/3_transition_table_1: $(SRC_DIR)/3_transition_table_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_cpp_iterators_2: $(SRC_DIR)/4_cpp_iterators_2.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-3_transition_table_1: $(BUILD_DIR)/3_transition_table_1
+4_cpp_iterators_2: $(BUILD_DIR)/4_cpp_iterators_2
 	$<
 
-.PHONY : 3_transition_table_1
+.PHONY : 4_cpp_iterators_2
 
 
 
 
 
-$(BUILD_DIR)/4_methods_1: $(SRC_DIR)/4_methods_1.cpp $(BUILD_DIR)
+$(BUILD_DIR)/4_cpp_iterators_3: $(SRC_DIR)/4_cpp_iterators_3.cpp $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $<
-4_methods_1: $(BUILD_DIR)/4_methods_1
+4_cpp_iterators_3: $(BUILD_DIR)/4_cpp_iterators_3
 	$<
 
-.PHONY : 4_methods_1
+.PHONY : 4_cpp_iterators_3
 
 
 $(BUILD_DIR)/4_methods_2: $(SRC_DIR)/4_methods_2.cpp $(BUILD_DIR)
